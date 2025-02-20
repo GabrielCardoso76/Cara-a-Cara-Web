@@ -57,3 +57,15 @@ function sortearImagemDado() {
   imgElement.src = imagemSorteada;
   imgElement.style.display = 'block'; // Torna a imagem visível
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Seleciona todas as imagens dentro da div "personagens"
+  const imagens = document.querySelectorAll('.personagens img');
+
+  imagens.forEach((img) => {
+    img.addEventListener('click', function () {
+      // Alterna a classe "pb" ao clicar na imagem
+      this.classList.toggle('pb');
+    });
+  });
+});
