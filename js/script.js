@@ -69,3 +69,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+const button = document.getElementById("toggle-theme");
+
+// Função para aplicar o tema salvo no localStorage
+function applyTheme() {
+    const theme = localStorage.getItem("theme");
+
+    if (theme === "dark") {
+        document.body.classList.add("dark-mode");
+        button.textContent = "Modo Claro";
+    } else {
+        document.body.classList.remove("dark-mode");
+        button.textContent = "Modo Escuro";
+    }
+}
+
+// Alternar tema e salvar no localStorage
+button.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("theme", "dark");
+        button.textContent = "Modo Claro";
+    } else {
+        localStorage.setItem("theme", "light");
+        button.textContent = "Modo Escuro";
+    }
+});
+
+// Aplicar o tema ao carregar a página
+applyTheme();
+

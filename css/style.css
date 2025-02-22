@@ -1,10 +1,30 @@
-.personagens {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-}
 
-/* Classe para aplicar o efeito preto e branco */
-.pb {
-  filter: grayscale(100%);
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #333;
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+.nav-buttons {
+  display: flex;
+  gap: 15px;
+}
+.nav-buttons button {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+.nav-buttons button:hover {
+  background-color: #777;
 }
