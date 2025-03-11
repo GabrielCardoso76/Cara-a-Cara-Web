@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo de 21</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Jogo de 21 (Blackjack)</h1>
+
+      <label for="numPlayers">Selecione o número de jogadores:</label>
+      <select id="numPlayers">
+        <option value="1">1 Jogador</option>
+        <option value="2">2 Jogadores</option>
+        <option value="3">3 Jogadores</option>
+        <option value="4">4 Jogadores</option>
+      </select>
+
+      <button onclick="startGame()">Começar o Jogo</button>
+
+      <div id="gameArea" class="game-area">
+        <!-- A área do jogo será gerada aqui via JavaScript -->
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
