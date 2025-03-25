@@ -1,67 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="pt-br">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Cara a Cara Online</title>
     <link rel="stylesheet" href="css/cara1.css" />
-    <script src="js/script.js" defer></script>
-  </head>
-  <body>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+</head>
+<body>
     <header class="header-container">
-      <div class="logo">Minha Logo</div>
-      <div class="nav-buttons">
-          <button onclick="window.location.href='configuracoes.html'">Configurações</button>
-          <button onclick="window.location.href='cara1.html'">Jogar</button>
-          <button onclick="window.location.href='index.html'">Início</button>
-      </div>
-  </header>
-    <div class="personagens">
-      <img src="img/personagem/Brett.jpg" alt="" />
-      <img src="img/personagem/Buddy.jpg" alt="" />
-      <img src="img/personagem/Butch.jpg" alt="" />
-      <img src="img/personagem/Captain Koons.jpg" alt="" />
-      <img src="img/personagem/Esmeralda.jpg" alt="" />
-      <img src="img/personagem/Fabienne.jpg" alt="" />
+        <div class="logo">Minha Logo</div>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='configuracoes.html'">Configurações</button>
+            <button onclick="window.location.href='cara1.html'">Jogar</button>
+            <button onclick="window.location.href='index.html'">Início</button>
+        </div>
+    </header>
+
+    <div class="login-container">
+        <input type="text" id="login-name" placeholder="Seu nome" autocomplete="off">
+        <input type="password" id="login-password" placeholder="Sua senha" autocomplete="off">
+        <button id="login-button">Entrar</button>
     </div>
-    <div class="personagens">
-      <img src="img/personagem/Jimmie.jpg" alt="" />
-      <img src="img/personagem/Jody.jpg" alt="" />
-      <img src="img/personagem/Jules.jpg" alt="" />
-      <img src="img/personagem/Lance.jpg" alt="" />
-      <img src="img/personagem/Marcellus.jpg" alt="" />
-      <img src="img/personagem/Marvin.jpg" alt="" />
+    <div id="logged-user">
+        Logado como: <span id="username"></span>
+        <button id="logout-button">Sair</button>
     </div>
-    <div class="personagens">
-      <img src="img/personagem/Maynard.jpg" alt="" />
-      <img src="img/personagem/Mia.jpg" alt="" />
-      <img src="img/personagem/Paul.jpg" alt="" />
-      <img src="img/personagem/Raquel.jpg" alt="" />
-      <img src="img/personagem/Ringo.jpg" alt="" />
-      <img src="img/personagem/Roger.jpg" alt="" />
+
+    <div class="online-actions">
+        <button id="create-room">Criar Sala</button>
+        <button id="join-room">Entrar em Sala</button>
+        <p id="room-id"></p>
     </div>
-    <div class="personagens">
-      <img src="img/personagem/The Gimp.jpg" alt="" />
-      <img src="img/personagem/Trudi.jpg" alt="" />
-      <img src="img/personagem/Vincent.jpg" alt="" />
-      <img src="img/personagem/Winston.jpg" alt="" />
-      <img src="img/personagem/Yolanda.jpg" alt="" />
-      <img src="img/personagem/Zed.jpg" alt="" />
+
+    <div class="characters-container">
+        <div class="personagens">
+            <img src="img/personagem/Brett.jpg" alt="Brett" />
+            <img src="img/personagem/Buddy.jpg" alt="Buddy" />
+            <img src="img/personagem/Butch.jpg" alt="Butch" />
+            <img src="img/personagem/Captain Koons.jpg" alt="Captain Koons" />
+            <img src="img/personagem/Esmeralda.jpg" alt="Esmeralda" />
+            <img src="img/personagem/Fabienne.jpg" alt="Fabienne" />
+        </div>
+        <div class="personagens">
+            <img src="img/personagem/Jimmie.jpg" alt="Jimmie" />
+            <img src="img/personagem/Jody.jpg" alt="Jody" />
+            <img src="img/personagem/Jules.jpg" alt="Jules" />
+            <img src="img/personagem/Lance.jpg" alt="Lance" />
+            <img src="img/personagem/Marcellus.jpg" alt="Marcellus" />
+            <img src="img/personagem/Marvin.jpg" alt="Marvin" />
+        </div>
+        <div class="personagens">
+            <img src="img/personagem/Maynard.jpg" alt="Maynard" />
+            <img src="img/personagem/Mia.jpg" alt="Mia" />
+            <img src="img/personagem/Paul.jpg" alt="Paul" />
+            <img src="img/personagem/Raquel.jpg" alt="Raquel" />
+            <img src="img/personagem/Ringo.jpg" alt="Ringo" />
+            <img src="img/personagem/Roger.jpg" alt="Roger" />
+        </div>
+        <div class="personagens">
+            <img src="img/personagem/The Gimp.jpg" alt="The Gimp" />
+            <img src="img/personagem/Trudi.jpg" alt="Trudi" />
+            <img src="img/personagem/Vincent.jpg" alt="Vincent" />
+            <img src="img/personagem/Winston.jpg" alt="Winston" />
+            <img src="img/personagem/Yolanda.jpg" alt="Yolanda" />
+            <img src="img/personagem/Zed.jpg" alt="Zed" />
+        </div>
     </div>
+
     <div class="sortedado">
-    <h1>Sorteio de Imagem</h1>
-    <button class="botaosorte" onclick="sortearImagem()">Sortear Imagem</button>
-
-    <div id="image-container">
-      <img id="imagem" src="" alt="Imagem sorteada" />
+        <div class="sorteio-section">
+            <h1>Sorteio de Personagem</h1>
+            <button class="botaosorte" id="sortear-imagem">Sortear Personagem</button>
+            <div class="sorteio-result">
+                <img id="imagem" src="" alt="Personagem sorteado" style="display: none;">
+                <div id="character-message" class="character-message" style="display: none;"></div>
+            </div>
+        </div>
+    
+        <div class="sorteio-section">
+            <h1>Sorteio Quem Começa</h1>
+            <button class="botaosorte" id="sortear-dado">Sortear Dado</button>
+            <div class="sorteio-result">
+                <img id="imagem2" src="" alt="Dado sorteado" style="display: none;">
+            </div>
+        </div>
+    
+        <div class="game-controls">
+            <h2>Adivinhar Personagem</h2>
+            <select id="guess-character"></select>
+            <button id="guess-button">Tentar Adivinhar</button>
+            
+            <h2>Declarar Vencedor</h2>
+            <select id="winner-select"></select>
+            <button id="declare-winner">Declarar Vencedor</button>
+        </div>
     </div>
 
-    <h1>Sorteio Quem começa</h1>
-    <button class="botaosorte" onclick="sortearImagemDado()">Sortear Quem Começa</button>
-
-    <div id="image-container">
-      <img id="imagem2" src="" alt="Imagem sorteada" style="display: none" />
-    </div>
-  </div>
-  </body>
+    <script>
+        if (!firebase.apps.length) {
+            firebase.initializeApp({
+                apiKey: "AIzaSyA7hNK-EeYu3TI3Rh5KHdNxIberYwc9wDk",
+                authDomain: "cara-a-cara-online.firebaseapp.com",
+                databaseURL: "https://cara-a-cara-online-default-rtdb.firebaseio.com",
+                projectId: "cara-a-cara-online",
+                storageBucket: "cara-a-cara-online.firebasestorage.app",
+                messagingSenderId: "200760352191",
+                appId: "1:200760352191:web:856f2265b60d551eab550a"
+            });
+        }
+    </script>
+    <script src="js/script.js"></script>
+</body>
 </html>
