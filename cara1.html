@@ -76,6 +76,7 @@
                 <img id="imagem" src="" alt="Personagem sorteado" style="display: none;">
                 <div id="character-message" class="character-message" style="display: none;"></div>
             </div>
+            <div id="wrong-attempts" class="attempts-counter">Tentativas erradas: 0/5</div>
         </div>
     
         <div class="sorteio-section">
@@ -84,16 +85,18 @@
             <div class="sorteio-result">
                 <img id="imagem2" src="" alt="Dado sorteado" style="display: none;">
             </div>
+            <div class="chat-container">
+                <h2>Chat</h2>
+                <div id="chat-messages" style="height: 150px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
+                <input type="text" id="chat-input" placeholder="Digite sua mensagem" style="width: 70%; padding: 8px;">
+                <button id="send-message" style="width: 25%; padding: 8px;">Enviar</button>
+            </div>
         </div>
     
         <div class="game-controls">
             <h2>Adivinhar Personagem</h2>
             <select id="guess-character"></select>
             <button id="guess-button">Tentar Adivinhar</button>
-            
-            <h2>Declarar Vencedor</h2>
-            <select id="winner-select"></select>
-            <button id="declare-winner">Declarar Vencedor</button>
         </div>
     </div>
 

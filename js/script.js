@@ -34,6 +34,10 @@ const imagensDado = [
   'img/dado_faces/face_6.jpg'
 ];
 
+let chatMessages = {};
+let isInitialChatLoad = true;
+let roomListener = null;
+let messagesListener = null;
 let roomId = null;
 let currentUser = null;
 let isRoomOwner = false;
@@ -42,6 +46,8 @@ let myCharacter = null;
 let myDice = null;
 let opponentCharacter = null;
 let gameStarted = false;
+let wrongAttempts = 0;
+const MAX_WRONG_ATTEMPTS = 5;
 const database = firebase.database();
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -64,8 +70,11 @@ function setupEventListeners() {
   document.getElementById('join-room').addEventListener('click', joinRoom);
   document.getElementById('sortear-imagem').addEventListener('click', sortearPersonagem);
   document.getElementById('sortear-dado').addEventListener('click', sortearDado);
-  document.getElementById('declare-winner').addEventListener('click', declareWinner);
   document.getElementById('guess-button').addEventListener('click', checkGuess);
+  document.getElementById('send-message').addEventListener('click', sendMessage);
+  document.getElementById('chat-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') sendMessage();
+  });
 
   document.querySelectorAll('.personagens img').forEach(img => {
     img.addEventListener('click', function() {
@@ -88,6 +97,7 @@ function handleLogin() {
 }
 
 function handleLogout() {
+  cleanupListeners();
   currentUser = null;
   localStorage.removeItem('tempUser');
   document.querySelector('.login-container').style.display = 'block';
@@ -139,6 +149,10 @@ function joinRoom() {
     return;
   }
 
+  cleanupListeners();
+  isInitialChatLoad = true;
+  chatMessages = {};
+  
   const inputRoomId = prompt('Digite o ID da sala:');
   if (!inputRoomId) return;
 
@@ -158,16 +172,23 @@ function joinRoom() {
     });
 }
 
-function updatePlayersList() {
-  const select = document.getElementById('winner-select');
-  select.innerHTML = '<option value="">Selecione o vencedor</option>';
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const message = input.value.trim();
   
-  Object.keys(players).forEach(player => {
-    const option = document.createElement('option');
-    option.value = player;
-    option.textContent = player;
-    select.appendChild(option);
-  });
+  if (message && currentUser && roomId) {
+    const timestamp = new Date().getTime();
+    
+    database.ref(`rooms/${roomId}/messages`).push().set({
+      sender: currentUser,
+      text: message,
+      timestamp: timestamp
+    }).then(() => {
+      input.value = '';
+    }).catch(error => {
+      console.error('Erro ao enviar mensagem:', error);
+    });
+  }
 }
 
 function updateOpponentSelect() {
@@ -200,13 +221,41 @@ function listenToRoom() {
   let characterAlertShown = false;
   let winnerAlertShown = false;
 
-  database.ref(`rooms/${roomId}`).on('value', snapshot => {
+  cleanupListeners();
+  document.getElementById('chat-messages').innerHTML = '';
+
+  messagesListener = database.ref(`rooms/${roomId}/messages`).on('child_added', snapshot => {
+    const messageId = snapshot.key;
+    const msg = snapshot.val();
+    
+    if (!chatMessages[messageId]) {
+      chatMessages[messageId] = true;
+      
+      if (!document.querySelector(`[data-message-id="${messageId}"]`)) {
+        const msgElement = document.createElement('div');
+        msgElement.dataset.messageId = messageId;
+        msgElement.innerHTML = `<strong>${msg.sender}:</strong> ${msg.text}`;
+        document.getElementById('chat-messages').appendChild(msgElement);
+        
+        if (!isInitialChatLoad) {
+          document.getElementById('chat-messages').scrollTop = 
+            document.getElementById('chat-messages').scrollHeight;
+        }
+      }
+    }
+  });
+
+  roomListener = database.ref(`rooms/${roomId}`).on('value', snapshot => {
     const roomData = snapshot.val();
     if (!roomData) return;
 
+    if (isInitialChatLoad && roomData.messages) {
+      loadInitialMessages(roomData.messages);
+      isInitialChatLoad = false;
+    }
+
     if (roomData.players) {
       players = roomData.players;
-      updatePlayersList();
       updateOpponentSelect();
     }
 
@@ -214,20 +263,24 @@ function listenToRoom() {
       document.getElementById('room-id').textContent = `ID da Sala: ${roomData.roomId}`;
     }
 
-    if (roomData.sortedCharacterOwner && isRoomOwner && !characterAlertShown) {
+    if (roomData.sortedCharacterOwner && isRoomOwner) {
       myCharacter = roomData.sortedCharacterOwner;
-      opponentCharacter = roomData.sortedCharacterVisitor;
-      showCharacterImage(myCharacter);
-      characterAlertShown = true;
-      gameStarted = true;
+      opponentCharacter = roomData.sortedCharacterVisitor || null;
+      if (myCharacter && !characterAlertShown) {
+        showCharacterImage(myCharacter);
+        characterAlertShown = true;
+        gameStarted = true;
+      }
     }
 
-    if (roomData.sortedCharacterVisitor && !isRoomOwner && !characterAlertShown) {
+    if (roomData.sortedCharacterVisitor && !isRoomOwner) {
       myCharacter = roomData.sortedCharacterVisitor;
-      opponentCharacter = roomData.sortedCharacterOwner;
-      showCharacterImage(myCharacter);
-      characterAlertShown = true;
-      gameStarted = true;
+      opponentCharacter = roomData.sortedCharacterOwner || null;
+      if (myCharacter && !characterAlertShown) {
+        showCharacterImage(myCharacter);
+        characterAlertShown = true;
+        gameStarted = true;
+      }
     }
 
     if (roomData.diceValues && 
@@ -237,9 +290,21 @@ function listenToRoom() {
       
       const diceValue = isRoomOwner ? roomData.diceValues.owner : roomData.diceValues.visitor;
       const opponentDiceValue = isRoomOwner ? roomData.diceValues.visitor : roomData.diceValues.owner;
-      const opponentName = isRoomOwner ? Object.keys(players).find(p => p !== currentUser) : roomData.owner;
       
       if (!isNaN(diceValue) && !isNaN(opponentDiceValue)) {
+        if (diceValue === opponentDiceValue) {
+          alert('EMPATE! Os dados serão sorteados novamente.');
+          database.ref(`rooms/${roomId}/diceValues`).update({
+            owner: null,
+            visitor: null,
+            ownerReady: false,
+            visitorReady: false
+          });
+          diceAlertShown = false;
+          return;
+        }
+        
+        const opponentName = isRoomOwner ? Object.keys(players).find(p => p !== currentUser) : roomData.owner;
         const quemComeca = diceValue > opponentDiceValue ? currentUser : opponentName;
         
         alert(`RESULTADO DO DADO:\n\nVocê: ${diceValue}\nOponente: ${opponentDiceValue}\n\nQUEM COMEÇA: ${quemComeca}`);
@@ -248,15 +313,52 @@ function listenToRoom() {
       }
     }
 
-    if (roomData.winner && !winnerAlertShown) {
+    if (roomData.gameEnded && !winnerAlertShown) {
       winnerAlertShown = true;
-      if (currentUser === roomData.winner) {
-        alert('🎉 PARABÉNS! VOCÊ VENCEU O JOGO!');
-      } else {
-        alert('😢 VOCÊ PERDEU... MELHOR SORTE NA PRÓXIMA!');
-      }
+      const endMessage = roomData.endMessage || 
+                       (roomData.winner === currentUser ? 'Você venceu!' : 'Você perdeu!');
+      
+      alert(endMessage);
+      setTimeout(() => {
+        window.location.href = 'cara1.html';
+      }, 2000);
+    }
+    
+    updateWrongAttemptsUI();
+  });
+}
+
+function loadInitialMessages(messages) {
+  Object.keys(messages).forEach(messageId => {
+    const msg = messages[messageId];
+    if (!chatMessages[messageId]) {
+      chatMessages[messageId] = true;
+      const msgElement = document.createElement('div');
+      msgElement.dataset.messageId = messageId;
+      msgElement.innerHTML = `<strong>${msg.sender}:</strong> ${msg.text}`;
+      document.getElementById('chat-messages').appendChild(msgElement);
     }
   });
+  document.getElementById('chat-messages').scrollTop = 
+    document.getElementById('chat-messages').scrollHeight;
+}
+
+function cleanupListeners() {
+  if (roomListener) {
+    database.ref(`rooms/${roomId}`).off('value', roomListener);
+    roomListener = null;
+  }
+  if (messagesListener) {
+    database.ref(`rooms/${roomId}/messages`).off('child_added', messagesListener);
+    messagesListener = null;
+  }
+}
+
+function updateWrongAttemptsUI() {
+  const attemptsElement = document.getElementById('wrong-attempts');
+  if (attemptsElement) {
+    attemptsElement.textContent = `Tentativas erradas: ${wrongAttempts}/${MAX_WRONG_ATTEMPTS}`;
+  }
 }
 
 function sortearPersonagem() {
@@ -264,6 +366,9 @@ function sortearPersonagem() {
     alert('Entre ou crie uma sala primeiro!');
     return;
   }
+
+  wrongAttempts = 0;
+  updateWrongAttemptsUI();
 
   const randomIndex = Math.floor(Math.random() * imagensPersonagens.length);
   const sortedCharacter = imagensPersonagens[randomIndex];
@@ -298,51 +403,81 @@ function sortearDado() {
     
     showDiceImage(sortedDice);
 
-    if (isRoomOwner) {
-      database.ref(`rooms/${roomId}/diceValues`).update({ 
-        owner: diceValue,
-        ownerReady: true 
-      });
-    } else {
-      database.ref(`rooms/${roomId}/diceValues`).update({ 
-        visitor: diceValue,
-        visitorReady: true 
-      });
-    }
+    setTimeout(() => {
+      if (isRoomOwner) {
+        database.ref(`rooms/${roomId}/diceValues`).update({ 
+          owner: diceValue,
+          ownerReady: true 
+        });
+      } else {
+        database.ref(`rooms/${roomId}/diceValues`).update({ 
+          visitor: diceValue,
+          visitorReady: true 
+        });
+      }
+    }, 1000);
   });
 }
 
 function checkGuess() {
-  if (!gameStarted) {
-    alert('O jogo ainda não começou!');
-    return;
-  }
+  database.ref(`rooms/${roomId}`).once('value').then(snapshot => {
+    const roomData = snapshot.val();
+    if (!roomData) {
+      alert('Sala não encontrada!');
+      return;
+    }
 
-  const select = document.getElementById('guess-character');
-  const guessedCharacter = select.value;
-  
-  if (!guessedCharacter) {
-    alert('Selecione um personagem!');
-    return;
-  }
+    const bothCharactersSelected = roomData.sortedCharacterOwner && roomData.sortedCharacterVisitor;
+    if (!bothCharactersSelected) {
+      alert('Aguardando ambos os jogadores sortearem seus personagens!');
+      return;
+    }
 
-  const opponentCharacterName = opponentCharacter.split('/').pop().replace('.jpg', '');
-  
-  if (guessedCharacter === opponentCharacterName) {
-    alert('🎉 PARABÉNS! Você acertou o personagem do oponente!');
-    database.ref(`rooms/${roomId}`).update({ winner: currentUser });
-  } else {
-    alert('❌ Errou! Tente novamente.');
-  }
-}
+    myCharacter = isRoomOwner ? roomData.sortedCharacterOwner : roomData.sortedCharacterVisitor;
+    opponentCharacter = isRoomOwner ? roomData.sortedCharacterVisitor : roomData.sortedCharacterOwner;
 
-function declareWinner() {
-  const winner = document.getElementById('winner-select').value;
-  if (winner) {
-    database.ref(`rooms/${roomId}`).update({ 
-      winner: winner 
-    });
-  } else {
-    alert('Selecione um jogador!');
-  }
+    const select = document.getElementById('guess-character');
+    const guessedCharacter = select.value;
+    
+    if (!guessedCharacter) {
+      alert('Selecione um personagem!');
+      return;
+    }
+
+    try {
+      const opponentCharacterName = opponentCharacter.split('/').pop().replace('.jpg', '');
+      
+      if (guessedCharacter === opponentCharacterName) {
+        alert('🎉 PARABÉNS! Você acertou o personagem do oponente!');
+        const loser = isRoomOwner ? Object.keys(players).find(p => p !== currentUser) : roomData.owner;
+        database.ref(`rooms/${roomId}`).update({ 
+          winner: currentUser,
+          loser: loser,
+          gameEnded: true,
+          endMessage: `${currentUser} acertou seu personagem!`
+        });
+      } else {
+        wrongAttempts++;
+        alert(`❌ Errou! Tentativas erradas: ${wrongAttempts}/${MAX_WRONG_ATTEMPTS}`);
+        
+        if (wrongAttempts >= MAX_WRONG_ATTEMPTS) {
+          alert(`⚠️ VOCÊ PERDEU! Errou ${MAX_WRONG_ATTEMPTS} vezes.`);
+          const winner = isRoomOwner ? Object.keys(players).find(p => p !== currentUser) : roomData.owner;
+          database.ref(`rooms/${roomId}`).update({ 
+            winner: winner,
+            loser: currentUser,
+            gameEnded: true,
+            endMessage: `${currentUser} errou 5 vezes e perdeu!`
+          });
+        }
+      }
+      updateWrongAttemptsUI();
+    } catch (error) {
+      console.error('Erro ao verificar palpite:', error);
+      alert('Ocorreu um erro ao verificar seu palpite. Tente novamente.');
+    }
+  }).catch(error => {
+    console.error('Erro ao verificar sala:', error);
+    alert('Erro ao verificar estado do jogo. Tente novamente.');
+  });
 }
