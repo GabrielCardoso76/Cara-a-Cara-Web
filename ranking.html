@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Ranking - Cara a Cara</title>
+    <link rel="stylesheet" href="css/ranking.css">
+    <!-- Adicione o SDK do Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Ranking de Jogadores</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="cara1.html">Jogar</a>
+        </nav>
+    </header>
+
+    <main>
+        <div id="ranking-container">
+            <p>Carregando ranking...</p>
+        </div>
+    </main>
+
+    <!-- Carregue primeiro a configuração -->
+    <script src="js/firebase-config.js"></script>
+    <!-- Depois o ranking.js -->
+    <script src="js/ranking.js"></script>
+    <!-- E finalmente o script que usa as funções -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const ranking = await window.getRanking();
+                window.displayRanking(ranking);
+            } catch (error) {
+                console.error("Erro ao carregar ranking:", error);
+                document.getElementById('ranking-container').innerHTML = 
+                    "<p>Erro ao carregar o ranking. Por favor, recarregue a página.</p>";
+            }
+        });
+    </script>
+</body>
+</html>

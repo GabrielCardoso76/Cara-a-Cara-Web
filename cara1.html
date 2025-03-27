@@ -1,12 +1,15 @@
+<!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cara a Cara Online</title>
-    <link rel="stylesheet" href="css/cara1.css" />
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cara a Cara Online</title>
+        <link rel="stylesheet" href="css/cara1.css" />
+        <!-- Firebase FIRST -->
+        <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    </head>
 <body>
     <header class="header-container">
         <div class="logo">Minha Logo</div>
@@ -16,15 +19,10 @@
             <button onclick="window.location.href='index.html'">Início</button>
         </div>
     </header>
-
-    <div class="login-container">
-        <input type="text" id="login-name" placeholder="Seu nome" autocomplete="off">
-        <input type="password" id="login-password" placeholder="Sua senha" autocomplete="off">
-        <button id="login-button">Entrar</button>
-    </div>
-    <div id="logged-user">
-        Logado como: <span id="username"></span>
-        <button id="logout-button">Sair</button>
+    <div class="auth-status">
+        <a href="login.html" id="login-link">Fazer Login</a>
+        <span id="user-greeting" style="display: none;"></span>
+        <button id="logout-button" style="display: none;">Sair</button>
     </div>
 
     <div class="online-actions">
@@ -100,19 +98,15 @@
         </div>
     </div>
 
-    <script>
-        if (!firebase.apps.length) {
-            firebase.initializeApp({
-                apiKey: "AIzaSyA7hNK-EeYu3TI3Rh5KHdNxIberYwc9wDk",
-                authDomain: "cara-a-cara-online.firebaseapp.com",
-                databaseURL: "https://cara-a-cara-online-default-rtdb.firebaseio.com",
-                projectId: "cara-a-cara-online",
-                storageBucket: "cara-a-cara-online.firebasestorage.app",
-                messagingSenderId: "200760352191",
-                appId: "1:200760352191:web:856f2265b60d551eab550a"
-            });
-        }
-    </script>
-    <script src="js/script.js"></script>
+    <!-- Scripts (ORDEM CRÍTICA) -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth-system.js"></script> <!-- Unificado com auth.js -->
+    <script src="js/game-state.js"></script>
+    <script src="js/room-management.js"></script>
+    <script src="js/game-logic.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/ui-helpers.js"></script>
+    <script src="js/main.js"></script>
+    <!-- REMOVA script.js duplicado -->
 </body>
 </html>

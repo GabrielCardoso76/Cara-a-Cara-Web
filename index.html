@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cara a Cara Web</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js" defer></script>
+    <!-- Firebase (versão compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <header class="header-container">
@@ -26,6 +29,22 @@
     <footer>
         <p>Cara a Cara Web - Versão digital do famoso jogo físico.</p>
     </footer>
+
+    <!-- Carregue os scripts na ORDEM CORRETA -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth-system.js"></script>
+    <script src="js/room-management.js"></script> <!-- Adicione esta linha -->
+    <script src="js/main.js"></script>
+    
+    <!-- Script para inicialização -->
+    <script>
+        // Garante que tudo está carregado
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Todos os scripts carregados');
+            if (typeof firebase === 'undefined') {
+                alert('Erro: Firebase não carregado. Recarregue a página.');
+            }
+        });
+    </script>
 </body>
 </html>
-
