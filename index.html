@@ -2,49 +2,51 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cara a Cara Web</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- Firebase (versão compat) -->
+    <link rel="stylesheet" href="css/index.css">
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <header class="header-container">
-        <div class="logo">Minha Logo</div>
+        <div class="logo" onclick="window.location.href='index.html'">Cara a Cara</div>
         <div class="nav-buttons">
-            <button onclick="window.location.href='configuracoes.html'">Configurações</button>
-            <button onclick="window.location.href='cara1.html'">Jogar</button>
-            <button onclick="window.location.href='index.html'">Início</button>
+            <button class="nav-button" onclick="window.location.href='configuracoes.html'">Configurações</button>
+            <button class="nav-button" onclick="window.location.href='cara1.html'">Jogar</button>
+            <button class="nav-button" onclick="window.location.href='ranking.html'">Ranking</button>
+            <button class="nav-button" onclick="window.location.href='regras.html'">Regras</button>
+        </div>
+        <div class="auth-status">
+            <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
+            <span class="user-greeting" id="user-greeting" style="display: none;"></span>
+            <button class="logout-button" id="logout-button" style="display: none;">Sair</button>
         </div>
     </header>
 
-    <div class="container">
-        <h1>Cara a Cara Web</h1>
-        <button class="button1" onclick="location.href='carasenai.html'">Jogar</button>
-        <button class="button1" onclick="location.href='configuracoes.html'">Configurações</button>
-    </div>
+    <main class="main-container">
+        <div class="hero-section">
+            <h1 class="game-title">CARA A CARA</h1>
+            <div class="buttons-grid">
+                <button class="main-button" onclick="location.href='cara1.html'">Jogar Clássico</button>
+                <button class="main-button" onclick="location.href='carasenai.html'">Jogar Modo SENAI</button>
+                <button class="main-button" onclick="location.href='configuracoes.html'">Configurações</button>
+                <button class="main-button" onclick="location.href='ranking.html'">Ranking</button>
+                <button class="main-button" onclick="location.href='regras.html'">Regras</button>
+            </div>
+        </div>
+    </main>
 
-    <footer>
-        <p>Cara a Cara Web - Versão digital do famoso jogo físico.</p>
+    <footer class="footer">
+        <p>Cara a Cara Web - Versão digital do famoso jogo físico</p>
     </footer>
 
-    <!-- Carregue os scripts na ORDEM CORRETA -->
+    <!-- Scripts -->
     <script src="js/firebase-config.js"></script>
     <script src="js/auth-system.js"></script>
-    <script src="js/room-management.js"></script> <!-- Adicione esta linha -->
     <script src="js/main.js"></script>
-    
-    <!-- Script para inicialização -->
-    <script>
-        // Garante que tudo está carregado
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Todos os scripts carregados');
-            if (typeof firebase === 'undefined') {
-                alert('Erro: Firebase não carregado. Recarregue a página.');
-            }
-        });
-    </script>
 </body>
 </html>

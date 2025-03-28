@@ -2,42 +2,92 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ranking - Cara a Cara</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/ranking.css">
-    <!-- Adicione o SDK do Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <!-- Firebase (usando a mesma versão que outros arquivos) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Ranking de Jogadores</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="cara1.html">Jogar</a>
-        </nav>
+    <header class="header-container">
+        <div class="logo" onclick="window.location.href='index.html'">Cara a Cara</div>
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="window.location.href='configuracoes.html'">Configurações</button>
+            <button class="nav-button" onclick="window.location.href='cara1.html'">Jogar</button>
+            <button class="nav-button" onclick="window.location.href='ranking.html'">Ranking</button>
+            <button class="nav-button" onclick="window.location.href='regras.html'">Regras</button>
+        </div>
+        <div class="auth-status">
+            <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
+            <span class="user-greeting" id="user-greeting" style="display: none;"></span>
+            <button class="logout-button" id="logout-button" style="display: none;">Sair</button>
+        </div>
     </header>
 
-    <main>
-        <div id="ranking-container">
-            <p>Carregando ranking...</p>
+    <main class="ranking-main">
+        <h1 class="ranking-title">Ranking de Jogadores</h1>
+        <div class="ranking-container">
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Jogador</th>
+                        <th>Vitórias</th>
+                        <th>Derrotas</th>
+                        <th>Partidas</th>
+                    </tr>
+                </thead>
+                <tbody id="ranking-data">
+                    <tr>
+                        <td colspan="5">Carregando ranking...</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 
-    <!-- Carregue primeiro a configuração -->
+    <!-- Scripts na ORDEM CORRETA -->
     <script src="js/firebase-config.js"></script>
-    <!-- Depois o ranking.js -->
+    <script src="js/auth-system.js"></script>
     <script src="js/ranking.js"></script>
-    <!-- E finalmente o script que usa as funções -->
+    
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const ranking = await window.getRanking();
-                window.displayRanking(ranking);
-            } catch (error) {
-                console.error("Erro ao carregar ranking:", error);
-                document.getElementById('ranking-container').innerHTML = 
-                    "<p>Erro ao carregar o ranking. Por favor, recarregue a página.</p>";
+        // Inicialização após carregar tudo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configura o botão de logout
+            const logoutButton = document.getElementById('logout-button');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    logoutUser().then(() => {
+                        window.location.href = 'index.html';
+                    }).catch(error => {
+                        console.error('Erro ao fazer logout:', error);
+                    });
+                });
+            }
+            
+            // Verifica autenticação
+            if (window.updateAuthUI) {
+                updateAuthUI(window.currentUser);
+            }
+            
+            // Carrega ranking
+            if (window.getRanking) {
+                window.getRanking()
+                    .then(ranking => {
+                        if (window.displayRanking) {
+                            window.displayRanking(ranking);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao carregar ranking:", error);
+                        document.getElementById('ranking-data').innerHTML = 
+                            '<tr><td colspan="5">Erro ao carregar o ranking</td></tr>';
+                    });
             }
         });
     </script>

@@ -1,53 +1,54 @@
-// auth-system.js
-// Variáveis globais compartilhadas
 window.currentUser = null;
 window.auth = firebase.auth();
 window.database = firebase.database();
 
-// Função para definir o usuário atual
+window.requireAuth = async function() {
+    if (!window.currentUser) {
+        sessionStorage.setItem('redirectAfterLogin', window.location.pathname);
+        window.location.href = 'login.html';
+        return false;
+    }
+    return true;
+};
+
 window.setCurrentUser = function(user) {
     window.currentUser = user;
     console.log('Usuário atual definido:', user ? user.email : 'null');
     
-    // Dispara evento personalizado quando o usuário muda
-    document.dispatchEvent(new CustomEvent('userStateChanged', {
+    document.dispatchEvent(new CustomEvent('authStateChanged', {
         detail: { user: user }
     }));
 };
 
-// Listener de autenticação
 auth.onAuthStateChanged(function(user) {
     setCurrentUser(user);
-    updateLoginUI(user); // Certifique-se que esta função está definida
+    updateAuthUI(user);
     
-    if (user) {
-        console.log('Usuário logado:', user.uid);
-    } else {
-        console.log('Nenhum usuário logado');
-        if (!window.location.pathname.includes('login.html')) {
-            window.location.href = 'login.html';
+    if (user && sessionStorage.getItem('redirectAfterLogin')) {
+        const redirectUrl = sessionStorage.getItem('redirectAfterLogin');
+        sessionStorage.removeItem('redirectAfterLogin');
+        if (window.location.pathname !== redirectUrl) {
+            window.location.href = redirectUrl;
         }
     }
 });
 
-
-// Função para atualizar a UI
-function updateLoginUI(user) {
-    const loginLink = document.getElementById('login-link');
-    const userGreeting = document.getElementById('user-greeting');
-    const logoutBtn = document.getElementById('logout-button');
+function updateAuthUI(user) {
+    const loginLinks = document.querySelectorAll('.login-link');
+    const userGreetings = document.querySelectorAll('.user-greeting');
+    const logoutButtons = document.querySelectorAll('.logout-button');
     
     if (user) {
-        if (loginLink) loginLink.style.display = 'none';
-        if (userGreeting) {
-            userGreeting.style.display = 'inline';
-            userGreeting.textContent = `Olá, ${user.displayName || user.email}`;
-        }
-        if (logoutBtn) logoutBtn.style.display = 'inline';
+        loginLinks.forEach(el => el.style.display = 'none');
+        userGreetings.forEach(el => {
+            el.style.display = 'inline';
+            el.textContent = `Olá, ${user.displayName || user.email.split('@')[0]}`;
+        });
+        logoutButtons.forEach(el => el.style.display = 'inline');
     } else {
-        if (loginLink) loginLink.style.display = 'inline';
-        if (userGreeting) userGreeting.style.display = 'none';
-        if (logoutBtn) logoutBtn.style.display = 'none';
+        loginLinks.forEach(el => el.style.display = 'inline');
+        userGreetings.forEach(el => el.style.display = 'none');
+        logoutButtons.forEach(el => el.style.display = 'none');
     }
 }
 
@@ -59,7 +60,7 @@ async function registerUser(email, password, username) {
         await database.ref(`users/${userCredential.user.uid}`).set({
             username: username,
             email: email,
-            displayName: username,  // Garante que teremos este campo
+            displayName: username,
             wins: 0,
             losses: 0,
             matches: 0,
@@ -73,7 +74,6 @@ async function registerUser(email, password, username) {
     }
 }
 
-// Função de login
 async function loginUser(email, password) {
     try {
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
@@ -84,7 +84,6 @@ async function loginUser(email, password) {
     }
 }
 
-// Função de logout
 function logoutUser() {
     return auth.signOut();
 }
@@ -92,21 +91,18 @@ function logoutUser() {
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("Usuário logado:", user.uid);
-        setCurrentUser(user);  // Atualiza a variável global corretamente
+        setCurrentUser(user);
     } else {
         console.log("Nenhum usuário logado");
         setCurrentUser(null);
     }
-    updateLoginUI(user);
 });
 
-// game-logic.js ou auth-system.js
 async function updateUserStats(userId, result) {
     try {
         const updates = {};
         const userRef = database.ref(`users/${userId}`);
         
-        // Atualiza estatísticas baseadas no resultado
         updates['/matches'] = firebase.database.ServerValue.increment(1);
         
         if (result === 'win') {

@@ -1,23 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="js/script.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Configurações - Cara a Cara</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/configuracoes.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <header class="header-container">
-        <div class="logo">Minha Logo</div>
+        <div class="logo" onclick="window.location.href='index.html'">Cara a Cara</div>
         <div class="nav-buttons">
-            <button onclick="window.location.href='configuracoes.html'">Configurações</button>
-            <button onclick="window.location.href='cara1.html'">Jogar</button>
-            <button onclick="window.location.href='index.html'">Início</button>
+            <button class="nav-button" onclick="window.location.href='configuracoes.html'">Configurações</button>
+            <button class="nav-button" onclick="window.location.href='cara1.html'">Jogar</button>
+            <button class="nav-button" onclick="window.location.href='ranking.html'">Ranking</button>
+            <button class="nav-button" onclick="window.location.href='regras.html'">Regras</button>
+        </div>
+        <div class="auth-status">
+            <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
+            <span class="user-greeting" id="user-greeting" style="display: none;"></span>
+            <button class="logout-button" id="logout-button" style="display: none;">Sair</button>
         </div>
     </header>
-    <div>
-        <button class="button2" id="toggle-theme">Modo Escuro</button>
+
+    <div class="container">
+        <h1>Configurações</h1>
+        
+        <div class="settings-section">
+            <h2>Tema</h2>
+            <button class="button2" id="toggle-theme">Alternar Modo Escuro</button>
+        </div>
+        
+        <div class="settings-section">
+            <h2>Perfil</h2>
+            <input type="text" id="new-username" placeholder="Novo nome de usuário">
+            <button class="button2" id="change-username">Alterar Nome</button>
+        </div>
     </div>
+
+    <!-- Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth-system.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

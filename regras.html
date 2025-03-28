@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Regras - Cara a Cara</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Firebase (usando a mesma versão que outros arquivos) -->
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+</head>
+<body>
+    <header class="header-container">
+        <div class="logo" onclick="window.location.href='index.html'">Cara a Cara</div>
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="window.location.href='configuracoes.html'">Configurações</button>
+            <button class="nav-button" onclick="window.location.href='cara1.html'">Jogar</button>
+            <button class="nav-button" onclick="window.location.href='ranking.html'">Ranking</button>
+            <button class="nav-button" onclick="window.location.href='regras.html'">Regras</button>
+        </div>
+        <div class="auth-status">
+            <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
+            <span class="user-greeting" id="user-greeting" style="display: none;"></span>
+            <button class="logout-button" id="logout-button" style="display: none;">Sair</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Regras do Jogo</h1>
+        
+        <div class="rules-content">
+            <h2>Como Jogar Cara a Cara</h2>
+            
+            <div class="rule-section">
+                <h3>1. Preparação</h3>
+                <p>Cada jogador escolhe um personagem secreto do tabuleiro. O objetivo é adivinhar o personagem do oponente fazendo perguntas sobre suas características.</p>
+            </div>
+            
+            <div class="rule-section">
+                <h3>2. Rodadas</h3>
+                <p>Os jogadores alternam turnos fazendo uma pergunta por vez que possa ser respondida com "sim" ou "não". Exemplo: "Seu personagem usa óculos?"</p>
+            </div>
+            
+            <div class="rule-section">
+                <h3>3. Eliminação</h3>
+                <p>Com base nas respostas, os jogadores devem eliminar personagens que não correspondam às características reveladas.</p>
+            </div>
+            
+            <div class="rule-section">
+                <h3>4. Adivinhação</h3>
+                <p>Quando um jogador acha que sabe qual é o personagem do oponente, pode tentar adivinhar em seu turno. Se errar, perde o jogo!</p>
+            </div>
+            
+            <div class="rule-section">
+                <h3>5. Vitória</h3>
+                <p>O primeiro jogador que adivinhar corretamente o personagem do oponente vence a partida!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth-system.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

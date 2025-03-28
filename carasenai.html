@@ -1,68 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="pt-br">
+<head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="css/cara1.css" />
-    <script src="js/script.js" defer></script>
-  </head>
-  <body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cara a Cara SENAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/carasenai.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+</head>
+<body>
     <header class="header-container">
-      <div class="logo">Minha Logo</div>
-      <div class="nav-buttons">
-          <button onclick="window.location.href='configuracoes.html'">Configurações</button>
-          <button onclick="window.location.href='cara1.html'">Jogar</button>
-          <button onclick="window.location.href='index.html'">Início</button>
-      </div>
-  </header>
-    <h1>Versão Senai</h1>
-    <div class="personagens">
-      <img src="img/personagemSenai/RAFAEL.jpg" alt="" />
-      <img src="img/personagemSenai/RAFAELA.jpg" alt="" />
-      <img src="img/personagemSenai/DAVI.jpg" alt="" />
-      <img src="img/personagemSenai/DAVIANE.jpg" alt="" />
-      <img src="img/personagemSenai/CARDOSO.jpg" alt="" />
-      <img src="img/personagemSenai/GABRIELLA.jpg   " alt="" />
+        <div class="logo" onclick="window.location.href='index.html'">Cara a Cara</div>
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="window.location.href='configuracoes.html'">Configurações</button>
+            <button class="nav-button" onclick="window.location.href='carasenai.html'">Jogar</button>
+            <button class="nav-button" onclick="window.location.href='ranking.html'">Ranking</button>
+            <button class="nav-button" onclick="window.location.href='regras.html'">Regras</button>
+        </div>
+        <div class="auth-status">
+            <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
+            <span class="user-greeting" id="user-greeting" style="display: none;"></span>
+            <button class="logout-button" id="logout-button" style="display: none;">Sair</button>
+        </div>
+    </header>
+
+    <div class="characters-container">
+        <div class="personagens">
+            <img src="img/personagemSenai/RAFAEL.jpg" alt="Rafael" />
+            <img src="img/personagemSenai/RAFAELA.jpg" alt="Rafaela" />
+            <img src="img/personagemSenai/DAVI.jpg" alt="Davi" />
+            <img src="img/personagemSenai/DAVIANE.jpg" alt="Daviane" />
+            <img src="img/personagemSenai/CARDOSO.jpg" alt="Cardoso" />
+            <img src="img/personagemSenai/GABRIELLA.jpg" alt="Gabriella" />
+        </div>
+        <div class="personagens">
+            <img src="img/personagemSenai/FELIPE.jpg" alt="Felipe" />   
+            <img src="img/personagemSenai/FELIPA.jpg" alt="Felipa" />
+            <img src="img/personagem/Jules.jpg" alt="Jules" />
+            <img src="img/personagem/Lance.jpg" alt="Lance" />
+            <img src="img/personagem/Marcellus.jpg" alt="Marcellus" />
+            <img src="img/personagem/Marvin.jpg" alt="Marvin" />
+        </div>
     </div>
-    <div class="personagens">
-      <img src="img/personagemSenai/FELIPE.jpg" alt="" />   
-      <img src="img/personagemSenai/FELIPA.jpg" alt="" />
-      <img src="img/personagem/Jules.jpg" alt="" />
-      <img src="img/personagem/Lance.jpg" alt="" />
-      <img src="img/personagem/Marcellus.jpg" alt="" />
-      <img src="img/personagem/Marvin.jpg" alt="" />
-    </div>
-    <div class="personagens">
-      <img src="img/personagem/Maynard.jpg" alt="" />
-      <img src="img/personagem/Mia.jpg" alt="" />
-      <img src="img/personagem/Paul.jpg" alt="" />
-      <img src="img/personagem/Raquel.jpg" alt="" />
-      <img src="img/personagem/Ringo.jpg" alt="" />
-      <img src="img/personagem/Roger.jpg" alt="" />
-    </div>
-    <div class="personagens">
-      <img src="img/personagem/The Gimp.jpg" alt="" />
-      <img src="img/personagem/Trudi.jpg" alt="" />
-      <img src="img/personagem/Vincent.jpg" alt="" />
-      <img src="img/personagem/Winston.jpg" alt="" />
-      <img src="img/personagem/Yolanda.jpg" alt="" />
-      <img src="img/personagem/Zed.jpg" alt="" />
-    </div>
+
     <div class="sortedado">
-    <h1>Sorteio de Imagem</h1>
-    <button class="botaosorte" onclick="sortearImagem()">Sortear Imagem</button>
-
-    <div id="image-container">
-      <img id="imagem" src="" alt="Imagem sorteada" />
+        <div class="sorteio-section">
+            <h1>Sorteio de Personagem</h1>
+            <button class="botaosorte" id="sortear-imagem">Sortear Personagem</button>
+            <div class="sorteio-result">
+                <img id="imagem" src="" alt="Personagem sorteado" style="display: none;">
+            </div>
+        </div>
+        
+        <div class="sorteio-section">
+            <h1>Sorteio Quem Começa</h1>
+            <button class="botaosorte" id="sortear-dado">Sortear Dado</button>
+            <div class="sorteio-result">
+                <img id="imagem2" src="" alt="Dado sorteado" style="display: none;">
+            </div>
+        </div>
     </div>
 
-    <h1>Sorteio Quem começa</h1>
-    <button class="botaosorte" onclick="sortearImagemDado()">Sortear Quem Começa</button>
-
-    <div id="image-container">
-      <img id="imagem2" src="" alt="Imagem sorteada" style="display: none" />
-    </div>
-  </div>
-  </body>
+    <!-- Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth-system.js"></script>
+    <script src="js/game-state.js"></script>
+    <script src="js/room-management.js"></script>
+    <script src="js/game-logic.js"></script>
+    <script src="js/main.js"></script>
+</body>
 </html>

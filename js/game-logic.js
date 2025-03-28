@@ -50,6 +50,11 @@ async function checkGuess() {
             return;
         }
 
+        if (roomData.currentPlayer !== currentUser.uid) {
+            alert('Aguarde sua vez para jogar!');
+            return;
+        }
+
         const opponentCharacter = isRoomOwner ? roomData.sortedCharacterVisitor : roomData.sortedCharacterOwner;
         const opponentCharacterName = opponentCharacter.split('/').pop().replace('.jpg', '');
         
@@ -99,6 +104,11 @@ async function checkGuess() {
                 alert('⏰ Você perdeu! Errou 5 vezes.');
             } else {
                 alert(`❌ Errou! Tentativas: ${wrongAttempts}/${MAX_WRONG_ATTEMPTS}`);
+                await roomRef.update({
+                    currentPlayer: isRoomOwner ? 
+                        Object.keys(roomData.players).find(uid => uid !== currentUser.uid) : 
+                        roomData.owner
+                });
             }
         }
     } catch (error) {
@@ -108,7 +118,6 @@ async function checkGuess() {
 }
 
 function listenToRoom() {
-    let diceAlertShown = false;
     let characterAlertShown = false;
     let winnerAlertShown = false;
 
@@ -178,21 +187,20 @@ function listenToRoom() {
         if (roomData.diceValues && 
             roomData.diceValues.ownerReady && 
             roomData.diceValues.visitorReady && 
-            !diceAlertShown) {
+            !roomData.diceResultsShown) {
             
             const diceValue = isRoomOwner ? roomData.diceValues.owner : roomData.diceValues.visitor;
             const opponentDiceValue = isRoomOwner ? roomData.diceValues.visitor : roomData.diceValues.owner;
             
             if (!isNaN(diceValue) && !isNaN(opponentDiceValue)) {
                 if (diceValue === opponentDiceValue) {
-                    alert('EMPATE! Os dados serão sorteados novamente.');
                     database.ref(`rooms/${roomId}/diceValues`).update({
                         owner: null,
                         visitor: null,
                         ownerReady: false,
                         visitorReady: false
                     });
-                    diceAlertShown = false;
+                    alert('EMPATE! Os dados serão sorteados novamente.');
                     return;
                 }
                 
@@ -206,10 +214,14 @@ function listenToRoom() {
                     database.ref(`users/${opponentUid}`).once('value').then(opponentSnap => {
                         const opponentName = opponentSnap.val().username || opponentSnap.val().email.split('@')[0];
                         const quemComeca = diceValue > opponentDiceValue ? currentUserName : opponentName;
+                        const startingPlayer = diceValue > opponentDiceValue ? currentUser.uid : opponentUid;
                         
-                        alert(`RESULTADO DO DADO:\n\nVocê: ${diceValue}\nOponente: ${opponentDiceValue}\n\nQUEM COMEÇA: ${quemComeca}`);
-                        diceAlertShown = true;
-                        database.ref(`rooms/${roomId}/diceAlertShown`).set(true);
+                        database.ref(`rooms/${roomId}`).update({
+                            diceResultsShown: true,
+                            currentPlayer: startingPlayer
+                        }).then(() => {
+                            alert(`RESULTADO DO DADO:\n\nVocê: ${diceValue}\nOponente: ${opponentDiceValue}\n\nQUEM COMEÇA: ${quemComeca}`);
+                        });
                     });
                 });
             }
@@ -265,7 +277,7 @@ function sortearDado() {
         return;
     }
 
-    database.ref(`rooms/${roomId}/diceAlertShown`).once('value').then(snapshot => {
+    database.ref(`rooms/${roomId}/diceResultsShown`).once('value').then(snapshot => {
         if (snapshot.exists() && snapshot.val()) {
             alert('O dado já foi sorteado e o jogo começou!');
             return;
@@ -292,3 +304,9 @@ function sortearDado() {
         }, 1000);
     });
 }
+
+document.querySelectorAll('.personagens img').forEach(img => {
+    img.addEventListener('click', function() {
+        this.classList.toggle('eliminated');
+    });
+});

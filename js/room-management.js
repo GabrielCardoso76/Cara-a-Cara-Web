@@ -1,42 +1,50 @@
 function createRoom() {
-    if (!currentUser || !currentUser.uid) {  // Verifica tanto a existência quanto o uid
-        alert('Faça login primeiro!');
-        window.location.href = 'login.html';  // Redireciona para login
-        return;
-    }
+    document.getElementById('create-room')?.addEventListener('click', async function() {
+        const isAuthenticated = await requireAuth();
+        if (!isAuthenticated) return;
+        
+        if (!currentUser || !currentUser.uid) {
+            alert('Faça login primeiro!');
+            window.location.href = 'login.html';
+            return;
+        }
 
-    isRoomOwner = true;
-    roomId = Math.random().toString(36).substr(2, 8).toUpperCase();
-    
-    const roomData = {
-        owner: currentUser.uid,
-        ownerName: currentUser.displayName || currentUser.email.split('@')[0],
-        players: { [currentUser.uid]: true },  // Use o uid como chave
-        createdAt: firebase.database.ServerValue.TIMESTAMP,
-        roomId: roomId,
-        diceValues: {
-            owner: null,
-            visitor: null,
-            ownerReady: false,
-            visitorReady: false
-        },
-        diceAlertShown: false
-    };
+        isRoomOwner = true;
+        roomId = Math.random().toString(36).substr(2, 8).toUpperCase();
+        
+        const roomData = {
+            owner: currentUser.uid,
+            ownerName: currentUser.displayName || currentUser.email.split('@')[0],
+            players: { [currentUser.uid]: true },
+            createdAt: firebase.database.ServerValue.TIMESTAMP,
+            roomId: roomId,
+            diceValues: {
+                owner: null,
+                visitor: null,
+                ownerReady: false,
+                visitorReady: false
+            },
+            diceAlertShown: false,
+            currentPlayer: null,
+            diceResultsShown: false
+        };
 
-    database.ref(`rooms/${roomId}`).set(roomData)
-        .then(() => {
-            document.getElementById('room-id').textContent = `ID da Sala: ${roomId}`;
-            document.querySelector('.sortedado').style.display = 'block';
-            listenToRoom();
-        })
-        .catch(error => {
-            console.error("Erro ao criar sala:", error);
-            alert('Erro ao criar sala. Tente novamente.');
-        });
+        database.ref(`rooms/${roomId}`).set(roomData)
+            .then(() => {
+                document.getElementById('room-id').textContent = `ID da Sala: ${roomId}`;
+                document.querySelector('.sortedado').style.display = 'block';
+                document.body.classList.add('in-room');
+                listenToRoom();
+            })
+            .catch(error => {
+                console.error("Erro ao criar sala:", error);
+                alert('Erro ao criar sala. Tente novamente.');
+            });
+    });
 }
 
 function joinRoom() {
-    if (!currentUser || !currentUser.uid) {  // Verificação consistente
+    if (!currentUser || !currentUser.uid) {
         alert('Faça login primeiro!');
         window.location.href = 'login.html';
         return;
@@ -54,12 +62,13 @@ function joinRoom() {
         .then(snapshot => {
             if (!snapshot.exists()) throw new Error('Sala não encontrada');
             return database.ref(`rooms/${roomId}/players`).update({ 
-                [currentUser.uid]: true  // Use o uid como chave
+                [currentUser.uid]: true
             });
         })
         .then(() => {
             document.getElementById('room-id').textContent = `ID da Sala: ${roomId}`;
             document.querySelector('.sortedado').style.display = 'block';
+            document.body.classList.add('in-room');
             listenToRoom();
         })
         .catch(error => {
@@ -68,9 +77,8 @@ function joinRoom() {
         });
 }
 
-
 function cleanupListeners() {
-    if (!roomId) return;  // Adicione esta linha para evitar erros
+    if (!roomId) return;
     
     if (roomListener) {
         database.ref(`rooms/${roomId}`).off('value', roomListener);
@@ -80,4 +88,12 @@ function cleanupListeners() {
         database.ref(`rooms/${roomId}/messages`).off('child_added', messagesListener);
         messagesListener = null;
     }
+}
+
+function setupGameInteractions() {
+    document.querySelectorAll('.personagens img').forEach(img => {
+        img.addEventListener('click', function() {
+            this.classList.toggle('eliminated');
+        });
+    });
 }
