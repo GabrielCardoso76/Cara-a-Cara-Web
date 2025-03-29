@@ -38,11 +38,12 @@
                         <th>Vitórias</th>
                         <th>Derrotas</th>
                         <th>Partidas</th>
+                        <th>Win Rate</th> <!-- Nova coluna -->
                     </tr>
                 </thead>
                 <tbody id="ranking-data">
                     <tr>
-                        <td colspan="5">Carregando ranking...</td>
+                        <td colspan="6">Carregando ranking...</td>
                     </tr>
                 </tbody>
             </table>
@@ -76,8 +77,9 @@
             }
             
             // Carrega ranking
+            // Carrega ranking (alterado para 50)
             if (window.getRanking) {
-                window.getRanking()
+                window.getRanking(50)  // Passando 50 como parâmetro
                     .then(ranking => {
                         if (window.displayRanking) {
                             window.displayRanking(ranking);
@@ -86,7 +88,7 @@
                     .catch(error => {
                         console.error("Erro ao carregar ranking:", error);
                         document.getElementById('ranking-data').innerHTML = 
-                            '<tr><td colspan="5">Erro ao carregar o ranking</td></tr>';
+                            '<tr><td colspan="6">Erro ao carregar o ranking</td></tr>';
                     });
             }
         });
