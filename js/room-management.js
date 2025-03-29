@@ -1,3 +1,9 @@
+//let roomListener = null;
+//let messagesListener = null;
+//let notificationsListener = null;
+//let isInitialChatLoad = true;
+//let chatMessages = {};
+
 function createRoom() {
     document.getElementById('create-room')?.addEventListener('click', async function() {
         const isAuthenticated = await requireAuth();
@@ -26,7 +32,8 @@ function createRoom() {
             },
             diceAlertShown: false,
             currentPlayer: null,
-            diceResultsShown: false
+            diceResultsShown: false,
+            notifications: {}
         };
 
         database.ref(`rooms/${roomId}`).set(roomData)
@@ -35,6 +42,7 @@ function createRoom() {
                 document.querySelector('.sortedado').style.display = 'block';
                 document.body.classList.add('in-room');
                 listenToRoom();
+                setupNotificationListener();
             })
             .catch(error => {
                 console.error("Erro ao criar sala:", error);
@@ -70,6 +78,7 @@ function joinRoom() {
             document.querySelector('.sortedado').style.display = 'block';
             document.body.classList.add('in-room');
             listenToRoom();
+            setupNotificationListener();
         })
         .catch(error => {
             console.error("Erro ao entrar na sala:", error);
@@ -88,6 +97,127 @@ function cleanupListeners() {
         database.ref(`rooms/${roomId}/messages`).off('child_added', messagesListener);
         messagesListener = null;
     }
+    if (notificationsListener) {
+        database.ref(`rooms/${roomId}/notifications`).off('child_added', notificationsListener);
+        notificationsListener = null;
+    }
+}
+
+function setupNotificationListener() {
+    if (notificationsListener) {
+        database.ref(`rooms/${roomId}/notifications`).off('child_added', notificationsListener);
+    }
+
+    notificationsListener = database.ref(`rooms/${roomId}/notifications`).on('child_added', (snapshot) => {
+        const notification = snapshot.val();
+        
+        if (notification.from !== currentUser.uid) {
+            switch (notification.type) {
+                case 'wrong_guess':
+                    showCustomAlert(`🚨 ${notification.fromName} tentou adivinhar "${notification.guessedCharacter}" e errou! (${notification.attempts})`);
+                    break;
+            }
+            
+            snapshot.ref.remove();
+        }
+    });
+}
+
+function showCustomAlert(message) {
+    const existingAlert = document.querySelector('.custom-alert');
+    if (existingAlert) existingAlert.remove();
+
+    const alert = document.createElement('div');
+    alert.className = 'custom-alert';
+    alert.innerHTML = message;
+    document.body.appendChild(alert);
+
+    setTimeout(() => {
+        alert.remove();
+    }, 5500);
+}
+
+function listenToRoom() {
+    cleanupListeners();
+    document.getElementById('chat-messages').innerHTML = '';
+
+    messagesListener = database.ref(`rooms/${roomId}/messages`).on('child_added', snapshot => {
+        const messageId = snapshot.key;
+        const msg = snapshot.val();
+        
+        if (!chatMessages[messageId]) {
+            chatMessages[messageId] = true;
+            
+            if (!document.querySelector(`[data-message-id="${messageId}"]`)) {
+                const msgElement = document.createElement('div');
+                msgElement.dataset.messageId = messageId;
+                const senderName = msg.senderName || msg.sender || 'Anônimo';
+                msgElement.innerHTML = `<strong>${senderName}:</strong> ${msg.text}`;
+                document.getElementById('chat-messages').appendChild(msgElement);
+                
+                if (!isInitialChatLoad) {
+                    document.getElementById('chat-messages').scrollTop = 
+                        document.getElementById('chat-messages').scrollHeight;
+                }
+            }
+        }
+    });
+
+    roomListener = database.ref(`rooms/${roomId}`).on('value', snapshot => {
+        const roomData = snapshot.val();
+        if (!roomData) return;
+
+        if (isInitialChatLoad && roomData.messages) {
+            loadInitialMessages(roomData.messages);
+            isInitialChatLoad = false;
+        }
+
+        if (roomData.players) {
+            players = roomData.players;
+            updateOpponentSelect();
+        }
+
+        if (roomData.roomId) {
+            document.getElementById('room-id').textContent = `ID da Sala: ${roomData.roomId}`;
+        }
+
+        if (roomData.sortedCharacterOwner && isRoomOwner) {
+            myCharacter = roomData.sortedCharacterOwner;
+            opponentCharacter = roomData.sortedCharacterVisitor || null;
+            if (myCharacter && !characterAlertShown) {
+                showCharacterImage(myCharacter);
+                characterAlertShown = true;
+                gameStarted = true;
+            }
+        }
+
+        if (roomData.sortedCharacterVisitor && !isRoomOwner) {
+            myCharacter = roomData.sortedCharacterVisitor;
+            opponentCharacter = roomData.sortedCharacterOwner || null;
+            if (myCharacter && !characterAlertShown) {
+                showCharacterImage(myCharacter);
+                characterAlertShown = true;
+                gameStarted = true;
+            }
+        }
+
+        if (roomData.diceValues && 
+            roomData.diceValues.ownerReady && 
+            roomData.diceValues.visitorReady && 
+            !roomData.diceResultsShown) {
+            
+            const diceValue = isRoomOwner ? roomData.diceValues.owner : roomData.diceValues.visitor;
+            const opponentDiceValue = isRoomOwner ? roomData.diceValues.visitor : roomData.diceValues.owner;
+            
+            if (!isNaN(diceValue)) {
+                database.ref(`rooms/${roomId}`).update({
+                    diceResultsShown: true,
+                    currentPlayer: diceValue > opponentDiceValue ? currentUser.uid : 
+                        Object.keys(roomData.players).find(p => p !== currentUser.uid)
+                });
+            }
+        }
+    });
 }
 
 function setupGameInteractions() {

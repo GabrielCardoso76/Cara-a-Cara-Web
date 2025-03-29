@@ -30,6 +30,7 @@ async function updateUserStats(userId, result) {
 
 async function checkGuess() {
     try {
+        // Verifica sessão
         if (!currentUser?.uid) {
             alert('Sessão expirada. Faça login novamente!');
             window.location.href = 'login.html';
@@ -45,19 +46,17 @@ async function checkGuess() {
             return;
         }
 
+        // Verifica se ambos sortearam personagens
         if (!roomData.sortedCharacterOwner || !roomData.sortedCharacterVisitor) {
             alert('Aguardando ambos os jogadores sortearem seus personagens!');
             return;
         }
 
-        if (roomData.currentPlayer !== currentUser.uid) {
-            alert('Aguarde sua vez para jogar!');
-            return;
-        }
-
+        // Obtém personagem do oponente
         const opponentCharacter = isRoomOwner ? roomData.sortedCharacterVisitor : roomData.sortedCharacterOwner;
         const opponentCharacterName = opponentCharacter.split('/').pop().replace('.jpg', '');
         
+        // Obtém palpite
         const guessedCharacter = document.getElementById('guess-character').value;
         if (!guessedCharacter) {
             alert('Selecione um personagem!');
@@ -65,6 +64,7 @@ async function checkGuess() {
         }
 
         if (guessedCharacter === opponentCharacterName) {
+            // Lógica quando acerta
             const loserUid = isRoomOwner ? 
                 Object.keys(roomData.players).find(uid => uid !== currentUser.uid) : 
                 roomData.owner;
@@ -82,33 +82,41 @@ async function checkGuess() {
             });
             alert('🎉 Parabéns! Você acertou!');
         } else {
+            // Lógica quando erra
             wrongAttempts++;
             updateWrongAttemptsUI();
             
+            // Identifica o oponente
+            const opponentUid = isRoomOwner ? 
+                Object.keys(roomData.players).find(uid => uid !== currentUser.uid) : 
+                roomData.owner;
+
+            // Envia notificação DIRETA para o oponente
+            await database.ref(`rooms/${roomId}/notifications`).push({
+                type: 'wrong_guess',
+                from: currentUser.uid,
+                fromName: currentUser.displayName || 'Jogador',
+                guessedCharacter: guessedCharacter,
+                attempts: `${wrongAttempts}/${MAX_WRONG_ATTEMPTS}`,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
+
             if (wrongAttempts >= MAX_WRONG_ATTEMPTS) {
-                const winnerUid = isRoomOwner ? 
-                    Object.keys(roomData.players).find(uid => uid !== currentUser.uid) : 
-                    roomData.owner;
-                
+                // Jogador perdeu
                 await Promise.all([
                     updateUserStats(currentUser.uid, 'loss'),
-                    winnerUid && updateUserStats(winnerUid, 'win')
+                    opponentUid && updateUserStats(opponentUid, 'win')
                 ]);
 
                 await roomRef.update({ 
-                    winner: winnerUid,
+                    winner: opponentUid,
                     loser: currentUser.uid,
                     gameEnded: true,
                     endMessage: `${currentUser.displayName || 'Jogador'} errou 5 vezes!`
                 });
-                alert('⏰ Você perdeu! Errou 5 vezes.');
+                alert('⏰ Você perdeu! Errou muitas vezes.');
             } else {
-                alert(`❌ Errou! Tentativas: ${wrongAttempts}/${MAX_WRONG_ATTEMPTS}`);
-                await roomRef.update({
-                    currentPlayer: isRoomOwner ? 
-                        Object.keys(roomData.players).find(uid => uid !== currentUser.uid) : 
-                        roomData.owner
-                });
+                alert(`❌ Errou! Seu oponente foi notificado. Tentativas: ${wrongAttempts}/${MAX_WRONG_ATTEMPTS}`);
             }
         }
     } catch (error) {
@@ -310,3 +318,11 @@ document.querySelectorAll('.personagens img').forEach(img => {
         this.classList.toggle('eliminated');
     });
 });
+// Função auxiliar para atualizar a UI de tentativas
+function updateWrongAttemptsUI() {
+    const attemptsElement = document.getElementById('wrong-attempts');
+    if (attemptsElement) {
+        attemptsElement.textContent = `Tentativas erradas: ${wrongAttempts}/${MAX_WRONG_ATTEMPTS}`;
+        attemptsElement.style.color = wrongAttempts >= 3 ? '#ff4655' : '#ece8e1';
+    }
+}

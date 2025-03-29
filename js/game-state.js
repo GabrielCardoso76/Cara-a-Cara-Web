@@ -50,6 +50,7 @@ let opponentCharacter = null;
 let gameStarted = false;
 let wrongAttempts = 0;
 const MAX_WRONG_ATTEMPTS = 5;
+let notificationsListener = null;
 
 function setCurrentUser(user) {
     currentUser = user;
