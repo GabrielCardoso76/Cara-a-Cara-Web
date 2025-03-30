@@ -95,7 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     auth.onAuthStateChanged(user => {
         console.log('Estado de autenticação alterado:', user);
-        
+        //new
+        if(user){
+            if (window.SettingsUI) {
+                SettingsUI.init();
+            }
+        }
         if (!user) {
             if (!window.location.pathname.includes('login.html')) {
                 console.log('Usuário não autenticado, redirecionando...');

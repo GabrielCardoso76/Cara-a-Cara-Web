@@ -24,27 +24,192 @@
             <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
             <span class="user-greeting" id="user-greeting" style="display: none;"></span>
             <button class="logout-button" id="logout-button" style="display: none;">Sair</button>
+        </div> 
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </button>
+        
+        <div class="global-chat-container" id="global-chat-container">
+            <div class="chat-header">
+                <h3>Chat Global</h3>
+            </div>
+            <div class="chat-messages" id="global-chat-messages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="global-chat-input" placeholder="Digite sua mensagem..." maxlength="200">
+                <button id="global-send-message">Enviar</button>
+            </div>
         </div>
     </header>
 
-    <div class="container">
-        <h1>Configurações</h1>
+    <main class="settings-container">
+        <h1 class="settings-title">CONFIGURAÇÕES</h1>
         
-        <div class="settings-section">
-            <h2>Tema</h2>
-            <button class="button2" id="toggle-theme">Alternar Modo Escuro</button>
+        <div class="settings-grid">
+            <!-- Seção de Perfil -->
+            <div class="settings-section profile-section">
+                <h2 class="section-title">PERFIL</h2>
+                <div class="section-content">
+                    <div class="input-group">
+                        <label for="username">Nome/Nickname</label>
+                        <input type="text" id="username" placeholder="Seu nome no jogo">
+                        <button class="valorant-button" id="change-username">Alterar Nome</button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="victory-phrase">Frase de Vitória</label>
+                        <input type="text" id="victory-phrase" placeholder="Ex: Foi fácil!">
+                        <button class="valorant-button" id="random-victory">Aleatório</button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="defeat-phrase">Frase de Derrota</label>
+                        <input type="text" id="defeat-phrase" placeholder="Ex: Foi sorte!">
+                        <button class="valorant-button" id="random-defeat">Aleatório</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seção de Conta -->
+            <div class="settings-section account-section">
+                <h2 class="section-title">CONTA</h2>
+                <div class="section-content">
+                    <div class="input-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" placeholder="seu@email.com">
+                        <button class="valorant-button" id="change-email">Alterar E-mail</button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" placeholder="Nova senha">
+                        <button class="valorant-button" id="change-password">Alterar Senha</button>
+                    </div>
+                    
+                    <div class="danger-zone">
+                        <button class="valorant-button danger" id="logout">Sair da Conta</button>
+                        <button class="valorant-button danger" id="delete-account">Excluir Conta</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seção de Aparência -->
+            <div class="settings-section appearance-section">
+                <h2 class="section-title">APARÊNCIA</h2>
+                <div class="section-content">
+                    <div class="input-group">
+                        <label>Tema</label>
+                        <div class="theme-options">
+                            <button class="theme-option valorant-theme active" data-theme="valorant">
+                                <div class="theme-preview"></div>
+                                <span>Valorant</span>
+                            </button>
+                            <button class="theme-option dark-theme" data-theme="dark">
+                                <div class="theme-preview"></div>
+                                <span>Escuro</span>
+                            </button>
+                            <button class="theme-option light-theme" data-theme="light">
+                                <div class="theme-preview"></div>
+                                <span>Claro</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="accent-color">Cor de Destaque</label>
+                        <div class="color-picker">
+                            <input type="color" id="accent-color" value="#ff4655">
+                            <button class="valorant-button" id="apply-color">Aplicar Cor</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seção de Áudio -->
+            <div class="settings-section audio-section">
+                <h2 class="section-title">ÁUDIO</h2>
+                <div class="section-content">
+                    <div class="input-group">
+                        <label for="master-volume">Volume Geral</label>
+                        <input type="range" id="master-volume" min="0" max="100" value="100">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="game-sounds">Sons do Jogo</label>
+                        <input type="range" id="game-sounds" min="0" max="100" value="80">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="menu-sounds">Sons do Menu</label>
+                        <input type="range" id="menu-sounds" min="0" max="100" value="70">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="music-volume">Volume da Música</label>
+                        <input type="range" id="music-volume" min="0" max="100" value="60">
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <div class="settings-section">
-            <h2>Perfil</h2>
-            <input type="text" id="new-username" placeholder="Novo nome de usuário">
-            <button class="button2" id="change-username">Alterar Nome</button>
+        <div class="settings-actions">
+            <button class="valorant-button" id="save-settings">SALVAR CONFIGURAÇÕES</button>
+            <button class="valorant-button secondary" id="reset-settings">REDEFINIR PADRÕES</button>
         </div>
-    </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-title">Cara a Cara Web</h3>
+                <p>Versão digital do famoso jogo físico</p>
+                <p>Desenvolvido por alunos do SENAI</p>
+                <div class="social-links">
+                    <a href="https://github.com/GabrielCardoso76/Cara-a-Cara-Web" target="_blank" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+    
+            <div class="footer-section">
+                <h3 class="footer-title">Desenvolvedores</h3>
+                <ul class="dev-list">
+                    <li>Gabriel Cardoso Torres</li>
+                    <li>DeepSeek Chat</li>
+                </ul>
+                <div class="contact-info">
+                    <p><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> torresgbriel8@gmail.com</p>
+                    <p><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> (16) 99346-3038</p>
+                </div>
+            </div>
+    
+            <div class="footer-section">
+                <h3 class="footer-title">Tecnologias</h3>
+                <div class="tech-badges">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Firebase</span>
+                    <span class="tech-badge">GitHub Pages</span>
+                </div>
+                <p class="copyright">© 2024 Cara a Cara Web. Todos os direitos reservados.</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Projeto desenvolvido como parte do Curso Técnico em Desenvolvimento de Sistemas - SENAI</p>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="js/firebase-config.js"></script>
     <script src="js/auth-system.js"></script>
     <script src="js/main.js"></script>
+    <!-- Adicione no final do configuracoes.html -->
+<script type="module" src="js/settings-ui.js"></script>
 </body>
 </html>

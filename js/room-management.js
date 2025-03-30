@@ -1,9 +1,3 @@
-//let roomListener = null;
-//let messagesListener = null;
-//let notificationsListener = null;
-//let isInitialChatLoad = true;
-//let chatMessages = {};
-
 function createRoom() {
     document.getElementById('create-room')?.addEventListener('click', async function() {
         const isAuthenticated = await requireAuth();

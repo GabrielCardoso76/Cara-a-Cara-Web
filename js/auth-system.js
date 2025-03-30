@@ -60,6 +60,11 @@ async function registerUser(email, password, username) {
         await database.ref(`users/${userCredential.user.uid}`).set({
             username: username,
             email: email,
+            // Adicionar configurações padrão
+            settings: {
+                ...DEFAULT_SETTINGS,
+                createdAt: new Date().toISOString()
+            },
             displayName: username,  // Garante que temos displayName
             wins: 0,
             losses: 0,
