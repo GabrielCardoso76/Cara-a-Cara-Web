@@ -24,17 +24,19 @@ body {
   flex-direction: column;
 }
 
-/* Header estilo Valorant */
+/* ========= HEADER COM BOTÕES MAIS À ESQUERDA ========= */
 .header-container {
-  background-color: var(--valorant-dark);
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--valorant-dark);
   border-bottom: 2px solid var(--valorant-red);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
+/* Logo à esquerda */
 .logo {
   font-family: 'Montserrat', sans-serif;
   font-size: 2rem;
@@ -44,6 +46,8 @@ body {
   letter-spacing: 2px;
   cursor: pointer;
   transition: all 0.3s;
+  margin-right: 40px; /* Aumentado para empurrar os botões */
+  flex-shrink: 0;
 }
 
 .logo:hover {
@@ -51,9 +55,18 @@ body {
   text-shadow: 0 0 10px var(--valorant-red);
 }
 
+/* Container dos botões - AJUSTE PRINCIPAL */
+.nav-buttons-container {
+  position: absolute;
+  left: 44%; /* Reduzido significativamente para mover para esquerda */
+  transform: translateX(-50%);
+}
+
 .nav-buttons {
   display: flex;
   gap: 1.5rem;
+  margin: 0 auto;
+  padding-right: 30px;
 }
 
 .nav-button {
@@ -67,6 +80,7 @@ body {
   cursor: pointer;
   position: relative;
   transition: all 0.3s;
+  white-space: nowrap;
 }
 
 .nav-button::after {
@@ -88,6 +102,16 @@ body {
   width: 100%;
 }
 
+/* Lado direito (auth + hambúrguer) */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: auto;
+  min-width: 200px;
+}
+
+/* Status de auth */
 .auth-status {
   display: flex;
   align-items: center;
@@ -130,8 +154,162 @@ body {
   color: white;
 }
 
-/* Footer */
-footer {
+/* Menu hambúrguer */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-left: 15px;
+}
+
+.hamburger-line {
+  width: 100%;
+  height: 3px;
+  background-color: var(--valorant-light);
+  transition: all 0.3s;
+}
+
+.menu-toggle:hover .hamburger-line {
+  background-color: var(--valorant-red);
+}
+
+/* ========= CHAT GLOBAL ========= */
+.global-chat-container {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 380px;
+  height: 100vh;
+  background-color: var(--valorant-dark);
+  border-left: 2px solid var(--valorant-red);
+  z-index: 1000;
+  transition: right 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.global-chat-container.open {
+  right: 0;
+}
+
+.chat-header {
+  padding: 1.2rem;
+  background: linear-gradient(to right, var(--valorant-blue), var(--valorant-dark));
+  color: white;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid var(--valorant-red);
+}
+
+.chat-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 1.2rem;
+  overflow-y: auto;
+  background-color: rgba(15, 25, 35, 0.95);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.message {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.8rem;
+  border-radius: 6px;
+  animation: messageIn 0.3s ease-out;
+}
+
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.3rem;
+}
+
+.message-user {
+  font-weight: bold;
+  color: var(--valorant-red);
+  font-size: 0.9rem;
+}
+
+.message-time {
+  color: rgba(236, 232, 225, 0.6);
+  font-size: 0.8rem;
+}
+
+.message-text {
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.chat-input-container {
+  display: flex;
+  padding: 1rem;
+  background-color: var(--valorant-blue);
+  border-top: 1px solid var(--valorant-red);
+  gap: 0.8rem;
+}
+
+.chat-input-container input {
+  flex-grow: 1;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--valorant-red);
+  background-color: var(--valorant-dark);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
+}
+
+.chat-input-container input:focus {
+  outline: none;
+  border-color: var(--valorant-light);
+}
+
+.chat-input-container button {
+  padding: 0 1.5rem;
+  background-color: var(--valorant-red);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.chat-input-container button:hover {
+  background-color: #bd3944;
+  transform: translateY(-2px);
+}
+
+/* ========= FOOTER ========= */
+.footer {
   background-color: var(--valorant-dark);
   color: var(--valorant-light);
   text-align: center;
@@ -140,89 +318,82 @@ footer {
   border-top: 1px solid rgba(255, 70, 85, 0.3);
 }
 
-/* Botões base */
-.button {
-  background-color: var(--valorant-red);
-  color: white;
-  border: none;
-  padding: 0.8rem 2rem;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-  margin: 0.5rem;
+/* ========= RESPONSIVIDADE ========= */
+@media (max-width: 1024px) {
+  .nav-buttons {
+    gap: 1rem;
+  }
+  
+  .nav-button {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .nav-buttons-container {
+    left: 42%; /* Ajuste proporcional para telas médias */
+  }
 }
 
-.button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
-}
-
-.button:hover {
-  background-color: #bd3944;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 70, 85, 0.4);
-}
-
-.button:hover::before {
-  left: 100%;
-}
-
-/* Container principal */
-.container {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-h1, h2, h3 {
-  font-family: 'Montserrat', sans-serif;
-  color: var(--valorant-red);
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-h1 {
-  font-size: 3rem;
-  text-shadow: 0 0 10px rgba(255, 70, 85, 0.5);
-}
-/* Media Queries para Responsividade */
 @media (max-width: 768px) {
   .header-container {
-      flex-direction: column;
-      padding: 1rem;
-  }
-
-  .nav-buttons {
-      flex-direction: column;
-      gap: 0.5rem;
-      margin: 1rem 0;
-      width: 100%;
-  }
-
-  .nav-button {
-      width: 100%;
-      padding: 0.8rem;
-  }
-
-  .auth-status {
-      width: 100%;
-      justify-content: center;
-      margin-top: 1rem;
+    padding: 1rem;
+    flex-wrap: wrap;
   }
 
   .logo {
-      margin-bottom: 1rem;
+    font-size: 1.8rem;
+    order: 1;
+    margin-right: auto;
+  }
+
+  .nav-buttons-container {
+    position: static;
+    order: 4;
+    transform: none;
+    width: 100%;
+    margin-top: 1rem;
+    left: auto;
+  }
+
+  .nav-buttons {
+    display: none;
+    flex-direction: column;
+    background-color: var(--valorant-dark);
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .nav-buttons.active {
+    display: flex;
+  }
+
+  .nav-button {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem;
+    margin: 0.2rem 0;
+  }
+
+  .header-right {
+    order: 2;
+    min-width: auto;
+  }
+
+  .auth-status {
+    order: 1;
+  }
+
+  .menu-toggle {
+    display: flex;
+    order: 3;
+  }
+
+  .global-chat-container {
+    width: 100%;
+    max-width: none;
+    border-left: none;
   }
 }

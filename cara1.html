@@ -24,8 +24,26 @@
             <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
             <span class="user-greeting" id="user-greeting" style="display: none;"></span>
             <button class="logout-button" id="logout-button" style="display: none;">Sair</button>
-        </div>
-    </header>
+        </div> 
+           <!-- Menu Hambúrguer Simplificado -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir chat">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+        
+            <!-- Chat Global (sem botão de fechar) -->
+            <div class="global-chat-container" id="global-chat-container">
+                <div class="chat-header">
+                    <h3>Chat Global</h3>
+                </div>
+                <div class="chat-messages" id="global-chat-messages"></div>
+                <div class="chat-input-container">
+                    <input type="text" id="global-chat-input" placeholder="Digite sua mensagem..." maxlength="200">
+                    <button id="global-send-message">Enviar</button>
+                </div>
+            </div>
+        </header>
 
     <div class="online-actions">
         <button class="button" id="create-room">Criar Sala</button>
@@ -109,6 +127,6 @@
     <script src="js/chat.js"></script>
     <script src="js/ui-helpers.js"></script>
     <script src="js/main.js"></script>
-    
+    <script src="js/global-chat.js"></script>
 </body>
 </html>
