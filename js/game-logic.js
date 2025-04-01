@@ -255,7 +255,7 @@ function listenToRoom() {
     });
 }
 
-function sortearPersonagem() {
+/* function sortearPersonagem() {
     if (!roomId) {
         alert('Entre ou crie uma sala primeiro!');
         return;
@@ -277,6 +277,50 @@ function sortearPersonagem() {
             sortedCharacterVisitor: sortedCharacter 
         });
     }
+} */
+function sortearPersonagem() {
+    if (!roomId) {
+        alert('Entre ou crie uma sala primeiro!');
+        return;
+    }
+
+    database.ref(`rooms/${roomId}/charactersSorted`).once('value').then(snapshot => {
+        if (snapshot.exists() && snapshot.val()) {
+            alert('O personagem já foi sorteado!');
+            return;
+        }
+
+        wrongAttempts = 0;
+        updateWrongAttemptsUI();
+
+        const randomIndex = Math.floor(Math.random() * imagensPersonagens.length);
+        const sortedCharacter = imagensPersonagens[randomIndex];
+        showCharacterImage(sortedCharacter);
+
+        setTimeout(() => {
+            if (isRoomOwner) {
+                database.ref(`rooms/${roomId}`).update({ 
+                    sortedCharacterOwner: sortedCharacter,
+                    ownerCharacterReady: true 
+                });
+            } else {
+                database.ref(`rooms/${roomId}`).update({ 
+                    sortedCharacterVisitor: sortedCharacter,
+                    visitorCharacterReady: true 
+                });
+            }
+
+            // Verifica se ambos já sortearam personagem
+            database.ref(`rooms/${roomId}`).once('value').then(roomSnapshot => {
+                const roomData = roomSnapshot.val();
+                if (roomData.ownerCharacterReady && roomData.visitorCharacterReady) {
+                    database.ref(`rooms/${roomId}`).update({
+                        charactersSorted: true
+                    });
+                }
+            });
+        }, 1000);
+    });
 }
 
 function sortearDado() {
