@@ -132,6 +132,12 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Objeto auth não definido! Verifique firebase-config.js');
         alert('Erro no sistema de autenticação. Recarregue a página.');
     }
+    const menuToggle = document.getElementById("menu-toggle");
+    const navButtons = document.querySelector(".nav-buttons");
+
+    menuToggle.addEventListener("click", function () {
+        navButtons.classList.toggle("show"); // Adiciona ou remove a classe "show"
+    });
 });
 
 window.addEventListener('error', function(error) {

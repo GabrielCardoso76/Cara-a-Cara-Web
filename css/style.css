@@ -568,3 +568,39 @@ body {
       justify-content: center;
   }
 }
+/*tentativa de arrumar o botao hambuguer no celular*/
+/* Estilo do menu hamburguer */
+.menu-toggle {
+  display: block;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.hamburger-line {
+  width: 30px;
+  height: 3px;
+  background: #fff;
+  margin: 5px 0;
+}
+
+/* Esconder a navegação por padrão no mobile */
+@media (max-width: 768px) {
+  .nav-buttons {
+      display: none; /* Esconde os botões no mobile */
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 10px;
+      background: #333;
+      width: 150px;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+  }
+
+  .nav-buttons.show {
+      display: flex; /* Exibe quando ativado */
+  }
+}
