@@ -1,115 +1,149 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Ranking - Cara a Cara</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/ranking.css">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/ranking.css" />
     <!-- Firebase (usando a mesma versão que outros arquivos) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <header class="header-container">
-        <div class="logo" onclick="window.location.href='index.html'">Cara a Cara</div>
-        <div class="nav-buttons">
-            <button class="nav-button" onclick="window.location.href='configuracoes.html'">Configurações</button>
-            <button class="nav-button" onclick="window.location.href='cara1.html'">Jogar</button>
-            <button class="nav-button" onclick="window.location.href='ranking.html'">Ranking</button>
-            <button class="nav-button" onclick="window.location.href='regras.html'">Regras</button>
+      <div class="logo" onclick="window.location.href='index.html'">
+        Cara a Cara
+      </div>
+      <div class="nav-buttons">
+        <button
+          class="nav-button"
+          onclick="window.location.href='configuracoes.html'"
+        >
+          Configurações
+        </button>
+        <button class="nav-button" onclick="window.location.href='cara1.html'">
+          Jogar
+        </button>
+        <button
+          class="nav-button"
+          onclick="window.location.href='ranking.html'"
+        >
+          Ranking
+        </button>
+        <button class="nav-button" onclick="window.location.href='regras.html'">
+          Regras
+        </button>
+      </div>
+      <div class="auth-status">
+        <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
+        <span
+          class="user-greeting"
+          id="user-greeting"
+          style="display: none"
+        ></span>
+        <button class="logout-button" id="logout-button" style="display: none">
+          Sair
+        </button>
+      </div>
+      <!-- Menu Hambúrguer Simplificado -->
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir chat">
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+      </button>
+
+      <!-- Chat Global (sem botão de fechar) -->
+      <div class="global-chat-container" id="global-chat-container">
+        <div class="chat-header">
+          <h3>Chat Global</h3>
         </div>
-        <div class="auth-status">
-            <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
-            <span class="user-greeting" id="user-greeting" style="display: none;"></span>
-            <button class="logout-button" id="logout-button" style="display: none;">Sair</button>
-        </div> 
-           <!-- Menu Hambúrguer Simplificado -->
-            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir chat">
-                <div class="hamburger-line"></div>
-                <div class="hamburger-line"></div>
-                <div class="hamburger-line"></div>
-            </button>
-        
-            <!-- Chat Global (sem botão de fechar) -->
-            <div class="global-chat-container" id="global-chat-container">
-                <div class="chat-header">
-                    <h3>Chat Global</h3>
-                </div>
-                <div class="chat-messages" id="global-chat-messages"></div>
-                <div class="chat-input-container">
-                    <input type="text" id="global-chat-input" placeholder="Digite sua mensagem..." maxlength="200">
-                    <button id="global-send-message">Enviar</button>
-                </div>
-            </div>
-        </header>
+        <div class="chat-messages" id="global-chat-messages"></div>
+        <div class="chat-input-container">
+          <input
+            type="text"
+            id="global-chat-input"
+            placeholder="Digite sua mensagem..."
+            maxlength="200"
+          />
+          <button id="global-send-message">Enviar</button>
+        </div>
+      </div>
+    </header>
 
     <main class="ranking-main">
-        <h1 class="ranking-title">Ranking de Jogadores</h1>
-        <div class="ranking-container">
-            <table class="ranking-table">
-                <thead>
-                    <tr>
-                        <th>Posição</th>
-                        <th>Jogador</th>
-                        <th>Vitórias</th>
-                        <th>Derrotas</th>
-                        <th>Partidas</th>
-                        <th>Win Rate</th> <!-- Nova coluna -->
-                    </tr>
-                </thead>
-                <tbody id="ranking-data">
-                    <tr>
-                        <td colspan="6">Carregando ranking...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+      <h1 class="ranking-title">Ranking de Jogadores</h1>
+      <div class="ranking-container">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>Posição</th>
+              <th>Jogador</th>
+              <th>Vitórias</th>
+              <th>Derrotas</th>
+              <th>Partidas</th>
+              <th>Win Rate</th>
+              <!-- Nova coluna -->
+            </tr>
+          </thead>
+          <tbody id="ranking-data">
+            <tr>
+              <td colspan="6">Carregando ranking...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </main>
 
     <!-- Scripts na ORDEM CORRETA -->
     <script src="js/firebase-config.js"></script>
     <script src="js/auth-system.js"></script>
     <script src="js/ranking.js"></script>
-    
+
     <script>
-        // Inicialização após carregar tudo
-        document.addEventListener('DOMContentLoaded', function() {
-            // Configura o botão de logout
-            const logoutButton = document.getElementById('logout-button');
-            if (logoutButton) {
-                logoutButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    logoutUser().then(() => {
-                        window.location.href = 'index.html';
-                    }).catch(error => {
-                        console.error('Erro ao fazer logout:', error);
-                    });
-                });
-            }
-            
-            // Verifica autenticação
-            if (window.updateAuthUI) {
-                updateAuthUI(window.currentUser);
-            }
-            
-            // Carrega ranking
-            // Carrega ranking (alterado para 50)
-            if (window.getRanking) {
-                window.getRanking(50)  // Passando 50 como parâmetro
-                    .then(ranking => {
-                        if (window.displayRanking) {
-                            window.displayRanking(ranking);
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Erro ao carregar ranking:", error);
-                        document.getElementById('ranking-data').innerHTML = 
-                            '<tr><td colspan="6">Erro ao carregar o ranking</td></tr>';
-                    });
-            }
-        });
+      // Inicialização após carregar tudo
+      document.addEventListener("DOMContentLoaded", function () {
+        // Configura o botão de logout
+        const logoutButton = document.getElementById("logout-button");
+        if (logoutButton) {
+          logoutButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            logoutUser()
+              .then(() => {
+                window.location.href = "index.html";
+              })
+              .catch((error) => {
+                console.error("Erro ao fazer logout:", error);
+              });
+          });
+        }
+
+        // Verifica autenticação
+        if (window.updateAuthUI) {
+          updateAuthUI(window.currentUser);
+        }
+
+        // Carrega ranking
+        // Carrega ranking (alterado para 50)
+        if (window.getRanking) {
+          window
+            .getRanking(50) // Passando 50 como parâmetro
+            .then((ranking) => {
+              if (window.displayRanking) {
+                window.displayRanking(ranking);
+              }
+            })
+            .catch((error) => {
+              console.error("Erro ao carregar ranking:", error);
+              document.getElementById("ranking-data").innerHTML =
+                '<tr><td colspan="6">Erro ao carregar o ranking</td></tr>';
+            });
+        }
+      });
     </script>
-</body>
+  </body>
 </html>

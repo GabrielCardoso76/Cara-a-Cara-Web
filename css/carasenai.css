@@ -1,9 +1,9 @@
 :root {
-    --valorant-red: #4CAF50; /* Verde */
-    --valorant-dark: #1A237E; /* Azul escuro */
-    --valorant-light: #e8f5e9; /* Verde claro */
-    --valorant-blue: #303F9F; /* Azul */
-    --valorant-gold: #2E7D32; /* Verde escuro */
-  }
-  
-  /* Mantém todos os outros estilos iguais ao cara1.css */
+  --valorant-red: #4caf50; /* Verde */
+  --valorant-dark: #1a237e; /* Azul escuro */
+  --valorant-light: #e8f5e9; /* Verde claro */
+  --valorant-blue: #303f9f; /* Azul */
+  --valorant-gold: #2e7d32; /* Verde escuro */
+}
+
+/* Mantém todos os outros estilos iguais ao cara1.css */

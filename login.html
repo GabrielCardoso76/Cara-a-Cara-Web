@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Login - Cara a Cara</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/auth.css" />
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="auth-container">
-        <div class="auth-box" id="login-box">
-            <div class="auth-logo">Cara a Cara</div>
-            <h2>Login</h2>
-            <input type="email" id="login-email" placeholder="E-mail">
-            <input type="password" id="login-password" placeholder="Senha">
-            <button id="login-btn" class="auth-button">Entrar</button>
-            <p class="auth-switch">Não tem conta? <a href="#" id="show-register">Cadastre-se</a></p>
-        </div>
+      <div class="auth-box" id="login-box">
+        <div class="auth-logo">Cara a Cara</div>
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="E-mail" />
+        <input type="password" id="login-password" placeholder="Senha" />
+        <button id="login-btn" class="auth-button">Entrar</button>
+        <p class="auth-switch">
+          Não tem conta? <a href="#" id="show-register">Cadastre-se</a>
+        </p>
+      </div>
 
-        <div class="auth-box" id="register-box" style="display: none;">
-            <div class="auth-logo">Cara a Cara</div>
-            <h2>Cadastro</h2>
-            <input type="text" id="register-username" placeholder="Nome de usuário">
-            <input type="email" id="register-email" placeholder="E-mail">
-            <input type="password" id="register-password" placeholder="Senha">
-            <input type="password" id="register-confirm" placeholder="Confirmar senha">
-            <button id="register-btn" class="auth-button">Cadastrar</button>
-            <p class="auth-switch">Já tem conta? <a href="#" id="show-login">Fazer login</a></p>
-        </div>
+      <div class="auth-box" id="register-box" style="display: none">
+        <div class="auth-logo">Cara a Cara</div>
+        <h2>Cadastro</h2>
+        <input
+          type="text"
+          id="register-username"
+          placeholder="Nome de usuário"
+        />
+        <input type="email" id="register-email" placeholder="E-mail" />
+        <input type="password" id="register-password" placeholder="Senha" />
+        <input
+          type="password"
+          id="register-confirm"
+          placeholder="Confirmar senha"
+        />
+        <button id="register-btn" class="auth-button">Cadastrar</button>
+        <p class="auth-switch">
+          Já tem conta? <a href="#" id="show-login">Fazer login</a>
+        </p>
+      </div>
     </div>
 
     <!-- Scripts -->
     <script src="js/firebase-config.js"></script>
     <script src="js/auth-system.js"></script>
     <script src="js/auth-ui.js"></script>
-</body>
+  </body>
 </html>

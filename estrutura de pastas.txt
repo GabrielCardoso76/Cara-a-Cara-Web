@@ -1,0 +1,3 @@
+css/ auth   cara1   configuracoes  ranking  style carasenai header index 
+js/ auth-system auth-ui chat global-chat  firebase-config game-logic game-state main ranking.js  room-management ui-helpers settings-ui settings-service
+cara1.html    carasenai     configuracoes  index login  ranking.html regras

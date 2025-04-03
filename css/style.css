@@ -1,5 +1,4 @@
-/* Fontes e cores base */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap");
 
 :root {
   --valorant-red: #ff4655;
@@ -13,7 +12,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 body {
@@ -24,7 +23,7 @@ body {
   flex-direction: column;
 }
 
-/* ========= HEADER COM BOTÕES MAIS À ESQUERDA ========= */
+/* HEADER */
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -36,9 +35,8 @@ body {
   position: relative;
 }
 
-/* Logo à esquerda */
 .logo {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 2rem;
   font-weight: bold;
   color: var(--valorant-red);
@@ -46,7 +44,7 @@ body {
   letter-spacing: 2px;
   cursor: pointer;
   transition: all 0.3s;
-  margin-right: 40px; /* Aumentado para empurrar os botões */
+  margin-right: 40px;
   flex-shrink: 0;
 }
 
@@ -55,10 +53,9 @@ body {
   text-shadow: 0 0 10px var(--valorant-red);
 }
 
-/* Container dos botões - AJUSTE PRINCIPAL */
 .nav-buttons-container {
   position: absolute;
-  left: 44%; /* Reduzido significativamente para mover para esquerda */
+  left: 44%;
   transform: translateX(-50%);
 }
 
@@ -84,7 +81,7 @@ body {
 }
 
 .nav-button::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -102,7 +99,6 @@ body {
   width: 100%;
 }
 
-/* Lado direito (auth + hambúrguer) */
 .header-right {
   display: flex;
   align-items: center;
@@ -111,7 +107,6 @@ body {
   min-width: 200px;
 }
 
-/* Status de auth */
 .auth-status {
   display: flex;
   align-items: center;
@@ -154,9 +149,9 @@ body {
   color: white;
 }
 
-/* Menu hambúrguer */
+/* MENU HAMBÚRGUER SIMPLIFICADO */
 .menu-toggle {
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 30px;
@@ -166,6 +161,7 @@ body {
   border: none;
   padding: 0;
   margin-left: 15px;
+  z-index: 1001;
 }
 
 .hamburger-line {
@@ -175,11 +171,7 @@ body {
   transition: all 0.3s;
 }
 
-.menu-toggle:hover .hamburger-line {
-  background-color: var(--valorant-red);
-}
-
-/* ========= CHAT GLOBAL ========= */
+/* CHAT GLOBAL */
 .global-chat-container {
   position: fixed;
   top: 0;
@@ -201,7 +193,11 @@ body {
 
 .chat-header {
   padding: 1.2rem;
-  background: linear-gradient(to right, var(--valorant-blue), var(--valorant-dark));
+  background: linear-gradient(
+    to right,
+    var(--valorant-blue),
+    var(--valorant-dark)
+  );
   color: white;
   display: flex;
   justify-content: center;
@@ -212,7 +208,8 @@ body {
   margin: 0;
   font-size: 1.3rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
 }
 
 .chat-messages {
@@ -308,96 +305,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* ========= FOOTER ========= */
-.footer {
-  background-color: var(--valorant-dark);
-  color: var(--valorant-light);
-  text-align: center;
-  padding: 1.5rem;
-  margin-top: auto;
-  border-top: 1px solid rgba(255, 70, 85, 0.3);
-}
-
-/* ========= RESPONSIVIDADE ========= */
-@media (max-width: 1024px) {
-  .nav-buttons {
-    gap: 1rem;
-  }
-  
-  .nav-button {
-    padding: 0.5rem 0.8rem;
-    font-size: 0.9rem;
-  }
-  
-  .nav-buttons-container {
-    left: 42%; /* Ajuste proporcional para telas médias */
-  }
-}
-
-@media (max-width: 768px) {
-  .header-container {
-    padding: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    font-size: 1.8rem;
-    order: 1;
-    margin-right: auto;
-  }
-
-  .nav-buttons-container {
-    position: static;
-    order: 4;
-    transform: none;
-    width: 100%;
-    margin-top: 1rem;
-    left: auto;
-  }
-
-  .nav-buttons {
-    display: none;
-    flex-direction: column;
-    background-color: var(--valorant-dark);
-    padding: 1rem;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    padding-right: 0;
-  }
-
-  .nav-buttons.active {
-    display: flex;
-  }
-
-  .nav-button {
-    width: 100%;
-    text-align: center;
-    padding: 0.8rem;
-    margin: 0.2rem 0;
-  }
-
-  .header-right {
-    order: 2;
-    min-width: auto;
-  }
-
-  .auth-status {
-    order: 1;
-  }
-
-  .menu-toggle {
-    display: flex;
-    order: 3;
-  }
-
-  .global-chat-container {
-    width: 100%;
-    max-width: none;
-    border-left: none;
-  }
-}
-/* ========= FOOTER ELABORADO ========= */
+/* FOOTER */
 .footer {
   background-color: var(--valorant-dark);
   color: var(--valorant-light);
@@ -424,7 +332,7 @@ body {
 
 .footer-title {
   color: var(--valorant-red);
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -434,7 +342,7 @@ body {
 }
 
 .footer-title::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -460,12 +368,12 @@ body {
   width: fit-content;
 }
 
-.social-icon svg {
-  transition: all 0.3s;
-}
-
 .social-icon:hover {
   color: var(--valorant-red);
+}
+
+.social-icon svg {
+  transition: all 0.3s;
 }
 
 .social-icon:hover svg {
@@ -485,7 +393,7 @@ body {
 }
 
 .dev-list li::before {
-  content: '▹';
+  content: "▹";
   position: absolute;
   left: 0;
   color: var(--valorant-red);
@@ -534,73 +442,108 @@ body {
   border-top: 1px solid rgba(255, 70, 85, 0.1);
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .footer-content {
-      grid-template-columns: 1fr;
-      padding: 2rem 1rem;
-      gap: 2rem;
-  }
-  
-  .footer-section {
-      align-items: center;
-      text-align: center;
-  }
-  
-  .footer-title::after {
-      left: 50%;
-      transform: translateX(-50%);
-  }
-  
-  .social-links {
-      align-items: center;
-  }
-  
-  .dev-list li::before {
-      display: none;
-  }
-  
-  .contact-info {
-      align-items: center;
-  }
-  
-  .tech-badges {
-      justify-content: center;
-  }
-}
-/*tentativa de arrumar o botao hambuguer no celular*/
-/* Estilo do menu hamburguer */
-.menu-toggle {
-  display: block;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-}
-
-.hamburger-line {
-  width: 30px;
-  height: 3px;
-  background: #fff;
-  margin: 5px 0;
-}
-
-/* Esconder a navegação por padrão no mobile */
-@media (max-width: 768px) {
+/* RESPONSIVIDADE */
+@media (max-width: 1024px) {
   .nav-buttons {
-      display: none; /* Esconde os botões no mobile */
-      flex-direction: column;
-      position: absolute;
-      top: 60px;
-      right: 10px;
-      background: #333;
-      width: 150px;
-      text-align: center;
-      padding: 10px;
-      border-radius: 8px;
+    gap: 1rem;
   }
 
-  .nav-buttons.show {
-      display: flex; /* Exibe quando ativado */
+  .nav-button {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .nav-buttons-container {
+    left: 42%;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 1.8rem;
+    order: 1;
+    margin-right: auto;
+  }
+
+  .nav-buttons-container {
+    position: static;
+    order: 4;
+    transform: none;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .nav-buttons {
+    display: none;
+    flex-direction: column;
+    background-color: var(--valorant-dark);
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    width: 100%;
+  }
+
+  .nav-buttons.active {
+    display: flex;
+  }
+
+  .nav-button {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem;
+    margin: 0.2rem 0;
+  }
+
+  .header-right {
+    order: 2;
+    min-width: auto;
+  }
+
+  .auth-status {
+    order: 1;
+  }
+
+  .menu-toggle {
+    order: 3;
+  }
+
+  .global-chat-container {
+    width: 100%;
+    max-width: none;
+    border-left: none;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
+
+  .footer-section {
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .social-links,
+  .contact-info {
+    align-items: center;
+  }
+
+  .dev-list li::before {
+    display: none;
+  }
+
+  .tech-badges {
+    justify-content: center;
   }
 }

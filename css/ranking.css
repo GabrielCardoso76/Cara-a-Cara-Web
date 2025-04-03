@@ -1,131 +1,135 @@
 .ranking-main {
-    padding: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .ranking-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: var(--valorant-red);
-    text-shadow: 0 0 10px rgba(255, 70, 85, 0.5);
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--valorant-red);
+  text-shadow: 0 0 10px rgba(255, 70, 85, 0.5);
 }
 
 .ranking-container {
-    background-color: rgba(15, 25, 35, 0.7);
-    border-radius: 8px;
-    padding: 2rem;
-    border: 1px solid var(--valorant-blue);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  background-color: rgba(15, 25, 35, 0.7);
+  border-radius: 8px;
+  padding: 2rem;
+  border: 1px solid var(--valorant-blue);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .ranking-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
 }
 
 .ranking-table th {
-    background-color: var(--valorant-red);
-    color: white;
-    padding: 1rem;
-    text-align: left;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  background-color: var(--valorant-red);
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .ranking-table td {
-    padding: 1rem;
-    border-bottom: 1px solid var(--valorant-blue);
+  padding: 1rem;
+  border-bottom: 1px solid var(--valorant-blue);
 }
 
 .ranking-table tr:nth-child(even) {
-    background-color: rgba(13, 50, 77, 0.3);
+  background-color: rgba(13, 50, 77, 0.3);
 }
 
 .ranking-table tr:hover {
-    background-color: rgba(255, 70, 85, 0.1);
+  background-color: rgba(255, 70, 85, 0.1);
 }
 
 .ranking-position {
-    font-weight: bold;
-    color: var(--valorant-red);
-    width: 80px;
+  font-weight: bold;
+  color: var(--valorant-red);
+  width: 80px;
 }
 
 .ranking-name {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .ranking-stats {
-    text-align: center;
-    width: 120px;
+  text-align: center;
+  width: 120px;
 }
 /* Adicione no final do arquivo */
 @media (max-width: 768px) {
-    .ranking-main {
-        padding: 1rem;
-    }
+  .ranking-main {
+    padding: 1rem;
+  }
 
-    .ranking-table {
-        font-size: 0.8rem;
-    }
+  .ranking-table {
+    font-size: 0.8rem;
+  }
 
-    .ranking-table th, 
-    .ranking-table td {
-        padding: 0.5rem;
-    }
+  .ranking-table th,
+  .ranking-table td {
+    padding: 0.5rem;
+  }
 
-    .ranking-title {
-        font-size: 1.8rem;
-    }
+  .ranking-title {
+    font-size: 1.8rem;
+  }
 }
 
 /* Cores das medalhas */
 .ranking-position.gold {
-    color: #FFD700; /* Dourado */
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  color: #ffd700; /* Dourado */
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 
 .ranking-position.silver {
-    color: #C0C0C0; /* Prata */
-    text-shadow: 0 0 5px rgba(192, 192, 192, 0.5);
+  color: #c0c0c0; /* Prata */
+  text-shadow: 0 0 5px rgba(192, 192, 192, 0.5);
 }
 
 .ranking-position.bronze {
-    color: #CD7F32; /* Bronze */
-    text-shadow: 0 0 5px rgba(205, 127, 50, 0.5);
+  color: #cd7f32; /* Bronze */
+  text-shadow: 0 0 5px rgba(205, 127, 50, 0.5);
 }
 
 /* Estilo para a coluna de win rate */
 .win-rate {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* Cores baseadas no win rate (opcional) */
-.win-rate[style*="100"] { color: #4CAF50; } /* Verde para 100% */
-.win-rate[style*="0"] { color: #F44336; } /* Vermelho para 0% */
+.win-rate[style*="100"] {
+  color: #4caf50;
+} /* Verde para 100% */
+.win-rate[style*="0"] {
+  color: #f44336;
+} /* Vermelho para 0% */
 
 /* Ajuste para a nova coluna */
 .ranking-table th:nth-child(6),
 .ranking-table td:nth-child(6) {
-    width: 100px;
+  width: 100px;
 }
 
 /* Cores mais suaves para o tema Valorant */
 .ranking-container {
-    background-color: rgba(15, 25, 35, 0.9); /* Fundo mais escuro */
+  background-color: rgba(15, 25, 35, 0.9); /* Fundo mais escuro */
 }
 
 .ranking-table th {
-    background-color: rgba(255, 70, 85, 0.8); /* Vermelho mais suave */
+  background-color: rgba(255, 70, 85, 0.8); /* Vermelho mais suave */
 }
 
 .ranking-table tr:nth-child(even) {
-    background-color: rgba(13, 50, 77, 0.2); /* Azul mais transparente */
+  background-color: rgba(13, 50, 77, 0.2); /* Azul mais transparente */
 }
 
 .ranking-table tr:hover {
-    background-color: rgba(255, 70, 85, 0.05); /* Efeito hover mais sutil */
+  background-color: rgba(255, 70, 85, 0.05); /* Efeito hover mais sutil */
 }

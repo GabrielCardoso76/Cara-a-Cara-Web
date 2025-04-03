@@ -1,38 +1,38 @@
 // Listas de imagens
 const imagensPersonagens = [
-    'img/personagem/Brett.jpg',
-    'img/personagem/Buddy.jpg',
-    'img/personagem/Butch.jpg',
-    'img/personagem/Captain Koons.jpg',
-    'img/personagem/Esmeralda.jpg',
-    'img/personagem/Fabienne.jpg',
-    'img/personagem/Jimmie.jpg',
-    'img/personagem/Jody.jpg',
-    'img/personagem/Jules.jpg',
-    'img/personagem/Lance.jpg',
-    'img/personagem/Marcellus.jpg',
-    'img/personagem/Marvin.jpg',
-    'img/personagem/Maynard.jpg',
-    'img/personagem/Mia.jpg',
-    'img/personagem/Paul.jpg',
-    'img/personagem/Raquel.jpg',
-    'img/personagem/Ringo.jpg',
-    'img/personagem/Roger.jpg',
-    'img/personagem/The Gimp.jpg',
-    'img/personagem/Trudi.jpg',
-    'img/personagem/Vincent.jpg',
-    'img/personagem/Winston.jpg',
-    'img/personagem/Yolanda.jpg',
-    'img/personagem/Zed.jpg'
+  "img/personagem/Brett.jpg",
+  "img/personagem/Buddy.jpg",
+  "img/personagem/Butch.jpg",
+  "img/personagem/Captain Koons.jpg",
+  "img/personagem/Esmeralda.jpg",
+  "img/personagem/Fabienne.jpg",
+  "img/personagem/Jimmie.jpg",
+  "img/personagem/Jody.jpg",
+  "img/personagem/Jules.jpg",
+  "img/personagem/Lance.jpg",
+  "img/personagem/Marcellus.jpg",
+  "img/personagem/Marvin.jpg",
+  "img/personagem/Maynard.jpg",
+  "img/personagem/Mia.jpg",
+  "img/personagem/Paul.jpg",
+  "img/personagem/Raquel.jpg",
+  "img/personagem/Ringo.jpg",
+  "img/personagem/Roger.jpg",
+  "img/personagem/The Gimp.jpg",
+  "img/personagem/Trudi.jpg",
+  "img/personagem/Vincent.jpg",
+  "img/personagem/Winston.jpg",
+  "img/personagem/Yolanda.jpg",
+  "img/personagem/Zed.jpg",
 ];
 
 const imagensDado = [
-    'img/dado_faces/face_1.jpg',
-    'img/dado_faces/face_2.jpg',
-    'img/dado_faces/face_3.jpg',
-    'img/dado_faces/face_4.jpg',
-    'img/dado_faces/face_5.jpg',
-    'img/dado_faces/face_6.jpg'
+  "img/dado_faces/face_1.jpg",
+  "img/dado_faces/face_2.jpg",
+  "img/dado_faces/face_3.jpg",
+  "img/dado_faces/face_4.jpg",
+  "img/dado_faces/face_5.jpg",
+  "img/dado_faces/face_6.jpg",
 ];
 
 // Variáveis de estado do jogo
@@ -53,10 +53,10 @@ const MAX_WRONG_ATTEMPTS = 5;
 let notificationsListener = null;
 
 function setCurrentUser(user) {
-    currentUser = user;
-    if (user) {
-        console.log("Usuário definido:", user.uid, user.email);
-    } else {
-        console.log("Usuário deslogado");
-    }
+  currentUser = user;
+  if (user) {
+    console.log("Usuário definido:", user.uid, user.email);
+  } else {
+    console.log("Usuário deslogado");
+  }
 }
