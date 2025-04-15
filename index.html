@@ -2,17 +2,15 @@
 <html lang="pt">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Cara a Cara Web</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/index.css" />
-    <!-- Firebase -->
+    <!-- Firebase (carrega primeiro) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js" defer></script>
   </head>
   <body>
     <header class="header-container">
@@ -20,56 +18,29 @@
         Cara a Cara
       </div>
       <div class="nav-buttons">
-        <button
-          class="nav-button"
-          onclick="window.location.href='configuracoes.html'"
-        >
-          Configurações
-        </button>
-        <button class="nav-button" onclick="window.location.href='cara1.html'">
-          Jogar
-        </button>
-        <button
-          class="nav-button"
-          onclick="window.location.href='ranking.html'"
-        >
-          Ranking
-        </button>
-        <button class="nav-button" onclick="window.location.href='regras.html'">
-          Regras
-        </button>
+        <button class="nav-button" onclick="window.location.href='configuracoes.html'">Configurações</button>
+        <button class="nav-button" onclick="window.location.href='cara1.html'">Jogar</button>
+        <button class="nav-button" onclick="window.location.href='ranking.html'">Ranking</button>
+        <button class="nav-button" onclick="window.location.href='regras.html'">Regras</button>
       </div>
       <div class="auth-status">
         <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
-        <span
-          class="user-greeting"
-          id="user-greeting"
-          style="display: none"
-        ></span>
-        <button class="logout-button" id="logout-button" style="display: none">
-          Sair
-        </button>
+        <span class="user-greeting" id="user-greeting" style="display: none"></span>
+        <button class="logout-button" id="logout-button" style="display: none">Sair</button>
       </div>
-      <!-- Menu Hambúrguer Simplificado -->
       <button class="menu-toggle" id="menu-toggle" aria-label="Abrir chat">
         <div class="hamburger-line"></div>
         <div class="hamburger-line"></div>
         <div class="hamburger-line"></div>
       </button>
 
-      <!-- Chat Global (sem botão de fechar) -->
       <div class="global-chat-container" id="global-chat-container">
         <div class="chat-header">
           <h3>Chat Global</h3>
         </div>
         <div class="chat-messages" id="global-chat-messages"></div>
         <div class="chat-input-container">
-          <input
-            type="text"
-            id="global-chat-input"
-            placeholder="Digite sua mensagem..."
-            maxlength="200"
-          />
+          <input type="text" id="global-chat-input" placeholder="Digite sua mensagem..." maxlength="200" />
           <button id="global-send-message">Enviar</button>
         </div>
       </div>
@@ -79,24 +50,11 @@
       <div class="hero-section">
         <h1 class="game-title">CARA A CARA</h1>
         <div class="buttons-grid">
-          <button class="main-button" onclick="location.href='cara1.html'">
-            Jogar Clássico
-          </button>
-          <button class="main-button" onclick="location.href='carasenai.html'">
-            Jogar Modo SENAI
-          </button>
-          <button
-            class="main-button"
-            onclick="location.href='configuracoes.html'"
-          >
-            Configurações
-          </button>
-          <button class="main-button" onclick="location.href='ranking.html'">
-            Ranking
-          </button>
-          <button class="main-button" onclick="location.href='regras.html'">
-            Regras
-          </button>
+          <button class="main-button" onclick="location.href='cara1.html'">Jogar Clássico</button>
+          <button class="main-button" onclick="location.href='carasenai.html'">Jogar Modo SENAI</button>
+          <button class="main-button" onclick="location.href='configuracoes.html'">Configurações</button>
+          <button class="main-button" onclick="location.href='ranking.html'">Ranking</button>
+          <button class="main-button" onclick="location.href='regras.html'">Regras</button>
         </div>
       </div>
     </main>
@@ -108,25 +66,9 @@
           <p>Versão digital do famoso jogo físico</p>
           <p>Desenvolvido por alunos do SENAI</p>
           <div class="social-links">
-            <a
-              href="https://github.com/GabrielCardoso76/Cara-a-Cara-Web"
-              target="_blank"
-              class="social-icon"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path>
+            <a href="https://github.com/GabrielCardoso76/Cara-a-Cara-Web" target="_blank" class="social-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
               </svg>
               GitHub
             </a>
@@ -141,39 +83,15 @@
           </ul>
           <div class="contact-info">
             <p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                ></path>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
               torresgbriel8@gmail.com
             </p>
             <p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-                ></path>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
               </svg>
               (16) 99346-3038
             </p>
@@ -189,35 +107,37 @@
             <span class="tech-badge">Firebase</span>
             <span class="tech-badge">GitHub Pages</span>
           </div>
-          <p class="copyright">
-            © 2024 Cara a Cara Web. Todos os direitos reservados.
-          </p>
+          <p class="copyright">© 2024 Cara a Cara Web. Todos os direitos reservados.</p>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>
-          Projeto desenvolvido como parte do Curso Técnico em Desenvolvimento de
-          Sistemas - SENAI
-        </p>
+        <p>Projeto desenvolvido como parte do Curso Técnico em Desenvolvimento de Sistemas - SENAI</p>
       </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="js/firebase-config.js"></script>
-    <script src="js/auth-system.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/global-chat.js"></script>
-    <script src="js/theme-manager.js"></script>
+    <!-- Scripts (no final do body) -->
+    <script src="js/auth-system.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/global-chat.js" defer></script>
+    <script src="js/theme-manager.js" defer></script>
     <script>
-      setTimeout(() => {
+      // Debug do menu (pode remover depois de testar)
+      document.addEventListener('DOMContentLoaded', () => {
         const btn = document.getElementById("menu-toggle");
         if (btn) {
           btn.style.display = "flex";
-          btn.style.backgroundColor = "red"; // Para destacar
-          console.log("Botão forçado a aparecer!");
+          console.log("Menu toggle carregado");
         }
-      }, 3000);
+        
+        // Verifica se o Firebase carregou
+        if (typeof firebase !== 'undefined') {
+          console.log('Firebase carregado com sucesso');
+        } else {
+          console.error('Firebase não carregou');
+        }
+      });
+      setTimeout(() => { const btn = document.getElementById("menu-toggle"); if (btn) { btn.style.display = "flex"; btn.style.backgroundColor = "red"; console.log("Botão forçado a aparecer!"); } }, 3000);
     </script>
   </body>
 </html>

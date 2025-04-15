@@ -1,180 +1,132 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <title>Cara a Cara Online</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/cara1.css" />
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
-  </head>
-  <body>
-    <header class="header-container">
-      <div class="logo" onclick="window.location.href='index.html'">
-        Cara a Cara
-      </div>
-      <div class="nav-buttons">
-        <button
-          class="nav-button"
-          onclick="window.location.href='configuracoes.html'"
-        >
-          Configurações
-        </button>
-        <button class="nav-button" onclick="window.location.href='cara1.html'">
-          Jogar
-        </button>
-        <button
-          class="nav-button"
-          onclick="window.location.href='ranking.html'"
-        >
-          Ranking
-        </button>
-        <button class="nav-button" onclick="window.location.href='regras.html'">
-          Regras
-        </button>
-      </div>
-      <div class="auth-status">
-        <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
-        <span
-          class="user-greeting"
-          id="user-greeting"
-          style="display: none"
-        ></span>
-        <button class="logout-button" id="logout-button" style="display: none">
-          Sair
-        </button>
-      </div>
-      <!-- Menu Hambúrguer Simplificado -->
-      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir chat">
-        <div class="hamburger-line"></div>
-        <div class="hamburger-line"></div>
-        <div class="hamburger-line"></div>
-      </button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Cara a Cara Online</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/cara1.css" />
+  <!-- Firebase (cabeçalho para carregamento antecipado) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+  <script src="js/firebase-config.js" defer></script>
+</head>
+<body>
+  <header class="header-container">
+    <div class="logo" onclick="window.location.href='index.html'">Cara a Cara</div>
+    <div class="nav-buttons">
+      <button class="nav-button" onclick="window.location.href='configuracoes.html'">Configurações</button>
+      <button class="nav-button" onclick="window.location.href='cara1.html'">Jogar</button>
+      <button class="nav-button" onclick="window.location.href='ranking.html'">Ranking</button>
+      <button class="nav-button" onclick="window.location.href='regras.html'">Regras</button>
+    </div>
+    <div class="auth-status">
+      <a href="login.html" class="login-link" id="login-link">Fazer Login</a>
+      <span class="user-greeting" id="user-greeting" style="display: none"></span>
+      <button class="logout-button" id="logout-button" style="display: none">Sair</button>
+    </div>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir chat">
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+    </button>
 
-      <!-- Chat Global (sem botão de fechar) -->
-      <div class="global-chat-container" id="global-chat-container">
-        <div class="chat-header">
-          <h3>Chat Global</h3>
-        </div>
-        <div class="chat-messages" id="global-chat-messages"></div>
-        <div class="chat-input-container">
-          <input
-            type="text"
-            id="global-chat-input"
-            placeholder="Digite sua mensagem..."
-            maxlength="200"
-          />
-          <button id="global-send-message">Enviar</button>
-        </div>
+    <div class="global-chat-container" id="global-chat-container">
+      <div class="chat-header">
+        <h3>Chat Global</h3>
       </div>
-    </header>
+      <div class="chat-messages" id="global-chat-messages"></div>
+      <div class="chat-input-container">
+        <input type="text" id="global-chat-input" placeholder="Digite sua mensagem..." maxlength="200" />
+        <button id="global-send-message">Enviar</button>
+      </div>
+    </div>
+  </header>
 
-    <div class="online-actions">
-      <button class="button" id="create-room">Criar Sala</button>
-      <button class="button" id="join-room">Entrar em Sala</button>
-      <p id="room-id"></p>
+  <div class="online-actions">
+    <button class="button" id="create-room">Criar Sala</button>
+    <button class="button" id="join-room">Entrar em Sala</button>
+    <p id="room-id"></p>
+  </div>
+
+  <div class="characters-container">
+    <!-- Personagens organizados em 4 linhas -->
+    <div class="personagens">
+      <img src="img/personagem/Brett.jpg" alt="Brett" loading="lazy">
+      <img src="img/personagem/Buddy.jpg" alt="Buddy" loading="lazy">
+      <img src="img/personagem/Butch.jpg" alt="Butch" loading="lazy">
+      <img src="img/personagem/Captain Koons.jpg" alt="Captain Koons" loading="lazy">
+      <img src="img/personagem/Esmeralda.jpg" alt="Esmeralda" loading="lazy">
+      <img src="img/personagem/Fabienne.jpg" alt="Fabienne" loading="lazy">
+    </div>
+    <div class="personagens">
+      <img src="img/personagem/Jimmie.jpg" alt="Jimmie" loading="lazy">
+      <img src="img/personagem/Jody.jpg" alt="Jody" loading="lazy">
+      <img src="img/personagem/Jules.jpg" alt="Jules" loading="lazy">
+      <img src="img/personagem/Lance.jpg" alt="Lance" loading="lazy">
+      <img src="img/personagem/Marcellus.jpg" alt="Marcellus" loading="lazy">
+      <img src="img/personagem/Marvin.jpg" alt="Marvin" loading="lazy">
+    </div>
+    <div class="personagens">
+      <img src="img/personagem/Maynard.jpg" alt="Maynard" loading="lazy">
+      <img src="img/personagem/Mia.jpg" alt="Mia" loading="lazy">
+      <img src="img/personagem/Paul.jpg" alt="Paul" loading="lazy">
+      <img src="img/personagem/Raquel.jpg" alt="Raquel" loading="lazy">
+      <img src="img/personagem/Ringo.jpg" alt="Ringo" loading="lazy">
+      <img src="img/personagem/Roger.jpg" alt="Roger" loading="lazy">
+    </div>
+    <div class="personagens">
+      <img src="img/personagem/The Gimp.jpg" alt="The Gimp" loading="lazy">
+      <img src="img/personagem/Trudi.jpg" alt="Trudi" loading="lazy">
+      <img src="img/personagem/Vincent.jpg" alt="Vincent" loading="lazy">
+      <img src="img/personagem/Winston.jpg" alt="Winston" loading="lazy">
+      <img src="img/personagem/Yolanda.jpg" alt="Yolanda" loading="lazy">
+      <img src="img/personagem/Zed.jpg" alt="Zed" loading="lazy">
+    </div>
+  </div>
+
+  <div class="sortedado">
+    <div class="sorteio-section">
+      <h1>Sorteio de Personagem</h1>
+      <button class="botaosorte" id="sortear-imagem">Sortear Personagem</button>
+      <div class="sorteio-result">
+        <img id="imagem" src="" alt="Personagem sorteado" style="display: none">
+        <div id="character-message" class="character-message" style="display: none"></div>
+      </div>
+      <div id="wrong-attempts" class="attempts-counter">Tentativas erradas: 0/5</div>
     </div>
 
-    <div class="characters-container">
-      <div class="personagens">
-        <img src="img/personagem/Brett.jpg" alt="Brett" />
-        <img src="img/personagem/Buddy.jpg" alt="Buddy" />
-        <img src="img/personagem/Butch.jpg" alt="Butch" />
-        <img src="img/personagem/Captain Koons.jpg" alt="Captain Koons" />
-        <img src="img/personagem/Esmeralda.jpg" alt="Esmeralda" />
-        <img src="img/personagem/Fabienne.jpg" alt="Fabienne" />
+    <div class="sorteio-section">
+      <h1>Sorteio Quem Começa</h1>
+      <button class="botaosorte" id="sortear-dado">Sortear Dado</button>
+      <div class="sorteio-result">
+        <img id="imagem2" src="" alt="Dado sorteado" style="display: none">
       </div>
-      <div class="personagens">
-        <img src="img/personagem/Jimmie.jpg" alt="Jimmie" />
-        <img src="img/personagem/Jody.jpg" alt="Jody" />
-        <img src="img/personagem/Jules.jpg" alt="Jules" />
-        <img src="img/personagem/Lance.jpg" alt="Lance" />
-        <img src="img/personagem/Marcellus.jpg" alt="Marcellus" />
-        <img src="img/personagem/Marvin.jpg" alt="Marvin" />
-      </div>
-      <div class="personagens">
-        <img src="img/personagem/Maynard.jpg" alt="Maynard" />
-        <img src="img/personagem/Mia.jpg" alt="Mia" />
-        <img src="img/personagem/Paul.jpg" alt="Paul" />
-        <img src="img/personagem/Raquel.jpg" alt="Raquel" />
-        <img src="img/personagem/Ringo.jpg" alt="Ringo" />
-        <img src="img/personagem/Roger.jpg" alt="Roger" />
-      </div>
-      <div class="personagens">
-        <img src="img/personagem/The Gimp.jpg" alt="The Gimp" />
-        <img src="img/personagem/Trudi.jpg" alt="Trudi" />
-        <img src="img/personagem/Vincent.jpg" alt="Vincent" />
-        <img src="img/personagem/Winston.jpg" alt="Winston" />
-        <img src="img/personagem/Yolanda.jpg" alt="Yolanda" />
-        <img src="img/personagem/Zed.jpg" alt="Zed" />
+      <div class="chat-container">
+        <h2>Chat</h2>
+        <div id="chat-messages"></div>
+        <input type="text" id="chat-input" placeholder="Digite sua mensagem">
+        <button id="send-message">Enviar</button>
       </div>
     </div>
 
-    <div class="sortedado">
-      <div class="sorteio-section">
-        <h1>Sorteio de Personagem</h1>
-        <button class="botaosorte" id="sortear-imagem">
-          Sortear Personagem
-        </button>
-        <div class="sorteio-result">
-          <img
-            id="imagem"
-            src=""
-            alt="Personagem sorteado"
-            style="display: none"
-          />
-          <div
-            id="character-message"
-            class="character-message"
-            style="display: none"
-          ></div>
-        </div>
-        <div id="wrong-attempts" class="attempts-counter">
-          Tentativas erradas: 0/5
-        </div>
-      </div>
-
-      <div class="sorteio-section">
-        <h1>Sorteio Quem Começa</h1>
-        <button class="botaosorte" id="sortear-dado">Sortear Dado</button>
-        <div class="sorteio-result">
-          <img id="imagem2" src="" alt="Dado sorteado" style="display: none" />
-        </div>
-        <div class="chat-container">
-          <h2>Chat</h2>
-          <div id="chat-messages"></div>
-          <input
-            type="text"
-            id="chat-input"
-            placeholder="Digite sua mensagem"
-          />
-          <button id="send-message">Enviar</button>
-        </div>
-      </div>
-
-      <div class="game-controls">
-        <h2>Adivinhar Personagem</h2>
-        <select id="guess-character"></select>
-        <button id="guess-button" class="button">Tentar Adivinhar</button>
-      </div>
+    <div class="game-controls">
+      <h2>Adivinhar Personagem</h2>
+      <select id="guess-character"></select>
+      <button id="guess-button" class="button">Tentar Adivinhar</button>
     </div>
+  </div>
 
-    <!-- Scripts -->
-    <script src="js/firebase-config.js"></script>
-    <script src="js/auth-system.js"></script>
-    <script src="js/game-state.js"></script>
-    <script src="js/room-management.js"></script>
-    <script src="js/game-logic.js"></script>
-    <script src="js/chat.js"></script>
-    <script src="js/ui-helpers.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/global-chat.js"></script>
-    <script src="js/theme-manager.js"></script>
-  </body>
+  <!-- Scripts (no final do body) -->
+  <script src="js/auth-system.js" defer></script>
+  <script src="js/game-state.js" defer></script>
+  <script src="js/room-management.js" defer></script>
+  <script src="js/game-logic.js" defer></script>
+  <script src="js/chat.js" defer></script>
+  <script src="js/ui-helpers.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/global-chat.js" defer></script>
+  <script src="js/theme-manager.js" defer></script>
+</body>
 </html>
