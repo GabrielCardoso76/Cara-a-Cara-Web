@@ -1,0 +1,118 @@
+/* Estilos específicos para a página de regras */
+.container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--valorant-red);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.rules-content {
+    background-color: rgba(15, 25, 35, 0.7);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--valorant-red);
+}
+
+h2 {
+    color: var(--valorant-light);
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background-color: var(--valorant-red);
+}
+
+.rule-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: rgba(255, 70, 85, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid var(--valorant-red);
+    transition: all 0.3s ease;
+}
+
+.rule-section:hover {
+    background-color: rgba(255, 70, 85, 0.2);
+    transform: translateY(-3px);
+}
+
+h3 {
+    color: var(--valorant-red);
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+h3::before {
+    content: '•';
+    color: var(--valorant-red);
+    font-size: 2rem;
+    margin-right: 0.8rem;
+}
+
+p {
+    color: var(--valorant-light);
+    line-height: 1.6;
+    font-size: 1.1rem;
+    margin-left: 2.5rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+        margin: 1rem auto;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .rules-content {
+        padding: 1rem;
+    }
+    
+    .rule-section {
+        padding: 1rem;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+    }
+    
+    p {
+        font-size: 1rem;
+        margin-left: 1.5rem;
+    }
+}
