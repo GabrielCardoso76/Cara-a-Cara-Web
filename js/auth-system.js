@@ -14,18 +14,14 @@ window.requireAuth = async function () {
 window.setCurrentUser = function (user) {
   window.currentUser = user;
   console.log("Usuário atual definido:", user ? user.email : "null");
-
-  document.dispatchEvent(
-    new CustomEvent("authStateChanged", {
-      detail: { user: user },
-    })
-  );
+  document.dispatchEvent(new CustomEvent("authStateChanged", {
+    detail: { user: user }
+  }));
 };
 
 auth.onAuthStateChanged(function (user) {
   setCurrentUser(user);
   updateAuthUI(user);
-
   if (user && sessionStorage.getItem("redirectAfterLogin")) {
     const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
     sessionStorage.removeItem("redirectAfterLogin");
@@ -56,25 +52,22 @@ function updateAuthUI(user) {
 
 async function registerUser(email, password, username) {
   try {
-    const userCredential = await auth.createUserWithEmailAndPassword(
-      email,
-      password
-    );
+    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
     await userCredential.user.updateProfile({ displayName: username });
 
     await database.ref(`users/${userCredential.user.uid}`).set({
       username: username,
       email: email,
-      // Adicionar configurações padrão
       settings: {
-        ...DEFAULT_SETTINGS,
-        createdAt: new Date().toISOString(),
+        theme: "light",
+        notifications: true,
+        createdAt: new Date().toISOString()
       },
-      displayName: username, // Garante que temos displayName
+      displayName: username,
       wins: 0,
       losses: 0,
       matches: 0,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date().toISOString()
     });
 
     return userCredential.user;
@@ -86,10 +79,7 @@ async function registerUser(email, password, username) {
 
 async function loginUser(email, password) {
   try {
-    const userCredential = await auth.signInWithEmailAndPassword(
-      email,
-      password
-    );
+    const userCredential = await auth.signInWithEmailAndPassword(email, password);
     return userCredential.user;
   } catch (error) {
     console.error("Erro no login:", error);

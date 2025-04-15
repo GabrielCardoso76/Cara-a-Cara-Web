@@ -22,62 +22,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       await loginUser(email, password);
-      const redirectUrl =
-        sessionStorage.getItem("redirectAfterLogin") || "index.html";
+      const redirectUrl = sessionStorage.getItem("redirectAfterLogin") || "index.html";
       window.location.href = redirectUrl;
     } catch (error) {
       alert(`Erro no login: ${error.message}`);
     }
   });
 
-  document
-    .getElementById("register-btn")
-    ?.addEventListener("click", async () => {
-      const username = document
-        .getElementById("register-username")
-        .value.trim();
-      const email = document.getElementById("register-email").value.trim();
-      const password = document.getElementById("register-password").value;
-      const confirm = document.getElementById("register-confirm").value;
+  document.getElementById("register-btn")?.addEventListener("click", async () => {
+    const username = document.getElementById("register-username").value.trim();
+    const email = document.getElementById("register-email").value.trim();
+    const password = document.getElementById("register-password").value;
+    const confirm = document.getElementById("register-confirm").value;
 
-      if (!username || !email || !password || !confirm) {
-        alert("Preencha todos os campos!");
-        return;
+    if (!username || !email || !password || !confirm) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    if (password !== confirm) {
+      alert("As senhas não coincidem!");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("A senha deve ter pelo menos 6 caracteres!");
+      return;
+    }
+
+    try {
+      await registerUser(email, password, username);
+      alert("Cadastro realizado com sucesso!");
+      const redirectUrl = sessionStorage.getItem("redirectAfterLogin") || "index.html";
+      window.location.href = redirectUrl;
+    } catch (error) {
+      let errorMessage = "Erro no cadastro: ";
+
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          errorMessage += "E-mail já está em uso";
+          break;
+        case "auth/invalid-email":
+          errorMessage += "E-mail inválido";
+          break;
+        case "auth/weak-password":
+          errorMessage += "Senha muito fraca";
+          break;
+        default:
+          errorMessage += error.message;
       }
 
-      if (password !== confirm) {
-        alert("As senhas não coincidem!");
-        return;
-      }
-
-      if (password.length < 6) {
-        alert("A senha deve ter pelo menos 6 caracteres!");
-        return;
-      }
-
-      try {
-        await registerUser(email, password, username);
-        const redirectUrl =
-          sessionStorage.getItem("redirectAfterLogin") || "index.html";
-        window.location.href = redirectUrl;
-      } catch (error) {
-        let errorMessage = "Erro no cadastro: ";
-
-        switch (error.code) {
-          case "auth/email-already-in-use":
-            errorMessage += "E-mail já está em uso";
-            break;
-          case "auth/invalid-email":
-            errorMessage += "E-mail inválido";
-            break;
-          case "auth/weak-password":
-            errorMessage += "Senha muito fraca";
-            break;
-          default:
-            errorMessage += error.message;
-        }
-
-        alert(errorMessage);
-      }
-    });
+      alert(errorMessage);
+    }
+  });
 });
