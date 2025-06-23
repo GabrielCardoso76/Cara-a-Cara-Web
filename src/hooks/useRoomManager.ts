@@ -30,58 +30,65 @@ const useRoomManager = () => {
 
     try {
       const snapshot = await get(recentRoomsQuery);
-      const roomsData: Room[] = []; // <<< DECLARAÇÃO CORRETA DA VARIÁVEL
+      const roomsData: Room[] = []; // <<< CORREÇÃO: Variável declarada aqui.
 
       if (snapshot.exists()) {
         snapshot.forEach((childSnapshot) => {
-          // Garantir que o objeto childSnapshot.val() não é null e tem a propriedade createdAt
-          const roomValue = childSnapshot.val();
-          if (roomValue && typeof roomValue === 'object') {
-            roomsData.push({
-              id: childSnapshot.key!, // Usar non-null assertion operator pois o key sempre existirá se snapshot.exists() é true
-              ...roomValue
-            } as Room); // Type assertion para garantir a estrutura
-          }
+          roomsData.push({ id: childSnapshot.key, ...childSnapshot.val() });
         });
       }
 
       setIsLoading(false);
-      // Tipando os parâmetros 'a' e 'b' e retornando a variável correta
+      // CORREÇÃO: Tipos adicionados e variável correta sendo retornada.
       return roomsData.sort((a: Room, b: Room) => (b.createdAt || 0) - (a.createdAt || 0));
+
     } catch (error: any) {
       console.error("Erro ao listar salas:", error);
       addNotification(`Falha ao buscar salas: ${error.message}`, "error");
       setIsLoading(false);
-      return []; // Retorna um array vazio em caso de erro
+      return []; // Retorna um array vazio para não quebrar a interface.
     }
-  }, [addNotification, setIsLoading]); // Adicionado setIsLoading às dependências do useCallback
+  }, [addNotification]);
 
   // Outras funções do hook podem ser adicionadas aqui
 
   // Função para criar uma nova sala
   const createRoom = async (roomDetails: { name: string; isPrivate: boolean; password?: string }) => {
-    if (!currentUser) throw new Error("Usuário não autenticado.");
-
-    const newRoomRef = push(ref(database, 'rooms'));
-
-    const roomData: Partial<Room> & { ownerId: string; players: { [key: string]: boolean }; gameState: string; createdAt: object } = {
-      id: newRoomRef.key,
-      name: roomDetails.name,
-      ownerId: currentUser.uid,
-      ownerName: currentUser.displayName || 'Anônimo',
-      players: { [currentUser.uid]: true },
-      playerCount: 1,
-      isPrivate: roomDetails.isPrivate,
-      createdAt: serverTimestamp(), // 'serverTimestamp' deve ser importado de 'firebase/database'
-      gameState: 'waiting',
-    };
-
-    if (roomDetails.isPrivate) {
-      roomData.password = roomDetails.password || '';
+    if (!currentUser) {
+      addNotification("Você precisa estar logado para criar uma sala.", "error");
+      return;
     }
 
-    await set(newRoomRef, roomData);
-    navigate(`/game/${newRoomRef.key}`);
+    try {
+      const newRoomRef = push(ref(database, 'rooms'));
+
+      const roomData: any = {
+        id: newRoomRef.key,
+        name: roomDetails.name,
+        ownerId: currentUser.uid,
+        ownerName: currentUser.displayName || 'Anônimo',
+        players: { [currentUser.uid]: true },
+        playerCount: 1,
+        isPrivate: roomDetails.isPrivate,
+        createdAt: serverTimestamp(),
+        gameState: 'waiting',
+      };
+
+      // <<< LÓGICA CORRIGIDA: Adiciona a senha apenas se a sala for privada
+      if (roomDetails.isPrivate) {
+        if (!roomDetails.password) {
+          addNotification("Salas privadas precisam de uma senha.", "error");
+          return;
+        }
+        roomData.password = roomDetails.password;
+      }
+
+      await set(newRoomRef, roomData);
+      navigate(`/game/${newRoomRef.key}`);
+    } catch (error: any) {
+      console.error("Erro ao criar sala:", error);
+      addNotification(`Falha ao criar sala: ${error.message}`, "error");
+    }
   };
 
   return { isLoading, fetchRooms, createRoom };
