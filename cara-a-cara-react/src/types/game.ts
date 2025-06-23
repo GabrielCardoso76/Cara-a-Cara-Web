@@ -25,9 +25,12 @@ export interface RoomData {
   roomId: string;
   roomName?: string; // Adicionado roomName como opcional
   owner: string; // UID do criador da sala
+  ownerName?: string; // Nome de exibição do criador da sala
   players: { [uid: string]: Player }; // Alterado de Player | boolean para Player
   createdAt: number;
   gameMode: 'classic' | 'senai';
+  visibility?: 'public' | 'private'; // Visibilidade da sala
+  password?: string; // Senha para salas privadas
 
   // Estado do jogo
   sortedCharacterOwner?: string | null;

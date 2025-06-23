@@ -7,6 +7,8 @@ const ClassicLobbyPage: React.FC = () => {
   const { createRoom, joinRoom, listAvailableRooms, isLoading } = useRoomManager();
   const [availableRooms, setAvailableRooms] = useState<ListedRoom[]>([]);
   const [newRoomName, setNewRoomName] = useState('');
+  const [roomVisibility, setRoomVisibility] = useState<'public' | 'private'>('public');
+  const [roomPassword, setRoomPassword] = useState('');
 
   const fetchRooms = async () => {
     const rooms = await listAvailableRooms('classic');
@@ -19,8 +21,17 @@ const ClassicLobbyPage: React.FC = () => {
   }, [listAvailableRooms]); // listAvailableRooms é estável, mas re-executa se a instância do hook mudar
 
   const handleCreateRoom = async () => {
-    await createRoom('classic', newRoomName.trim() || undefined);
-    setNewRoomName(''); // Limpa input após tentativa
+    const roomName = newRoomName.trim() || undefined;
+    const password = roomVisibility === 'private' ? roomPassword : undefined;
+    // Adicionar validação de senha aqui se necessário (ex: não vazia para sala privada)
+    if (roomVisibility === 'private' && !password) {
+      alert("Salas privadas devem ter uma senha."); // Substituir por notificação do sistema depois
+      return;
+    }
+    await createRoom('classic', roomName, roomVisibility, password);
+    setNewRoomName('');
+    setRoomPassword('');
+    setRoomVisibility('public');
     fetchRooms(); // Atualiza a lista após criar
   };
 
@@ -47,6 +58,25 @@ const ClassicLobbyPage: React.FC = () => {
             className="lobby-input"
             disabled={isLoading}
           />
+          <div className="room-options">
+            <label className="lobby-label">
+              Visibilidade:
+              <select value={roomVisibility} onChange={(e) => setRoomVisibility(e.target.value as 'public' | 'private')} disabled={isLoading} className="lobby-select">
+                <option value="public">Pública</option>
+                <option value="private">Privada</option>
+              </select>
+            </label>
+            {roomVisibility === 'private' && (
+              <input
+                type="password"
+                value={roomPassword}
+                onChange={(e) => setRoomPassword(e.target.value)}
+                placeholder="Senha da sala"
+                className="lobby-input"
+                disabled={isLoading}
+              />
+            )}
+          </div>
           <button onClick={handleCreateRoom} disabled={isLoading} className="lobby-button create-button">
             {isLoading ? 'Criando...' : 'Criar Nova Sala'}
           </button>
@@ -65,8 +95,11 @@ const ClassicLobbyPage: React.FC = () => {
           {availableRooms.map(room => (
             <li key={room.id} className="room-list-item">
               <div className="room-info">
-                <span className="room-name">{room.roomName || `Sala de ${room.owner?.substring(0,6)}`}</span>
-                <span className="room-details">({room.playerCount}/2 jogadores) - Criada por: {room.owner ? room.owner.substring(0,6) : 'Desconhecido'}</span>
+                <span className="room-name">
+                  {room.visibility === 'private' && <span className="private-icon">🔒 </span>}
+                  {room.roomName || `Sala de ${room.ownerName || room.owner?.substring(0,6)}`}
+                </span>
+                <span className="room-details">({room.playerCount}/2 jogadores) - Criada por: {room.ownerName || (room.owner ? room.owner.substring(0,6) : 'Desconhecido')}</span>
               </div>
               <button
                 onClick={() => handleJoinRoom(room.id)}
