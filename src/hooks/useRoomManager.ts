@@ -1,7 +1,9 @@
 import { useState, useCallback } from 'react';
-import { ref, get, query, orderByChild, startAt } from 'firebase/database'; // Removido serverTimestamp, update, equalTo, limitToFirst que não são usados aqui
-import { database } from '../services/firebase'; // Assumindo que este é o caminho correto
-import { useNotifications } from '../contexts/NotificationContext'; // Assumindo que este é o caminho correto
+import { ref, get, query, orderByChild, startAt, push, serverTimestamp, set } from 'firebase/database';
+import { database } from '../services/firebase';
+import { useNotifications } from '../contexts/NotificationContext';
+import { useAuth } from '../contexts/AuthContext'; // Assuming AuthContext provides currentUser
+import { useNavigate } from 'react-router-dom'; // Assuming react-router-dom for navigation
 
 // Adicione esta interface no topo do arquivo para definir a estrutura de uma sala
 interface Room {
@@ -11,11 +13,14 @@ interface Room {
   playerCount: number;
   isPrivate: boolean;
   createdAt: number;
+  password?: string; // Added password to Room interface
 }
 
 const useRoomManager = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { addNotification } = useNotifications();
+  const { currentUser } = useAuth(); // Get currentUser from AuthContext
+  const navigate = useNavigate(); // Get navigate function
 
   const fetchRooms = useCallback(async () => {
     setIsLoading(true);
@@ -52,7 +57,34 @@ const useRoomManager = () => {
   }, [addNotification, setIsLoading]); // Adicionado setIsLoading às dependências do useCallback
 
   // Outras funções do hook podem ser adicionadas aqui
-  return { isLoading, fetchRooms };
+
+  // Função para criar uma nova sala
+  const createRoom = async (roomDetails: { name: string; isPrivate: boolean; password?: string }) => {
+    if (!currentUser) throw new Error("Usuário não autenticado.");
+
+    const newRoomRef = push(ref(database, 'rooms'));
+
+    const roomData: Partial<Room> & { ownerId: string; players: { [key: string]: boolean }; gameState: string; createdAt: object } = {
+      id: newRoomRef.key,
+      name: roomDetails.name,
+      ownerId: currentUser.uid,
+      ownerName: currentUser.displayName || 'Anônimo',
+      players: { [currentUser.uid]: true },
+      playerCount: 1,
+      isPrivate: roomDetails.isPrivate,
+      createdAt: serverTimestamp(), // 'serverTimestamp' deve ser importado de 'firebase/database'
+      gameState: 'waiting',
+    };
+
+    if (roomDetails.isPrivate) {
+      roomData.password = roomDetails.password || '';
+    }
+
+    await set(newRoomRef, roomData);
+    navigate(`/game/${newRoomRef.key}`);
+  };
+
+  return { isLoading, fetchRooms, createRoom };
 };
 
 export default useRoomManager;
