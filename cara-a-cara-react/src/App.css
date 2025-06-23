@@ -95,6 +95,120 @@ a:hover {
   text-decoration: underline;
 }
 
+/* --- SENAI Theme --- */
+/* Estilos para quando a classe senai-theme está aplicada (no body ou app-container) */
+.senai-theme .header-container {
+  background-color: #d80000; /* Vermelho SENAI - um tom específico de vermelho */
+  color: #ffffff;
+  border-bottom: 2px solid #b00000; /* Vermelho mais escuro para a borda */
+}
+
+.senai-theme .logo {
+  color: #ffffff;
+  text-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+.senai-theme .logo:hover {
+  color: #f0f0f0; /* Um branco levemente acinzentado no hover */
+  text-shadow: 0 0 8px rgba(0,0,0,0.5);
+}
+
+.senai-theme .nav-button {
+  color: #ffffff;
+}
+.senai-theme .nav-button::after {
+  background-color: #ffffff; /* Sublinhado branco */
+}
+.senai-theme .nav-button:hover,
+.senai-theme .nav-button.active {
+  color: #f0f0f0; /* Branco acinzentado no hover/ativo */
+}
+
+.senai-theme .login-link, .senai-theme .user-greeting {
+  color: #ffffff;
+}
+.senai-theme .login-link:hover {
+  color: #f0f0f0;
+}
+
+.senai-theme .logout-button {
+  background: none;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+.senai-theme .logout-button:hover {
+  background-color: #ffffff;
+  color: #d80000; /* Texto vermelho SENAI no hover */
+}
+
+.senai-theme .menu-toggle-button {
+  color: #ffffff;
+}
+.senai-theme .menu-toggle-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+.senai-theme .menu-toggle-button.chat-open {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+
+.senai-theme .footer {
+  background-color: #d80000; /* Vermelho SENAI */
+  color: #ffffff;
+  border-top: 1px solid #b00000; /* Vermelho mais escuro para a borda */
+}
+
+.senai-theme .footer-title {
+  color: #ffffff; /* Título branco */
+}
+.senai-theme .footer-title::after {
+  background-color: #ffffff; /* Linha abaixo do título branca */
+}
+
+.senai-theme .social-icon {
+  color: #ffffff;
+}
+.senai-theme .social-icon:hover {
+  color: #f0f0f0; /* Ou um cinza claro, se preferir */
+}
+
+.senai-theme .dev-list li::before {
+  color: #ffffff; /* Marcador da lista branco */
+}
+
+.senai-theme .tech-badge {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+.senai-theme .footer-bottom {
+  background-color: #b00000; /* Vermelho mais escuro para a base do footer */
+  color: #f0f0f0;
+  border-top-color: rgba(255,255,255,0.1);
+}
+
+/* Ajustes gerais para o conteúdo da página no tema SENAI, se necessário */
+.senai-theme .page-content {
+  /* Exemplo: se o fundo do conteúdo principal também precisar mudar */
+  /* background-color: #f8f8f8; */
+  /* color: #333333; */
+}
+.senai-theme .page-content h1,
+.senai-theme .page-content h2,
+.senai-theme .settings-title {
+  color: #d80000; /* Títulos principais em vermelho SENAI */
+}
+
+.senai-theme .main-button-react {
+  background-color: #d80000; /* Botões principais vermelhos */
+  color: #ffffff;
+  border: 1px solid #b00000;
+}
+.senai-theme .main-button-react:hover {
+  background-color: #b00000; /* Vermelho mais escuro no hover */
+  border-color: #8c0000;
+}
+
 /* --- Theme System --- */
 /* Estilos padrão (aplicados se nenhuma classe de tema específica estiver presente ou como base para 'valorant-theme') */
 body {
@@ -152,6 +266,169 @@ body.dark-theme {
 
 /* Ajustes para componentes específicos baseados no tema, se necessário */
 /* Exemplo: Header e Footer podem precisar de ajustes de cor de fundo/texto */
+
+/* Header e Footer para o tema escuro */
+.dark-theme .header-container {
+  background-color: #121212; /* Mesma cor de fundo do body.dark-theme */
+  color: #e0e0e0;           /* Mesma cor de texto do body.dark-theme */
+  border-bottom-color: var(--valorant-red); /* Manter a borda com a cor de destaque */
+}
+
+.dark-theme .nav-button {
+  color: #e0e0e0;
+}
+.dark-theme .nav-button:hover,
+.dark-theme .nav-button.active {
+  color: #ffffff; /* Ou var(--valorant-red) se preferir destaque */
+}
+.dark-theme .nav-button:hover::after,
+.dark-theme .nav-button.active::after {
+  background-color: var(--valorant-red);
+}
+
+.dark-theme .logo {
+  color: var(--valorant-red); /* Manter a cor de destaque */
+}
+.dark-theme .logo:hover {
+  color: #ffffff; /* Ou um tom mais claro da cor de destaque */
+  text-shadow: 0 0 10px var(--valorant-red);
+}
+
+.dark-theme .login-link, .dark-theme .user-greeting {
+  color: #e0e0e0;
+}
+.dark-theme .login-link:hover {
+  color: var(--valorant-red);
+}
+.dark-theme .logout-button {
+  border-color: var(--valorant-red);
+  color: var(--valorant-red);
+}
+.dark-theme .logout-button:hover {
+  background-color: var(--valorant-red);
+  color: #ffffff;
+}
+.dark-theme .menu-toggle-button {
+  color: #e0e0e0;
+}
+.dark-theme .menu-toggle-button:hover {
+  background-color: rgba(255, 255, 255, 0.05); /* Mais sutil no tema escuro */
+}
+
+
+.dark-theme .footer {
+  background-color: #121212; /* Mesma cor de fundo do body.dark-theme */
+  color: #e0e0e0;           /* Mesma cor de texto do body.dark-theme */
+  border-top-color: rgba(255, 70, 85, 0.2); /* Ajustar opacidade da borda se necessário */
+}
+.dark-theme .footer-title {
+  color: var(--valorant-red); /* Manter a cor de destaque */
+}
+.dark-theme .footer-title::after {
+  background-color: var(--valorant-red);
+}
+.dark-theme .social-icon {
+  color: #e0e0e0;
+}
+.dark-theme .social-icon:hover {
+  color: var(--valorant-red);
+}
+.dark-theme .dev-list li::before {
+  color: var(--valorant-red);
+}
+.dark-theme .tech-badge {
+  background-color: rgba(255, 70, 85, 0.1); /* Ajustar opacidade do badge */
+  color: #e0e0e0;
+  border-color: var(--valorant-red);
+}
+.dark-theme .footer-bottom {
+  background-color: rgba(0, 0, 0, 0.15); /* Ajustar cor de fundo */
+  border-top-color: rgba(255, 70, 85, 0.1); /* Ajustar opacidade da borda */
+}
+
+
+/* Header e Footer para o tema claro */
+.light-theme .header-container {
+  background-color: #ffffff; /* Fundo branco para o header */
+  color: #1c1e21;           /* Texto escuro para o header */
+  border-bottom: 2px solid var(--valorant-red); /* Borda com cor de destaque */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
+}
+
+.light-theme .nav-button {
+  color: #333333; /* Cor de texto mais escura para os botões */
+}
+.light-theme .nav-button:hover,
+.light-theme .nav-button.active {
+  color: var(--valorant-red); /* Cor de destaque no hover/ativo */
+}
+.light-theme .nav-button:hover::after,
+.light-theme .nav-button.active::after {
+  background-color: var(--valorant-red);
+}
+
+.light-theme .logo {
+  color: var(--valorant-red); /* Cor de destaque para o logo */
+}
+.light-theme .logo:hover {
+  color: #000000; /* Preto no hover para contraste */
+  text-shadow: none;
+}
+
+.light-theme .login-link, .light-theme .user-greeting {
+  color: #333333;
+}
+.light-theme .login-link:hover {
+  color: var(--valorant-red);
+}
+.light-theme .logout-button {
+  border: 1px solid var(--valorant-red);
+  color: var(--valorant-red);
+  background-color: transparent;
+}
+.light-theme .logout-button:hover {
+  background-color: var(--valorant-red);
+  color: #ffffff;
+}
+.light-theme .menu-toggle-button {
+  color: #1c1e21;
+}
+.light-theme .menu-toggle-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+
+.light-theme .footer {
+  background-color: #f8f9fa; /* Fundo cinza claro para o footer */
+  color: #343a40;           /* Texto escuro para o footer */
+  border-top: 1px solid #dee2e6; /* Borda sutil */
+}
+
+.light-theme .footer-title {
+  color: var(--valorant-red); /* Cor de destaque */
+}
+.light-theme .footer-title::after {
+  background-color: var(--valorant-red);
+}
+.light-theme .social-icon {
+  color: #343a40;
+}
+.light-theme .social-icon:hover {
+  color: var(--valorant-red);
+}
+.light-theme .dev-list li::before {
+  color: var(--valorant-red);
+}
+.light-theme .tech-badge {
+  background-color: rgba(0, 0, 0, 0.05); /* Fundo sutil para os badges */
+  color: #343a40;
+  border: 1px solid #cccccc; /* Borda mais clara */
+}
+.light-theme .footer-bottom {
+  background-color: #e9ecef;
+  border-top-color: #ced4da;
+  color: #495057;
+}
 
 /* .valorant-theme já é o padrão, mas podemos ter seletores específicos se necessário */
 body.valorant-theme {

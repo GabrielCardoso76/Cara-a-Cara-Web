@@ -93,9 +93,9 @@ const SenaiGamePage: React.FC = () => {
     : 'character_selection';
 
   return (
-    // Adicionada a classe senai-game-theme para estilização específica
-    <div className="game-page-container senai-game-theme"> {/* MODIFICADO: Adicionada classe senai-game-theme */}
-      <h2 className="game-title">Jogo Modo SENAI - Sala: {roomData.roomName || roomId}</h2> {/* MODIFICADO: Título */}
+    // A classe senai-game-theme foi removida daqui, pois senai-theme será aplicada globalmente via Layout
+    <div className="game-page-container">
+      <h2 className="game-title">Jogo Modo SENAI - Sala: {roomData.roomName || roomId}</h2>
 
       {roomData.gameEnded && (
         <div className={`game-ended-message ${roomData.winner === currentUser.uid ? 'win' : 'loss'}`}>

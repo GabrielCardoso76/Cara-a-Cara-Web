@@ -45,6 +45,7 @@ const Footer: React.FC = () => {
           <ul className="dev-list">
             <li>Gabriel Cardoso Torres (Projeto Original)</li>
             <li>Jules (Assistente AI para migração React)</li>
+            <li>DeepSeek (Assistente AI Inicial)</li>
             {/* Adicionar seu nome se estiver trabalhando nisso */}
           </ul>
           <div className="contact-info">

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { GameProvider } from './contexts/GameContext';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -22,12 +22,36 @@ import './App.css';
 // Layout agora é envolvido por ThemeProvider no AppRoutes
 const Layout: React.FC = () => {
   const [isGlobalChatOpen, setIsGlobalChatOpen] = useState(false);
+  const location = useLocation();
+  const [isSenaiRoute, setIsSenaiRoute] = useState(false);
+
+  useEffect(() => {
+    const senaiPath = location.pathname.startsWith('/lobby-senai') || location.pathname.startsWith('/play-senai');
+    setIsSenaiRoute(senaiPath);
+
+    // Adiciona/remove a classe do body também para maior flexibilidade
+    if (senaiPath) {
+      document.body.classList.add('senai-theme');
+    } else {
+      document.body.classList.remove('senai-theme');
+    }
+    // Cleanup para remover a classe do body quando o componente desmontar ou a rota mudar
+    return () => {
+      document.body.classList.remove('senai-theme');
+    };
+  }, [location.pathname]);
 
   const toggleGlobalChat = () => setIsGlobalChatOpen(prev => !prev);
   const closeGlobalChat = () => setIsGlobalChatOpen(false);
 
+  const appContainerClasses = [
+    'app-container',
+    isGlobalChatOpen ? 'global-chat-active' : '',
+    isSenaiRoute ? 'senai-theme' : '' // Adiciona a classe ao app-container
+  ].filter(Boolean).join(' ');
+
   return (
-    <div className={`app-container ${isGlobalChatOpen ? 'global-chat-active' : ''}`}>
+    <div className={appContainerClasses}>
       <Header onToggleGlobalChat={toggleGlobalChat} isGlobalChatOpen={isGlobalChatOpen} />
       <main className="main-content">
         <Outlet />
@@ -38,6 +62,7 @@ const Layout: React.FC = () => {
   );
 };
 
+// GameLayout já usa Layout, então as classes senai-theme serão aplicadas automaticamente.
 const GameLayout: React.FC = () => (
   <GameProvider>
     <Layout />
