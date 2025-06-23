@@ -51,14 +51,17 @@ export const fetchRankingData = async (fetchLimit: number = 50): Promise<Ranking
         // E stats como 'wins', 'losses', 'matches', 'winRate' estão em 'users/{uid}/stats' ou diretamente.
         // Para simplificar, vamos assumir que estão no mesmo nível ou em `data.stats`.
         const stats = data.stats || data; // Se 'stats' for um subnó
+        const wins = stats.wins || 0;
+        const matches = stats.matches || 0;
+        const calculatedWinRate = matches > 0 ? Math.round((wins / matches) * 100) : 0;
 
         users.push({
           id: childSnapshot.key!,
           username: data.displayName || data.email?.split('@')[0] || `Usuário ${childSnapshot.key!.substring(0,4)}`,
-          wins: stats.wins || 0,
+          wins: wins,
           losses: stats.losses || 0,
-          matches: stats.matches || 0,
-          winRate: stats.winRate || 0,
+          matches: matches,
+          winRate: calculatedWinRate, // Usar o valor recalculado
         });
       });
     }

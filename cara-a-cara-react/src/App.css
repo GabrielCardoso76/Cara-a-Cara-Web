@@ -94,3 +94,91 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* --- Theme System --- */
+/* Estilos padrão (aplicados se nenhuma classe de tema específica estiver presente ou como base para 'valorant-theme') */
+body {
+  background-color: #0f1923; /* Valorant Default BG */
+  color: #ece8e1;       /* Valorant Default Text */
+  /* Outros estilos base podem continuar aqui */
+}
+
+/* Tema Claro */
+body.light-theme {
+  background-color: #f0f2f5; /* Um cinza muito claro para o fundo */
+  color: #1c1e21;       /* Um preto suave para o texto */
+}
+
+.light-theme .page-content h1,
+.light-theme .page-content h2,
+.light-theme .settings-title, /* Títulos nas configurações */
+.light-theme .main-button-react, /* Botões principais */
+.light-theme a { /* Links gerais, se necessário um ajuste específico */
+  /* Exemplo: se a cor de destaque padrão do Valorant for muito clara no tema claro */
+  /* color: var(--valorant-red); /* Usa a cor de destaque que pode ser ajustada pelo usuário */
+}
+
+.light-theme .main-button-react {
+  background-color: var(--valorant-red); /* Usa a cor de destaque */
+  color: #ffffff; /* Garante contraste no botão */
+}
+.light-theme .main-button-react:hover {
+  background-color: var(--valorant-red-hover);
+}
+
+
+/* Tema Escuro (pode ser similar ao Valorant ou um preto mais profundo) */
+body.dark-theme {
+  background-color: #121212; /* Um preto mais profundo */
+  color: #e0e0e0;       /* Um cinza claro para texto */
+}
+
+.dark-theme .page-content h1,
+.dark-theme .page-content h2,
+.dark-theme .settings-title,
+.dark-theme .main-button-react {
+  /* color: var(--valorant-red); */ /* Mantém a cor de destaque */
+}
+
+.dark-theme .main-button-react {
+  background-color: var(--valorant-red);
+  color: #ffffff;
+}
+
+.dark-theme .main-button-react:hover {
+  background-color: var(--valorant-red-hover);
+}
+
+
+/* Ajustes para componentes específicos baseados no tema, se necessário */
+/* Exemplo: Header e Footer podem precisar de ajustes de cor de fundo/texto */
+
+/* .valorant-theme já é o padrão, mas podemos ter seletores específicos se necessário */
+body.valorant-theme {
+  /* Estes são os padrões já definidos no body, mas podem ser explicitamente definidos aqui também */
+  background-color: #0f1923;
+  color: #ece8e1;
+}
+
+/* Para que a cor de destaque funcione nos títulos e botões em todos os temas */
+.page-content h1, .page-content h2, .settings-title {
+  color: var(--valorant-red);
+}
+
+.main-button-react {
+  background-color: var(--valorant-red);
+  color: white; /* Texto branco para botões com cor de destaque */
+}
+.main-button-react:hover {
+  background-color: var(--valorant-red-hover);
+}
+
+/* Se os links devem usar a cor de destaque: */
+/*
+a {
+  color: var(--valorant-red);
+}
+a:hover {
+  color: var(--valorant-red-hover);
+}
+*/

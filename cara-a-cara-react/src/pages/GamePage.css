@@ -157,3 +157,106 @@
     font-size: 1.5rem;
   }
 }
+
+/* --- Tema Específico para Modo SENAI --- */
+.senai-game-theme {
+  /* Fundo principal da página - Branco */
+  /* A classe de tema no body (ex: light-theme) já pode definir isso.
+     Se quisermos forçar um fundo branco específico para a página do jogo SENAI,
+     mesmo que o tema global seja escuro, podemos descomentar: */
+  /* background-color: #ffffff; */
+  /* color: #333333; */ /* Cor de texto principal escura para contraste com fundo branco */
+}
+
+/* Título do Jogo SENAI - Vermelho SENAI */
+.senai-game-theme .game-title {
+  color: #D40000; /* Vermelho SENAI */
+}
+
+/* Painel Direito - Fundo claro, borda vermelha */
+.senai-game-theme .game-right-panel {
+  background-color: #f8f8f8; /* Um cinza muito claro, quase branco */
+  border: 1px solid #D40000; /* Borda Vermelho SENAI */
+  color: #333333; /* Texto escuro para o painel */
+}
+
+/* Botões de Ação - Vermelho SENAI */
+.senai-game-theme .game-action-button {
+  background-color: #D40000; /* Vermelho SENAI */
+  color: #ffffff; /* Texto branco */
+  border: 1px solid #A00000; /* Borda vermelho escuro */
+}
+.senai-game-theme .game-action-button:hover:not(:disabled) {
+  background-color: #A00000; /* Vermelho SENAI mais escuro no hover */
+  border-color: #700000;
+}
+.senai-game-theme .game-action-button:disabled {
+  background-color: #cccccc; /* Cinza claro para desabilitado */
+  border-color: #bbbbbb;
+  color: #777777;
+}
+
+/* Textos de espera e informações - Cor escura */
+.senai-game-theme .waiting-text,
+.senai-game-theme .attempts-info {
+  color: #555555;
+}
+
+/* Área de Adivinhação - Fundo claro, borda vermelha */
+.senai-game-theme .guessing-area {
+  background-color: #ffffff;
+  border: 1px dashed #D40000; /* Borda tracejada Vermelho SENAI */
+}
+.senai-game-theme .guessing-area h3 {
+  color: #D40000; /* Título da área em Vermelho SENAI */
+}
+
+/* Select de Adivinhação - Estilo SENAI */
+.senai-game-theme .guess-select {
+  background-color: #ffffff;
+  border: 1px solid #D40000; /* Borda Vermelho SENAI */
+  color: #333333; /* Texto escuro */
+}
+.senai-game-theme .guess-select:focus {
+  border-color: #A00000; /* Vermelho SENAI mais escuro no foco */
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 0, 0, 0.2); /* Sombra sutil no foco */
+}
+
+/* Mensagem de Fim de Jogo - Estilo SENAI */
+.senai-game-theme .game-ended-message.win {
+  background-color: rgba(0, 128, 0, 0.1); /* Verde claro para vitória */
+  border: 1px solid green;
+  color: green;
+}
+.senai-game-theme .game-ended-message.loss {
+  background-color: rgba(212, 0, 0, 0.1); /* Vermelho SENAI claro para derrota */
+  border: 1px solid #D40000;
+  color: #D40000;
+}
+.senai-game-theme .game-ended-message .lobby-button {
+  background-color: #D40000;
+  color: white;
+}
+.senai-game-theme .game-ended-message .lobby-button:hover {
+  background-color: #A00000;
+}
+
+/* Links dentro do jogo SENAI (se houver) */
+.senai-game-theme a {
+    color: #B00000; /* Vermelho SENAI um pouco mais escuro para links */
+}
+.senai-game-theme a:hover {
+    color: #800000;
+}
+
+/* Ajustes para o CharacterCard e CharacterBoard no tema SENAI, se necessário */
+/* Por exemplo, se as bordas dos cards precisarem mudar: */
+/*
+.senai-game-theme .character-card {
+  border-color: #D40000;
+}
+.senai-game-theme .character-card.eliminated {
+  border-color: #AAAAAA;
+}
+*/

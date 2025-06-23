@@ -31,10 +31,10 @@ const Footer: React.FC = () => {
         <div className="footer-section">
           <h3 className="footer-title">Cara a Cara Web</h3>
           <p>Versão digital do famoso jogo físico.</p>
-          <p>Desenvolvido por alunos do SENAI (Projeto Original) e adaptado para React.</p>
+          <p>Desenvolvido por alunos do SENAI (Projeto Original), DeepSeek (projeto original) e adaptado para React.</p>
           <div className="social-links">
             <a href="https://github.com/GabrielCardoso76/Cara-a-Cara-Web" target="_blank" rel="noopener noreferrer" className="social-icon">
-              <GitHubIcon /> GitHub do Projeto Original
+              <GitHubIcon /> GitHub do Projeto Original (Vanilla JS)
             </a>
             {/* Adicionar link para o novo repositório React se houver */}
           </div>
