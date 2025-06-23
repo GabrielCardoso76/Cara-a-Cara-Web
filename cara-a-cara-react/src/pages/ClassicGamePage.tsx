@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom'; // Link adicionado
 import { useAuth } from '../contexts/AuthContext';
 import { useGame } from '../contexts/GameContext';
 import { useGameActions } from '../hooks/useGameActions';
@@ -61,7 +61,7 @@ const ClassicGamePage: React.FC = () => {
         addNotification(roomData.endMessage, messageType);
     }
 
-  }, [roomData?.currentPlayer, currentUser?.uid, roomData?.gameEnded, roomData?.endMessage, addNotification]);
+  }, [roomData, currentUser, addNotification]); // Array de dependências corrigido
 
 
   const handleToggleEliminate = (imagePath: string) => {
@@ -130,7 +130,7 @@ const ClassicGamePage: React.FC = () => {
 
           {gamePhase === 'dice_roll' && (
              <DiceDisplay
-                diceImagePath={isRoomOwner ? roomData.diceValues?.owner && DICE_FACES[roomData.diceValues.owner-1] : roomData.diceValues?.visitor && DICE_FACES[roomData.diceValues.visitor-1]}
+                diceImagePath={(isRoomOwner ? (roomData.diceValues?.owner && DICE_FACES[roomData.diceValues.owner - 1]) : (roomData.diceValues?.visitor && DICE_FACES[roomData.diceValues.visitor - 1])) || null}
                 onRollDice={rollDice}
                 rolling={false} // O estado de "rolling" seria gerenciado localmente se quiséssemos feedback mais complexo
                 label="Sorteie o Dado"

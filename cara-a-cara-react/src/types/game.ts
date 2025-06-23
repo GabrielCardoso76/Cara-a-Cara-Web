@@ -60,7 +60,7 @@ export interface GameContextType {
   myCharacterPath: string | null;
   opponentCharacterPath: string | null;
   currentTurnPlayerId: string | null;
-  wrongAttempts: number;
+  // wrongAttempts: number; // Removido de GameContextType
 }
 
 export const CLASSIC_CHARACTERS = [

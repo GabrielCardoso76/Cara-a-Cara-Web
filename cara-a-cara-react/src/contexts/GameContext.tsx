@@ -33,7 +33,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [myCharacterPath, setMyCharacterPath] = useState<string | null>(null);
   const [opponentCharacterPath, setOpponentCharacterPath] = useState<string | null>(null);
   const [currentTurnPlayerId, setCurrentTurnPlayerId] = useState<string|null>(null);
-  const [wrongAttempts, setWrongAttempts] = useState<number>(0);
+  // wrongAttempts removido completamente do estado do GameContext
 
   // Atualiza o roomId interno se o parâmetro da rota mudar
   useEffect(() => {
@@ -140,7 +140,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     myCharacterPath,
     opponentCharacterPath,
     currentTurnPlayerId,
-    wrongAttempts, // Gerenciado localmente pela página do jogo via useGameActions
+    // wrongAttempts removido do valor do contexto
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

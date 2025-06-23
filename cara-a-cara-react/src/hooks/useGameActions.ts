@@ -211,7 +211,7 @@ export const useGameActions = () => {
         await updateUserStats(loserUid, 'loss');
       }
 
-      await update(roomRef, {
+      await rtdbUpdate(roomRef, { // Corrigido para rtdbUpdate
         winner: currentUser.uid,
         loser: loserUid,
         gameEnded: true,
@@ -250,7 +250,7 @@ export const useGameActions = () => {
         if (opponentUid) {
           await updateUserStats(opponentUid, 'win');
         }
-        await update(roomRef, {
+        await rtdbUpdate(roomRef, { // Corrigido para rtdbUpdate
           winner: opponentUid,
           loser: currentUser.uid,
           gameEnded: true,
@@ -261,7 +261,7 @@ export const useGameActions = () => {
         // setRoomId(null); // Opcional
       } else {
         // Apenas errou, passa a vez
-        await update(roomRef, {
+         await rtdbUpdate(roomRef, { // Corrigido para rtdbUpdate
           currentPlayer: opponentUid, // Passa a vez para o oponente
         });
         addNotification(`❌ Errou! Tentativas: ${newWrongAttempts}/${MAX_WRONG_ATTEMPTS}. Vez do oponente.`, 'info');

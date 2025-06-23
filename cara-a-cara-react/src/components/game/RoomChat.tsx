@@ -57,7 +57,7 @@ const RoomChat: React.FC<RoomChatProps> = ({ roomId }) => {
 
     const messageData = {
       text: newMessage,
-      senderId: currentUser.uid,
+      senderUid: currentUser.uid, // Corrigido para senderUid
       senderName: currentUser.displayName || currentUser.email || 'Anônimo',
       timestamp: serverTimestamp(), // Firebase substitui isso pelo timestamp do servidor
     };
@@ -83,7 +83,7 @@ const RoomChat: React.FC<RoomChatProps> = ({ roomId }) => {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`chat-message ${msg.senderId === currentUser?.uid ? 'sent' : 'received'}`}
+            className={`chat-message ${msg.senderUid === currentUser?.uid ? 'sent' : 'received'}`} // Corrigido para senderUid
           >
             <div className="message-sender">{msg.senderName}</div>
             <div className="message-text">{msg.text}</div>

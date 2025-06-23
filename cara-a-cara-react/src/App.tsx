@@ -7,6 +7,8 @@ import { NotificationProvider } from './contexts/NotificationContext'; // Import
 import NotificationDisplay from './components/notifications/NotificationDisplay'; // Importando Display
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ClassicLobbyPage from './pages/ClassicLobbyPage'; // Adicionado
+import SenaiLobbyPage from './pages/SenaiLobbyPage';   // Adicionado
 import ClassicGamePage from './pages/ClassicGamePage';
 import SenaiGamePage from './pages/SenaiGamePage';
 import SettingsPage from './pages/SettingsPage';

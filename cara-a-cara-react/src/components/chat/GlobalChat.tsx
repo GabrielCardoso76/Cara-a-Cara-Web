@@ -68,7 +68,7 @@ const GlobalChat: React.FC<GlobalChatProps> = ({ isOpen, onClose }) => {
     const globalChatRef = ref(database, "global-chat");
     const messagesQuery = query(globalChatRef, orderByChild('timestamp'), limitToLast(50));
 
-    const listeners = onChildAdded(messagesQuery, async (snapshot) => {
+    onChildAdded(messagesQuery, async (snapshot) => { // Variável 'listeners' removida
       const msgData = snapshot.val();
       const senderName = msgData.senderName || await getDisplayName(msgData.senderUid);
 
