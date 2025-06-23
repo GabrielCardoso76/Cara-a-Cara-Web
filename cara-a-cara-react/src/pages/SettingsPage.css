@@ -1,0 +1,183 @@
+/* Estilos para SettingsPage.tsx */
+.settings-page-container {
+  max-width: 700px;
+  margin: 0 auto; /* Centraliza na .main-content que já tem padding */
+  text-align: left; /* Alinha o texto das seções à esquerda */
+}
+
+.settings-title {
+  text-align: center;
+  color: var(--valorant-red, #ff4655);
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.settings-section {
+  background-color: rgba(255, 255, 255, 0.03); /* Fundo sutil para cada seção */
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 70, 85, 0.1);
+}
+
+.settings-section h3 {
+  color: var(--valorant-red, #ff4655);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 70, 85, 0.2);
+  padding-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--valorant-light, #ece8e1);
+}
+
+.settings-input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background-color: rgba(236, 232, 225, 0.08);
+  border: 1px solid var(--valorant-blue, #0d324d);
+  color: var(--valorant-light, #ece8e1);
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.settings-input:focus {
+  outline: none;
+  border-color: var(--valorant-red, #ff4655);
+  box-shadow: 0 0 0 3px rgba(255, 70, 85, 0.3);
+}
+
+.settings-button {
+  background-color: var(--valorant-red, #ff4655);
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.9rem;
+  font-family: "Roboto Condensed", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: inline-block; /* Para botões lado a lado ou com margem */
+  margin-top: 0.5rem; /* Espaço se estiver abaixo de um input */
+}
+
+.settings-button:hover:not(:disabled) {
+  background-color: #d13340; /* Mais escuro */
+  transform: translateY(-1px);
+}
+.settings-button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.theme-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; /* Permite quebra de linha em telas menores */
+}
+
+.theme-option-button {
+  flex-grow: 1; /* Para ocupar espaço igual */
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--valorant-blue, #0d324d);
+  background-color: transparent;
+  color: var(--valorant-light, #ece8e1);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  text-transform: capitalize;
+}
+
+.theme-option-button.active {
+  background-color: var(--valorant-red, #ff4655);
+  color: white;
+  border-color: var(--valorant-red, #ff4655);
+  font-weight: bold;
+}
+
+.theme-option-button:hover:not(.active) {
+  border-color: var(--valorant-red, #ff4655);
+  color: var(--valorant-red, #ff4655);
+}
+
+.color-picker-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.settings-color-picker {
+  width: 60px; /* Tamanho do input de cor */
+  height: 40px;
+  padding: 0.2rem;
+  border: 1px solid var(--valorant-blue, #0d324d);
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: rgba(236, 232, 225, 0.08);
+}
+/* Remove a seta padrão do input color no chrome */
+.settings-color-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.settings-color-picker::-webkit-color-swatch {
+  border: none;
+  border-radius: 3px;
+}
+
+
+.apply-color-button {
+  margin-top: 0; /* Remove margem padrão do settings-button */
+}
+
+.color-preview-text {
+    font-size: 0.9rem;
+    margin-top: 0.8rem;
+}
+
+.reset-button {
+  background-color: var(--valorant-blue, #0d324d);
+  border: 1px solid var(--valorant-light, #ece8e1);
+}
+.reset-button:hover:not(:disabled) {
+  background-color: #174a69;
+}
+
+
+.feedback-message {
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+.feedback-message.success {
+  background-color: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+  border: 1px solid rgba(40, 167, 69, 0.3);
+}
+.feedback-message.error {
+  background-color: rgba(220, 53, 69, 0.15);
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+.feedback-message.info { /* Para mensagens informativas, não de erro/sucesso */
+    background-color: rgba(23, 162, 184, 0.15);
+    color: #17a2b8;
+    border: 1px solid rgba(23, 162, 184, 0.3);
+}

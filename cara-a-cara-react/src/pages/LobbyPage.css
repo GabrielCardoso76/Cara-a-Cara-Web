@@ -1,0 +1,168 @@
+/* Estilos para LobbyPage.tsx (Classic e Senai) */
+.lobby-page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem; /* page-content já tem padding, mas podemos ajustar aqui */
+  text-align: center; /* Centraliza o título principal */
+}
+
+.lobby-title {
+  color: var(--valorant-red, #ff4655);
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.lobby-actions {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 70, 85, 0.1);
+}
+
+.create-room-section {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap; /* Para telas menores */
+}
+
+.lobby-input {
+  padding: 0.7rem 0.9rem;
+  background-color: rgba(236, 232, 225, 0.08);
+  border: 1px solid var(--valorant-blue, #0d324d);
+  color: var(--valorant-light, #ece8e1);
+  border-radius: 4px;
+  font-size: 0.95rem;
+  flex-grow: 1; /* Ocupa espaço disponível */
+  min-width: 200px; /* Largura mínima */
+}
+.lobby-input:focus {
+  outline: none;
+  border-color: var(--valorant-red, #ff4655);
+  box-shadow: 0 0 0 3px rgba(255, 70, 85, 0.3);
+}
+
+.lobby-button {
+  background-color: var(--valorant-red, #ff4655);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.3rem;
+  font-size: 0.9rem;
+  font-family: "Roboto Condensed", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.lobby-button:hover:not(:disabled) {
+  background-color: #d13340;
+  transform: translateY(-1px);
+}
+.lobby-button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.create-button {
+  /* Estilos específicos se necessário */
+}
+.refresh-button {
+  background-color: var(--valorant-blue, #0d324d);
+  margin-top: 0.5rem; /* Espaço se o create-room-section quebrar linha */
+}
+.refresh-button:hover:not(:disabled) {
+  background-color: #174a69;
+}
+.join-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  margin-left: auto; /* Empurra para a direita no flex container do list-item */
+}
+
+
+.room-list-section {
+  text-align: left; /* Alinha o conteúdo da lista à esquerda */
+}
+.room-list-section h3 {
+  text-align: center;
+  color: var(--valorant-light, #ece8e1);
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.loading-text, .no-rooms-text {
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 1.5rem;
+  color: #a0a0a0;
+}
+
+.room-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.room-list-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgba(30, 45, 60, 0.7); /* Fundo para cada item da sala */
+  border-radius: 6px;
+  border: 1px solid rgba(255, 70, 85, 0.15);
+  transition: background-color 0.2s ease;
+}
+.room-list-item:hover {
+  background-color: rgba(40, 55, 70, 0.8);
+}
+
+.room-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-align: left;
+}
+
+.room-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--valorant-red, #ff4655);
+}
+
+.room-details {
+  font-size: 0.8rem;
+  color: #b0b0b0;
+}
+
+@media (max-width: 600px) {
+  .lobby-title {
+    font-size: 1.6rem;
+  }
+  .create-room-section {
+    flex-direction: column;
+  }
+  .lobby-input {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .lobby-button {
+    width: 100%;
+  }
+  .room-list-item {
+    flex-direction: column;
+    align-items: stretch; /* Estica o botão para largura total */
+    gap: 0.5rem;
+  }
+  .join-button {
+    margin-left: 0;
+  }
+}

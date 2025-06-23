@@ -1,0 +1,198 @@
+/* Estilos adaptados de css/style.css e css/header.css */
+
+:root {
+  --valorant-red: #ff4655;
+  --valorant-dark: #0f1923;
+  --valorant-light: #ece8e1;
+  /* --valorant-blue: #0d324d; */
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--valorant-dark);
+  border-bottom: 2px solid var(--valorant-red);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  position: sticky; /* Faz o header ficar fixo no topo ao rolar */
+  top: 0;
+  z-index: 900; /* Abaixo do chat global (z-index: 1000) */
+  color: var(--valorant-light);
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.logo {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--valorant-red);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.logo:hover {
+  color: white;
+  text-shadow: 0 0 10px var(--valorant-red);
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+  /* margin: 0 auto; */ /* Removido para permitir que header-right-controls vá para a direita */
+  flex-grow: 1; /* Permite que os botões de navegação ocupem espaço, ajudando a empurrar header-right-controls */
+  justify-content: center; /* Centraliza os botões de navegação se houver espaço */
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: var(--valorant-light);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--valorant-red);
+  transition: width 0.3s;
+}
+
+.nav-button:hover,
+.nav-button.active {
+  color: white;
+}
+
+.nav-button:hover::after,
+.nav-button.active::after {
+  width: 100%;
+}
+
+.header-right-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Espaço entre auth-status e botão de chat */
+}
+
+.auth-status {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem; /* Reduzido gap interno */
+  /* margin-left: auto; */ /* Removido, pois header-right-controls já está à direita */
+}
+
+.login-link, .user-greeting {
+  color: var(--valorant-light);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.85rem; /* Ajustado */
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  white-space: nowrap; /* Evita quebra de linha no nome do usuário */
+}
+.user-greeting {
+  max-width: 150px; /* Limita largura para não empurrar demais */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.login-link:hover {
+  color: var(--valorant-red);
+}
+
+.logout-button {
+  background: none;
+  border: 1px solid var(--valorant-red);
+  color: var(--valorant-red);
+  padding: 0.4rem 0.8rem; /* Ajustado */
+  text-transform: uppercase;
+  font-size: 0.85rem; /* Ajustado */
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 4px;
+}
+
+.logout-button:hover {
+  background-color: var(--valorant-red);
+  color: white;
+}
+
+.menu-toggle-button { /* Renomeado de .menu-toggle para evitar conflito com ID original */
+  background: transparent;
+  border: none;
+  color: var(--valorant-light);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.menu-toggle-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-toggle-button.chat-open {
+  background-color: rgba(255, 70, 85, 0.2); /* Destaque quando o chat está aberto */
+}
+
+.menu-toggle-button svg {
+  width: 24px; /* Tamanho do ícone de chat */
+  height: 24px;
+}
+
+
+/* Media Queries para responsividade */
+@media (max-width: 820px) { /* Ponto de quebra um pouco maior para acomodar tudo */
+  .nav-buttons {
+    /* Esconder botões de navegação e mostrar um menu hambúrguer (não implementado ainda) */
+    /* display: none;  */
+    gap: 0.5rem; /* Reduzir mais o gap */
+  }
+  .nav-button {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.5rem;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+  .user-greeting, .login-link, .logout-button {
+    font-size: 0.75rem;
+  }
+  .logout-button {
+    padding: 0.3rem 0.6rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .header-container {
+    padding: 0.8rem 1rem; /* Menos padding em telas pequenas */
+  }
+  .nav-buttons {
+    display: none; /* Esconde os botões de navegação. Menu hambúrguer seria necessário aqui */
+  }
+   .menu-toggle-button {
+    /* Se o menu hambúrguer fosse para navegação E chat, ele seria mais proeminente */
+   }
+}

@@ -1,0 +1,149 @@
+/* Estilos para RegisterPage.tsx, adaptados de css/auth.css e LoginPage.css */
+
+/* Reutiliza as mesmas variáveis de LoginPage.css se não forem globais */
+:root {
+  --valorant-red: #ff4655;
+  --valorant-dark: #0f1923;
+  --valorant-light: #ece8e1;
+  --valorant-blue: #0d324d;
+}
+
+.register-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 70px - 60px); /* Subtrai altura aproximada do header e footer */
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.register-auth-box {
+  background-color: var(--valorant-dark);
+  padding: 2rem 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 450px; /* Um pouco maior para o campo extra de nome */
+  border-top: 3px solid var(--valorant-red);
+  animation: authFadeIn 0.4s ease-out; /* Reutiliza a animação */
+  color: var(--valorant-light);
+}
+
+/* Reutiliza a animação de LoginPage.css se não for global */
+/* @keyframes authFadeIn { ... } */
+
+.register-auth-box .auth-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.8rem;
+  color: var(--valorant-red);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.register-auth-box .form-group {
+  margin-bottom: 1.1rem; /* Levemente reduzido para acomodar mais campos */
+}
+
+.register-auth-box .form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--valorant-light);
+  text-align: left;
+}
+
+.register-auth-box .auth-input {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  background-color: rgba(236, 232, 225, 0.08);
+  border: 1px solid var(--valorant-blue);
+  color: var(--valorant-light);
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.register-auth-box .auth-input:focus {
+  outline: none;
+  border-color: var(--valorant-red);
+  box-shadow: 0 0 0 3px rgba(255, 70, 85, 0.3);
+}
+
+.register-auth-box .auth-input::placeholder {
+  color: rgba(236, 232, 225, 0.4);
+}
+
+.register-auth-box .error-message {
+  color: #ff4655;
+  background-color: rgba(255, 70, 85, 0.1);
+  border: 1px solid rgba(255, 70, 85, 0.3);
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.register-auth-box .auth-button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: var(--valorant-red);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.register-auth-box .auth-button:hover:not(:disabled) {
+  background-color: #d13340;
+  transform: translateY(-1px);
+}
+
+.register-auth-box .auth-button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.register-auth-box .auth-switch {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.register-auth-box .auth-switch-link {
+  color: var(--valorant-red);
+  text-decoration: none;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.register-auth-box .auth-switch-link:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .register-auth-box {
+    padding: 1.5rem;
+    margin: 0.5rem;
+  }
+
+  .register-auth-box .auth-title {
+    font-size: 1.6rem;
+  }
+}

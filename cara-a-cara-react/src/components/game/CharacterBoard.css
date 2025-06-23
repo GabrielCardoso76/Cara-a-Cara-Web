@@ -1,0 +1,28 @@
+.character-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Cria colunas responsivas */
+  gap: 1rem; /* Espaçamento entre os cards */
+  padding: 1rem;
+  background-color: rgba(15, 25, 35, 0.8); /* Fundo escuro semi-transparente */
+  border-radius: 8px;
+  max-width: 900px; /* Limita a largura máxima do tabuleiro */
+  margin: 0 auto; /* Centraliza o tabuleiro */
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+/* Ajustes para diferentes tamanhos de tela, se necessário */
+@media (max-width: 768px) {
+  .character-board {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .character-board {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+}

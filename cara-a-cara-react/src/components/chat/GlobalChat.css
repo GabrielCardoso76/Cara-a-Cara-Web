@@ -1,0 +1,206 @@
+/* Estilos para GlobalChat.tsx */
+.global-chat-panel {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Começa fora da tela */
+  width: 100%;
+  max-width: 380px; /* Largura do painel de chat */
+  height: 100vh;
+  background-color: var(--valorant-dark, #0f1923);
+  border-left: 2px solid var(--valorant-red, #ff4655);
+  z-index: 1000; /* Para ficar sobre outros elementos */
+  transition: right 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+}
+
+.global-chat-panel.open {
+  right: 0; /* Entra na tela */
+}
+
+.global-chat-header {
+  padding: 0.8rem 1rem; /* Ajustado */
+  background: linear-gradient(to right, var(--valorant-blue, #0d324d), var(--valorant-dark, #0f1923));
+  color: white;
+  display: flex;
+  justify-content: space-between; /* Para alinhar título e botão de fechar */
+  align-items: center;
+  border-bottom: 1px solid var(--valorant-red, #ff4655);
+}
+
+.global-chat-header h3 {
+  margin: 0;
+  font-size: 1.2rem; /* Ajustado */
+  font-family: "Montserrat", sans-serif;
+}
+
+.close-chat-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem; /* Tamanho do 'X' */
+  cursor: pointer;
+  padding: 0 0.5rem;
+  line-height: 1;
+}
+.close-chat-button:hover {
+  color: var(--valorant-red, #ff4655);
+}
+
+.global-chat-messages-area {
+  flex-grow: 1;
+  padding: 0.8rem 1rem; /* Ajustado */
+  overflow-y: auto;
+  background-color: rgba(15, 25, 35, 0.95); /* Fundo das mensagens */
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem; /* Espaço entre mensagens */
+}
+
+.global-chat-message {
+  padding: 0.6rem 0.8rem; /* Ajustado */
+  border-radius: 6px;
+  max-width: 90%; /* Mensagens podem ser um pouco mais largas */
+  word-wrap: break-word;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.global-chat-message.sent {
+  background-color: var(--valorant-red, #ff4655);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+.global-chat-message.received {
+  background-color: #2a3b4c; /* Mesma cor do chat da sala */
+  color: var(--valorant-light, #ece8e1);
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+}
+
+.global-message-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+    align-items: baseline;
+}
+
+.global-message-user {
+  font-weight: bold;
+  font-size: 0.8rem; /* Ajustado */
+  color: inherit; /* Herda a cor do pai (.sent ou .received) */
+  opacity: 0.9;
+}
+.global-chat-message.sent .global-message-user {
+  /* color: rgba(255,255,255,0.8); */
+}
+.global-chat-message.received .global-message-user {
+  color: var(--valorant-red, #ff4655); /* Destaca o nome do remetente em msgs recebidas */
+}
+
+
+.global-message-time {
+  color: inherit; /* Herda a cor */
+  font-size: 0.7rem; /* Ajustado */
+  opacity: 0.7;
+  margin-left: 0.5rem;
+}
+
+.global-message-text {
+  /* Estilos já definidos em .global-chat-message */
+}
+
+.no-messages { /* Reutilizado de RoomChat.css */
+  text-align: center;
+  color: #a0a0a0;
+  margin: auto; /* Centraliza completamente */
+}
+
+.global-chat-input-form {
+  display: flex;
+  padding: 0.8rem 1rem; /* Ajustado */
+  background-color: var(--valorant-blue, #0d324d);
+  border-top: 1px solid var(--valorant-red, #ff4655);
+  gap: 0.5rem; /* Espaço entre input e botão */
+}
+
+.global-chat-input {
+  flex-grow: 1;
+  padding: 0.7rem 0.9rem; /* Ajustado */
+  border: 1px solid var(--valorant-red, #ff4655);
+  background-color: var(--valorant-dark, #0f1923);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.global-chat-input:focus {
+  outline: none;
+  border-color: var(--valorant-light, #ece8e1);
+}
+
+.global-send-button {
+  padding: 0 1.2rem; /* Ajustado */
+  background-color: var(--valorant-red, #ff4655);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.85rem; /* Ajustado */
+  letter-spacing: 0.5px;
+}
+
+.global-send-button:hover:not(:disabled) {
+  background-color: #bd3944; /* Tom mais escuro no hover */
+}
+.global-send-button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.global-chat-login-prompt {
+  padding: 1rem;
+  text-align: center;
+  background-color: var(--valorant-blue, #0d324d);
+  border-top: 1px solid var(--valorant-red, #ff4655);
+  font-size: 0.9rem;
+}
+
+.global-chat-login-prompt a {
+  color: var(--valorant-red, #ff4655);
+  font-weight: bold;
+}
+.global-chat-login-prompt a:hover {
+  color: white;
+}
+
+/* Scrollbar customizada (reutilizada de RoomChat.css) */
+.global-chat-messages-area::-webkit-scrollbar {
+  width: 8px;
+}
+.global-chat-messages-area::-webkit-scrollbar-track {
+  background: var(--valorant-dark, #0f1923);
+  border-radius: 4px;
+}
+.global-chat-messages-area::-webkit-scrollbar-thumb {
+  background-color: var(--valorant-red, #ff4655);
+  border-radius: 4px;
+  border: 2px solid var(--valorant-dark, #0f1923);
+}
+.global-chat-messages-area::-webkit-scrollbar-thumb:hover {
+  background-color: #bd3944;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 480px) {
+  .global-chat-panel {
+    max-width: 100%; /* Ocupa a tela toda */
+    border-left: none;
+  }
+}

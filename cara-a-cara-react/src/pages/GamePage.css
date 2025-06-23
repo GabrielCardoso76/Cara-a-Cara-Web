@@ -1,0 +1,159 @@
+/* Estilos para ClassicGamePage.tsx e SenaiGamePage.tsx */
+.game-page-container {
+  padding: 1rem;
+  /* max-width: 1200px; */ /* O main-content já limita */
+  /* margin: 0 auto; */
+}
+
+.game-title {
+  text-align: center;
+  color: var(--valorant-red, #ff4655);
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.game-loading,
+.game-error {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 2rem;
+  color: var(--valorant-light, #ece8e1);
+}
+.game-error {
+  color: var(--valorant-red, #ff4655);
+}
+.game-error a {
+    color: var(--valorant-red, #ff4655);
+    text-decoration: underline;
+}
+
+.game-ended-message {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1rem auto 2rem;
+  max-width: 600px;
+}
+.game-ended-message.win {
+  background-color: rgba(40, 167, 69, 0.2);
+  border: 1px solid #28a745;
+  color: #28a745;
+}
+.game-ended-message.loss {
+  background-color: rgba(220, 53, 69, 0.2);
+  border: 1px solid #dc3545;
+  color: #dc3545;
+}
+.game-ended-message h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+
+.game-main-area {
+  display: flex;
+  gap: 1.5rem; /* Espaço entre painel esquerdo e direito */
+  flex-wrap: wrap; /* Permite quebra em telas menores */
+}
+
+.game-left-panel {
+  flex: 2; /* Ocupa mais espaço, para o tabuleiro */
+  min-width: 300px; /* Largura mínima antes de quebrar */
+}
+
+.game-right-panel {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Espaço entre os componentes no painel direito */
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.game-action-button {
+  /* Reutiliza .main-button-react de App.css ou define aqui */
+  background-color: var(--valorant-red, #ff4655);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-family: "Roboto Condensed", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: block; /* Para ocupar largura total se necessário */
+  width: 100%;
+  margin-top: 0.5rem;
+}
+.game-action-button:hover:not(:disabled) {
+  background-color: #d13340;
+  transform: translateY(-1px);
+}
+.game-action-button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.waiting-text {
+  text-align: center;
+  font-style: italic;
+  color: #a0a0a0;
+  margin: 1rem 0;
+}
+
+.guessing-area {
+  padding: 1rem;
+  border: 1px dashed var(--valorant-blue, #0d324d);
+  border-radius: 6px;
+  background-color: rgba(13, 50, 77, 0.1);
+}
+.guessing-area h3 {
+  margin-top: 0;
+  text-align: center;
+  color: var(--valorant-light, #ece8e1);
+}
+
+.guess-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.guess-select {
+  padding: 0.7rem;
+  background-color: rgba(236, 232, 225, 0.08);
+  border: 1px solid var(--valorant-blue, #0d324d);
+  color: var(--valorant-light, #ece8e1);
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+.guess-select:focus {
+  outline: none;
+  border-color: var(--valorant-red, #ff4655);
+}
+
+.attempts-info {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #c0c0c0;
+  margin-top: 1rem;
+}
+
+
+@media (max-width: 768px) {
+  .game-main-area {
+    flex-direction: column;
+  }
+  .game-left-panel, .game-right-panel {
+    flex: 1 1 100%; /* Ocupa largura total na coluna */
+  }
+  .game-title {
+    font-size: 1.5rem;
+  }
+}

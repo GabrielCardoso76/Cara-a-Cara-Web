@@ -1,0 +1,199 @@
+/* Estilos adaptados de css/style.css para o Footer */
+
+:root {
+  --valorant-red: #ff4655;
+  --valorant-dark: #0f1923;
+  --valorant-light: #ece8e1;
+}
+
+.footer {
+  background-color: var(--valorant-dark);
+  color: var(--valorant-light);
+  padding: 0; /* Removido padding para dar controle ao .footer-content e .footer-bottom */
+  margin-top: auto; /* Empurra o footer para o final da página se o conteúdo for curto */
+  border-top: 1px solid rgba(255, 70, 85, 0.3);
+  font-size: 0.9rem; /* Reduzido um pouco */
+  font-family: "Roboto Condensed", sans-serif; /* Garantir a fonte */
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajustado minmax */
+  gap: 2rem;
+  padding: 2.5rem 2rem; /* Ajustado padding */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem; /* Reduzido gap */
+}
+
+.footer-section p {
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.footer-title {
+  color: var(--valorant-red);
+  font-family: "Montserrat", sans-serif; /* Garantir a fonte */
+  font-size: 1.1rem; /* Reduzido */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.8rem; /* Aumentado margin */
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.footer-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px; /* Reduzido */
+  height: 2px;
+  background-color: var(--valorant-red);
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column; /* Mantido como coluna para múltiplos links */
+  gap: 0.8rem;
+  margin-top: 0.5rem; /* Ajustado */
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem; /* Aumentado gap */
+  color: var(--valorant-light);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  width: fit-content; /* Para o hover não ocupar a linha toda */
+}
+
+.social-icon:hover {
+  color: var(--valorant-red);
+  transform: translateX(3px); /* Pequeno efeito no hover */
+}
+
+.social-icon svg {
+  transition: all 0.3s ease;
+  width: 20px; /* Tamanho explícito para os ícones SVG */
+  height: 20px;
+}
+
+/* .social-icon:hover svg { // Efeito no ícone já está bom com o transform no texto
+  transform: translateY(-2px);
+} */
+
+.dev-list {
+  list-style: none;
+  padding-left: 0; /* Removido padding padrão da lista */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dev-list li {
+  position: relative;
+  padding-left: 1.2rem; /* Espaço para o marcador */
+}
+
+.dev-list li::before {
+  content: "▹"; /* Marcador personalizado */
+  position: absolute;
+  left: 0;
+  color: var(--valorant-red);
+  font-weight: bold;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem; /* Aumentado gap */
+  margin-top: 0.8rem; /* Ajustado */
+}
+
+.contact-info p {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem; /* Aumentado gap */
+}
+.contact-info svg {
+  width: 16px; /* Tamanho explícito para os ícones SVG */
+  height: 16px;
+  flex-shrink: 0; /* Para não encolherem */
+}
+
+
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem; /* Aumentado gap */
+  margin: 0.8rem 0; /* Ajustado */
+}
+
+.tech-badge {
+  background-color: rgba(255, 70, 85, 0.15); /* Levemente mais visível */
+  color: var(--valorant-light);
+  padding: 0.4rem 0.9rem; /* Ajustado padding */
+  border-radius: 15px; /* Mais arredondado */
+  font-size: 0.75rem; /* Reduzido */
+  border: 1px solid var(--valorant-red);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.copyright {
+  font-size: 0.8rem; /* Reduzido */
+  opacity: 0.7;
+  margin-top: auto; /* Empurra para baixo na seção */
+}
+
+.footer-bottom {
+  background-color: rgba(0, 0, 0, 0.25); /* Mais escuro */
+  padding: 1.2rem; /* Aumentado padding */
+  text-align: center;
+  font-size: 0.85rem; /* Reduzido */
+  border-top: 1px solid rgba(255, 70, 85, 0.15); /* Mais sutil */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr; /* Coluna única em telas menores */
+    padding: 2rem 1.5rem; /* Ajustado padding */
+    gap: 1.5rem; /* Reduzido gap */
+  }
+
+  .footer-section {
+    align-items: center; /* Centraliza conteúdo da seção */
+    text-align: center;
+  }
+
+  .footer-title::after {
+    left: 50%;
+    transform: translateX(-50%); /* Centraliza a linha abaixo do título */
+  }
+
+  .social-links,
+  .contact-info,
+  .dev-list {
+    align-items: center; /* Centraliza itens dentro dessas listas/divs */
+  }
+
+  .dev-list li {
+    padding-left: 0; /* Remove padding para centralizar o texto */
+    text-align: center;
+  }
+  .dev-list li::before {
+    display: none; /* Esconde marcador em telas pequenas para melhor centralização */
+  }
+
+  .tech-badges {
+    justify-content: center; /* Centraliza os badges */
+  }
+}

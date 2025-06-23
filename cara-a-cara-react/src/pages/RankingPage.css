@@ -1,0 +1,137 @@
+/* Estilos para RankingPage.tsx */
+.ranking-page-container {
+  padding: 1rem; /* Reduzido o padding da página, o .main-content já tem */
+  max-width: 900px; /* Largura máxima para a tabela */
+  margin: 0 auto; /* Centraliza */
+  font-family: "Roboto Condensed", sans-serif;
+  color: var(--valorant-light, #ece8e1);
+}
+
+.ranking-title {
+  text-align: center;
+  color: var(--valorant-red, #ff4655);
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.ranking-loading,
+.ranking-error,
+.no-ranking-data {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 2rem;
+  color: var(--valorant-light, #ece8e1);
+}
+.ranking-error {
+  color: var(--valorant-red, #ff4655);
+  background-color: rgba(255, 70, 85, 0.1);
+  border: 1px solid var(--valorant-red, #ff4655);
+  border-radius: 6px;
+}
+
+.ranking-table-wrapper {
+  overflow-x: auto; /* Permite scroll horizontal em telas pequenas */
+  background-color: var(--valorant-dark, #0f1923);
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255, 70, 85, 0.2);
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse; /* Remove espaços entre células */
+  min-width: 600px; /* Evita que a tabela fique muito espremida */
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 0.8rem 1rem; /* Aumentado padding */
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 70, 85, 0.15); /* Linha separadora mais sutil */
+}
+
+.ranking-table th {
+  background-color: rgba(255, 70, 85, 0.2); /* Fundo vermelho sutil para o header */
+  color: var(--valorant-red, #ff4655);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+  position: sticky; /* Para o header da tabela ficar fixo no scroll wrapper (se o wrapper tiver altura) */
+  top: 0;
+  z-index: 10;
+}
+
+.ranking-table td {
+  font-size: 0.95rem;
+}
+
+.ranking-table tbody tr:last-child td {
+  border-bottom: none; /* Remove a borda da última linha */
+}
+
+.ranking-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.03); /* Hover sutil nas linhas */
+}
+
+.ranking-position {
+  font-weight: bold;
+  width: 5%; /* Largura para a coluna de posição */
+  text-align: center;
+}
+.ranking-name {
+  width: 40%; /* Largura para o nome */
+  font-weight: 500;
+}
+.ranking-stats {
+  width: 13%; /* Largura para colunas de stats */
+  text-align: center;
+}
+.win-rate {
+  font-weight: 500;
+}
+
+/* Estilos para os primeiros colocados */
+.gold-rank td {
+  /* background-color: rgba(255, 215, 0, 0.08); */
+  /* border-left: 3px solid gold; */
+}
+.gold-rank .ranking-position, .gold-rank .ranking-name {
+  color: #ffd700; /* Dourado */
+  font-weight: bold;
+}
+
+.silver-rank td {
+  /* background-color: rgba(192, 192, 192, 0.08); */
+  /* border-left: 3px solid silver; */
+}
+.silver-rank .ranking-position, .silver-rank .ranking-name {
+  color: #c0c0c0; /* Prata */
+  font-weight: bold;
+}
+
+.bronze-rank td {
+  /* background-color: rgba(205, 127, 50, 0.08); */
+  /* border-left: 3px solid #cd7f32; */
+}
+.bronze-rank .ranking-position, .bronze-rank .ranking-name {
+  color: #cd7f32; /* Bronze */
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .ranking-title {
+    font-size: 1.5rem;
+  }
+  .ranking-table th,
+  .ranking-table td {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  .ranking-stats, .win-rate, .ranking-position {
+    font-size: 0.8rem;
+  }
+}

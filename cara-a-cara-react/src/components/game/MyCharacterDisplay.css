@@ -1,0 +1,51 @@
+.my-character-display {
+  border: 2px solid #ff4655; /* Vermelho Valorant */
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #1c252e; /* Tom escuro, consistente com CharacterCard */
+  text-align: center;
+  width: 200px; /* Largura fixa ou max-width, ajuste conforme necessário */
+  margin: 1rem auto; /* Centraliza se for um bloco */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.my-character-display.placeholder {
+  border-style: dashed;
+  color: #a0a0a0; /* Cinza claro para texto placeholder */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px; /* Altura similar ao card com imagem */
+}
+
+.my-character-display .label {
+  font-size: 0.9rem;
+  color: #c0c0c0; /* Cinza mais claro para o label */
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.my-character-image {
+  width: 100%;
+  max-width: 180px; /* Para não ficar muito grande dentro do card */
+  height: auto;
+  max-height: 200px; /* Limita altura */
+  object-fit: cover;
+  border-radius: 4px; /* Leve arredondamento para a imagem */
+  margin-bottom: 0.75rem;
+  border: 1px solid #343a40; /* Borda sutil na imagem */
+}
+
+.character-name-display {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ece8e1; /* Branco Valorant */
+  margin-top: 0.5rem;
+}
+
+.my-character-display.placeholder .character-name-display {
+  font-size: 1rem;
+  font-style: italic;
+}

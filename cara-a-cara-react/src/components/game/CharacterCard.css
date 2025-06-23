@@ -1,0 +1,62 @@
+.character-card {
+  border: 2px solid #ff4655; /* Vermelho Valorant */
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background-color: #1c252e; /* Um pouco mais claro que o fundo principal */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative; /* Para o overlay de eliminação */
+}
+
+.character-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 8px 15px rgba(255, 70, 85, 0.2);
+}
+
+.character-image {
+  width: 100%;
+  height: auto; /* Manter proporção */
+  max-height: 150px; /* Limitar altura da imagem */
+  object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+  display: block;
+}
+
+.character-name {
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  color: #ece8e1; /* Branco Valorant */
+  text-align: center;
+  background-color: rgba(0,0,0, 0.3);
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Estilo para personagem eliminado */
+.character-card.eliminated {
+  opacity: 0.5;
+  /* filter: grayscale(100%); */ /* Outra opção visual */
+}
+
+.character-card.eliminated::after {
+  content: 'X';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5rem; /* Ajuste conforme o tamanho do card */
+  color: rgba(255, 70, 85, 0.7); /* Vermelho Valorant com transparência */
+  font-weight: bold;
+  text-shadow: 0 0 5px black;
+  pointer-events: none; /* Para não interferir no clique do card */
+}
+
+/* Ajustes para o nome não sobrepor o X em alguns casos */
+.character-card.eliminated .character-name {
+  opacity: 0.7;
+}

@@ -1,0 +1,96 @@
+/* Reset básico e estilos globais */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #0f1923; /* Cor de fundo padrão do Valorant */
+  color: #ece8e1; /* Cor de texto padrão do Valorant */
+  line-height: 1.5;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Estilos para o container principal da aplicação */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1; /* Faz o conteúdo principal crescer para preencher o espaço */
+  padding: 1.5rem; /* Um padding geral para o conteúdo das páginas */
+  max-width: 1200px; /* Limita a largura máxima do conteúdo */
+  margin: 0 auto; /* Centraliza o conteúdo */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Estilos para conteúdo específico de página, se necessário */
+.page-content {
+  /* background-color: rgba(255, 255, 255, 0.03); */ /* Um fundo sutil para destacar a área de conteúdo */
+  /* padding: 2rem; */
+  /* border-radius: 8px; */
+  /* box-shadow: 0 2px 10px rgba(0,0,0,0.2); */
+  text-align: center; /* Centraliza o texto por padrão nas páginas simples */
+}
+
+.page-content h1, .page-content h2 {
+  color: #ff4655; /* Cor de destaque Valorant para títulos */
+  font-family: "Montserrat", sans-serif; /* Fonte dos títulos */
+  text-transform: uppercase;
+}
+
+
+/* Botão principal reutilizável (exemplo) */
+.main-button-react {
+  background-color: #ff4655; /* Cor Valorant Red */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-family: "Roboto Condensed", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none; /* Para Links estilizados como botões */
+  display: inline-block; /* Para Links */
+}
+
+.main-button-react:hover {
+  background-color: #e03845; /* Um tom mais escuro de vermelho no hover */
+  transform: translateY(-2px);
+}
+
+/* Loading placeholder style */
+.loading-fullscreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  color: #ff4655;
+}
+
+/* Remover estilos padrão do create-react-app que não são mais usados */
+/* .App, .App-logo, .App-header, .App-link */
+/* Keyframes App-logo-spin */
+
+/* Você pode adicionar mais estilos globais ou resets aqui */
+
+a {
+  color: #61dafb; /* Cor padrão de link do React, pode ser sobrescrita */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

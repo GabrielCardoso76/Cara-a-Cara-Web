@@ -1,0 +1,96 @@
+/* Estilos para NotificationDisplay.tsx */
+.notification-container {
+  position: fixed;
+  top: 80px; /* Abaixo do header (assumindo header com ~70px + margem) */
+  right: 20px;
+  z-index: 2000; /* Acima de outros elementos, incluindo chat global */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espaço entre notificações */
+  width: 100%;
+  max-width: 350px; /* Largura máxima para as notificações */
+}
+
+.notification-item {
+  padding: 12px 15px;
+  border-radius: 6px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: slideInNotification 0.3s ease-out, fadeOutNotification 0.3s ease-in forwards; /* Adiciona animação de fadeOut */
+  /* A animação de fadeOut será controlada pelo tempo de duração no JS */
+  opacity: 1; /* Começa visível */
+}
+
+/* Animação de entrada */
+@keyframes slideInNotification {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animação de saída (será acionada antes da remoção do DOM se quisermos, mas JS já remove) */
+/* Para um efeito de fade out ANTES de remover do DOM, precisaríamos de mais lógica no JS */
+/* Por ora, o setTimeout do JS remove o elemento. Se for abrupto, podemos adicionar uma classe de 'fading-out' */
+@keyframes fadeOutNotification {
+  /* Este keyframe é mais para referência, a remoção é feita pelo JS */
+  /* Para um fade out real antes da remoção, o componente precisaria de um estado 'exiting' */
+  /* from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(50px); } */
+}
+
+
+.notification-item.success {
+  background-color: #28a745; /* Verde sucesso */
+  border-left: 5px solid #1e7e34;
+}
+
+.notification-item.error {
+  background-color: #dc3545; /* Vermelho erro */
+  border-left: 5px solid #b02a37;
+}
+
+.notification-item.info {
+  background-color: #17a2b8; /* Azul info */
+  border-left: 5px solid #117a8b;
+}
+
+.notification-item.warning {
+  background-color: #ffc107; /* Amarelo warning */
+  color: #212529; /* Texto escuro para melhor contraste com amarelo */
+  border-left: 5px solid #d39e00;
+}
+
+.notification-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.notification-message {
+  flex-grow: 1;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.notification-close-btn {
+  background: none;
+  border: none;
+  color: inherit; /* Herda a cor do texto da notificação */
+  opacity: 0.7;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0 0 0 10px; /* Padding à esquerda para não colar no texto */
+  line-height: 1;
+}
+
+.notification-close-btn:hover {
+  opacity: 1;
+}
