@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ref, push, serverTimestamp, onChildAdded, off, query, orderByChild, limitToLast } from 'firebase/database';
+import { ref, push, serverTimestamp, onChildAdded, off, query, orderByChild, limitToLast, get } from 'firebase/database'; // Adicionado get
 import { doc, getDoc } from 'firebase/firestore';
 import { database, firestore } from '../../services/firebase';
 import { useAuth } from '../../contexts/AuthContext';
-import { GameMessage } from '../../types/game'; // Reutilizando GameMessage, pode precisar de um tipo GlobalMessage específico
+import { GameMessage } from '../../types/game';
+import { Link } from 'react-router-dom'; // Adicionada importação do Link
 import './GlobalChat.css';
 
 interface GlobalChatProps {
@@ -39,8 +40,8 @@ const GlobalChat: React.FC<GlobalChatProps> = ({ isOpen, onClose }) => {
         return name;
       } else {
         // Fallback para Realtime Database se não encontrado no Firestore (como no original)
-        // Ou apenas usar um placeholder se o perfil Firestore é a fonte canônica
-        const snapshot = await ref(database, `users/${uid}`).once('value');
+        const userRtdbRef = ref(database, `users/${uid}`);
+        const snapshot = await get(userRtdbRef); // Corrigido para get(ref(...))
         if (snapshot.exists()) {
             const rtdbUserData = snapshot.val();
             const name = rtdbUserData?.displayName || rtdbUserData?.email?.split("@")[0] || `Jogador_${uid.substring(0, 4)}`;
@@ -118,7 +119,7 @@ const GlobalChat: React.FC<GlobalChatProps> = ({ isOpen, onClose }) => {
     const senderName = userNamesCache.get(currentUser.uid) || await getDisplayName(currentUser.uid);
 
     const messageData = {
-      senderUid: currentUser.uid,
+      senderId: currentUser.uid, // Alterado de senderUid para senderId
       senderName: senderName,
       text: newMessage,
       timestamp: serverTimestamp(),

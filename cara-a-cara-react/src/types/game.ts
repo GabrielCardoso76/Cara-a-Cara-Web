@@ -9,7 +9,7 @@ export interface Player {
 export interface GameMessage {
   id: string;
   text: string;
-  senderId: string;
+  senderId: string; // Padronizado para senderId
   senderName: string;
   timestamp: number; // ou firebase.database.ServerValue.TIMESTAMP
 }
@@ -23,32 +23,30 @@ export interface DiceValues {
 
 export interface RoomData {
   roomId: string;
+  roomName?: string; // Adicionado roomName como opcional
   owner: string; // UID do criador da sala
-  players: { [uid: string]: Player | boolean }; // Pode ser Player ou apenas true se não precisar de mais dados aqui
-  createdAt: number; // timestamp
-  gameMode: 'classic' | 'senai'; // Para diferenciar os modos de jogo
+  players: { [uid: string]: Player | boolean };
+  createdAt: number;
+  gameMode: 'classic' | 'senai';
 
   // Estado do jogo
-  sortedCharacterOwner?: string | null; // Caminho da imagem ou ID do personagem
+  sortedCharacterOwner?: string | null;
   sortedCharacterVisitor?: string | null;
   ownerCharacterReady?: boolean;
   visitorCharacterReady?: boolean;
-  charactersSorted?: boolean; // Indica se ambos sortearam e o jogo pode começar com os dados
+  charactersSorted?: boolean;
 
   diceValues?: DiceValues;
   diceResultsShown?: boolean;
-  currentPlayer?: string | null; // UID do jogador da vez
+  currentPlayer?: string | null;
 
   gameEnded?: boolean;
-  winner?: string | null; // UID do vencedor
-  loser?: string | null; // UID do perdedor
+  winner?: string | null;
+  loser?: string | null;
   endMessage?: string;
 
-  messages?: { [messageId: string]: GameMessage }; // Chat da sala
-  notifications?: { [notificationId: string]: any }; // Notificações específicas do jogo
-
-  // Adicionar outros campos conforme necessário
-  // Ex: currentQuestion (se houver perguntas), scores, etc.
+  messages?: { [messageId: string]: GameMessage };
+  notifications?: { [notificationId: string]: any };
 }
 
 // Para o contexto do jogo
@@ -60,21 +58,11 @@ export interface GameContextType {
   errorRoom: string | null;
   isRoomOwner: boolean | null;
   myCharacterPath: string | null;
-  opponentCharacterPath: string | null; // Apenas para debug ou se precisar mostrar pro usuário o do oponente no final
+  opponentCharacterPath: string | null;
   currentTurnPlayerId: string | null;
   wrongAttempts: number;
-  // Adicionar mais estados conforme necessário (e.g., selectedCharacterForGuess)
-
-  // Funções de ação (serão movidas para um hook useGameActions)
-  // sortCharacter: () => Promise<void>;
-  // rollDice: () => Promise<void>;
-  // makeGuess: (guessedCharacterName: string) => Promise<void>;
-  // sendMessage: (text: string) => Promise<void>;
-  // eliminateCharacterToggle: (characterName: string) => void; // Para o tabuleiro do jogador
 }
 
-// Lista de personagens (pode ser movida para um arquivo de assets/constants)
-// Caminhos atualizados para refletir a estrutura em public/assets/img/
 export const CLASSIC_CHARACTERS = [
   "assets/img/personagem/Brett.jpg",
   "assets/img/personagem/Buddy.jpg",
@@ -122,7 +110,6 @@ export const DICE_FACES = [
   "assets/img/dado_faces/face_6.jpg",
 ];
 
-// Função utilitária para extrair o nome do arquivo da imagem
 export const getCharacterNameFromPath = (path: string): string => {
   return path.split('/').pop()?.replace('.jpg', '') || 'unknown';
 };

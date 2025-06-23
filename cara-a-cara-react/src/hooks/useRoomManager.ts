@@ -6,9 +6,10 @@ import { useNotification } from '../contexts/NotificationContext';
 import { RoomData, Player } from '../types/game'; // Supondo que Player e RoomData estejam definidos
 import { useNavigate } from 'react-router-dom';
 
-export interface ListedRoom extends Partial<RoomData> {
+export interface ListedRoom extends Partial<RoomData> { // RoomData agora tem roomName opcional
     id: string;
     playerCount: number;
+    // roomName?: string; // Já herdado de Partial<RoomData> se RoomData for atualizado
     // gameMode já está em RoomData
 }
 

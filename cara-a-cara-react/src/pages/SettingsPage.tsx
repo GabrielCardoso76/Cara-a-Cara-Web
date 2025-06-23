@@ -12,7 +12,7 @@ const SettingsPage: React.FC = () => {
 
   const [displayName, setDisplayName] = useState(currentUser?.displayName || '');
   const [newAccentColor, setNewAccentColor] = useState(accentColor);
-  const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [feedback, setFeedback] = useState<{ type: 'success' | 'error' | 'info'; message: string } | null>(null); // Adicionado 'info'
   const [loadingName, setLoadingName] = useState(false);
 
   useEffect(() => {
