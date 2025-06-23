@@ -58,8 +58,9 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         setRoomData(data);
         const owner = data.owner === currentUser.uid;
         setIsRoomOwner(owner);
-        setMyCharacterPath(owner ? data.sortedCharacterOwner : data.sortedCharacterVisitor);
-        setOpponentCharacterPath(owner ? data.sortedCharacterVisitor : data.sortedCharacterOwner);
+        // Convertendo undefined para null para compatibilidade com o estado que espera string | null
+        setMyCharacterPath(owner ? data.sortedCharacterOwner || null : data.sortedCharacterVisitor || null);
+        setOpponentCharacterPath(owner ? data.sortedCharacterVisitor || null : data.sortedCharacterOwner || null);
         setCurrentTurnPlayerId(data.currentPlayer || null);
 
         // Lógica de processamento de dados do dado (QUEM COMEÇA)

@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
-import { ref, push, serverTimestamp, set, get, update, query, orderByChild, equalTo, limitToFirst, runTransaction } from 'firebase/database';
+// Adicionado limitToLast na importação
+import { ref, push, serverTimestamp, set, get, update, query, orderByChild, equalTo, limitToFirst, limitToLast, runTransaction } from 'firebase/database';
 import { database } from '../services/firebase';
 import { useAuth } from '../contexts/AuthContext';
 import { useNotification } from '../contexts/NotificationContext';

@@ -119,7 +119,7 @@ const GlobalChat: React.FC<GlobalChatProps> = ({ isOpen, onClose }) => {
     const senderName = userNamesCache.get(currentUser.uid) || await getDisplayName(currentUser.uid);
 
     const messageData = {
-      senderId: currentUser.uid, // Alterado de senderUid para senderId
+      senderUid: currentUser.uid, // Alterado de senderId para senderUid para consistência
       senderName: senderName,
       text: newMessage,
       timestamp: serverTimestamp(),

@@ -8,7 +8,8 @@ import CharacterBoard from '../components/game/CharacterBoard';
 import MyCharacterDisplay from '../components/game/MyCharacterDisplay';
 import DiceDisplay from '../components/game/DiceDisplay';
 import RoomChat from '../components/game/RoomChat';
-import { CLASSIC_CHARACTERS, getCharacterNameFromPath } from '../types/game';
+// Adicionada importação de DICE_FACES
+import { CLASSIC_CHARACTERS, getCharacterNameFromPath, DICE_FACES } from '../types/game';
 import './GamePage.css'; // Um CSS compartilhado para as páginas de jogo
 
 const ClassicGamePage: React.FC = () => {

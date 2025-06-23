@@ -9,7 +9,7 @@ export interface Player {
 export interface GameMessage {
   id: string;
   text: string;
-  senderId: string; // Padronizado para senderId
+  senderUid: string; // Padronizado para senderUid conforme solicitado
   senderName: string;
   timestamp: number; // ou firebase.database.ServerValue.TIMESTAMP
 }
@@ -25,7 +25,7 @@ export interface RoomData {
   roomId: string;
   roomName?: string; // Adicionado roomName como opcional
   owner: string; // UID do criador da sala
-  players: { [uid: string]: Player | boolean };
+  players: { [uid: string]: Player }; // Alterado de Player | boolean para Player
   createdAt: number;
   gameMode: 'classic' | 'senai';
 
