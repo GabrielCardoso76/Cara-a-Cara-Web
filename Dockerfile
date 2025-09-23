@@ -17,7 +17,7 @@ RUN mvn clean install -DskipTests
 
 # --- Estágio de Execução ---
 # Usa uma imagem muito mais leve, apenas com o Java Runtime
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre-alpine
 
 # Define o diretório de trabalho
 WORKDIR /app
