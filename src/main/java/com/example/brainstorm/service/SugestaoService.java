@@ -41,8 +41,17 @@ public class SugestaoService {
         novaSugestao.setCreatedAt(LocalDateTime.now());
 
         // Simula a verificação de domínio e INPI com valores aleatórios
-        novaSugestao.setDominioDisponivel(random.nextBoolean());
-        novaSugestao.setInpiDisponivel(random.nextBoolean());
+        novaSugestao.setDominioComDisponivel(random.nextBoolean());
+        novaSugestao.setDominioComBrDisponivel(random.nextBoolean());
+
+        int totalConflitos = random.nextInt(10); // 0 a 9 conflitos
+        int conflitosTecnologia = 0;
+        if (totalConflitos > 0) {
+            conflitosTecnologia = random.nextInt(totalConflitos + 1); // 0 a totalConflitos
+        }
+
+        novaSugestao.setConflitosMarca(totalConflitos);
+        novaSugestao.setConflitosMarcaTecnologia(conflitosTecnologia);
 
         sugestaoRepository.save(novaSugestao);
     }
@@ -73,13 +82,14 @@ public class SugestaoService {
 
     /**
      * Retorna uma lista de sugestões baseada no critério de filtro.
-     * @param filter O critério de filtro ("domain", "inpi", "recent").
+     * @param filter O critério de filtro ("com", "combr", "no_conflicts", "recent").
      * @return A lista de sugestões filtrada e ordenada.
      */
     public List<SugestaoNome> getFilteredSuggestions(String filter) {
         return switch (filter) {
-            case "domain" -> sugestaoRepository.findByDominioDisponivelTrueOrderByVotosDesc();
-            case "inpi" -> sugestaoRepository.findByInpiDisponivelTrueOrderByVotosDesc();
+            case "com" -> sugestaoRepository.findByDominioComDisponivelTrueOrderByVotosDesc();
+            case "combr" -> sugestaoRepository.findByDominioComBrDisponivelTrueOrderByVotosDesc();
+            case "no_conflicts" -> sugestaoRepository.findByConflitosMarcaEqualsOrderByVotosDesc(0);
             case "recent" -> sugestaoRepository.findAllByOrderByCreatedAtDesc();
             default -> findAllOrderByVotos();
         };

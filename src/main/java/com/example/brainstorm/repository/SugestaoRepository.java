@@ -12,11 +12,14 @@ public interface SugestaoRepository extends JpaRepository<SugestaoNome, Long> {
     // Ordenação padrão por votos descendente
     List<SugestaoNome> findAllByOrderByVotosDesc();
 
-    // Filtro para domínio disponível, ordenado por votos
-    List<SugestaoNome> findByDominioDisponivelTrueOrderByVotosDesc();
+    // Filtro para domínio .com disponível
+    List<SugestaoNome> findByDominioComDisponivelTrueOrderByVotosDesc();
 
-    // Filtro para INPI disponível, ordenado por votos
-    List<SugestaoNome> findByInpiDisponivelTrueOrderByVotosDesc();
+    // Filtro para domínio .com.br disponível
+    List<SugestaoNome> findByDominioComBrDisponivelTrueOrderByVotosDesc();
+
+    // Filtro para ausência de conflitos de marca
+    List<SugestaoNome> findByConflitosMarcaEqualsOrderByVotosDesc(int conflitos);
 
     // Ordenação por mais recentes
     List<SugestaoNome> findAllByOrderByCreatedAtDesc();

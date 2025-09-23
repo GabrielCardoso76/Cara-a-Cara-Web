@@ -47,8 +47,9 @@
         <div class="flex flex-wrap gap-3 md:gap-4 mb-6 items-center">
             <h3 class="text-xl font-semibold text-gray-700 mr-4">Ranking</h3>
             <a th:href="@{/}" th:classappend="${activeFilter == 'all'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">Todos</a>
-            <a th:href="@{/filter(by='domain')}" th:classappend="${activeFilter == 'domain'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">✅ Domínio Disponível</a>
-            <a th:href="@{/filter(by='inpi')}" th:classappend="${activeFilter == 'inpi'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">✅ Marca Disponível</a>
+            <a th:href="@{/filter(by='com')}" th:classappend="${activeFilter == 'com'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">✅ .com Disponível</a>
+            <a th:href="@{/filter(by='combr')}" th:classappend="${activeFilter == 'combr'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">✅ .com.br Disponível</a>
+            <a th:href="@{/filter(by='no_conflicts')}" th:classappend="${activeFilter == 'no_conflicts'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">✅ Sem Conflitos de Marca</a>
             <a th:href="@{/filter(by='recent')}" th:classappend="${activeFilter == 'recent'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">Mais Recentes</a>
         </div>
 
@@ -60,12 +61,20 @@
                     <h4 class="text-xl font-bold text-gray-800" th:text="${sugestao.nome}"></h4>
                     <p class="text-xs text-gray-500 mb-3">Sugerido por: <span th:text="${sugestao.autor}"></span></p>
                     <div class="space-y-2 text-sm">
-                        <p class="flex items-center gap-2" th:classappend="${sugestao.dominioDisponivel} ? 'text-green-600' : 'text-red-600'">
-                            <span th:text="${sugestao.dominioDisponivel} ? '✅ Domínio Disponível' : '❌ Domínio Ocupado'"></span>
+                        <p class="flex items-center gap-2" th:classappend="${sugestao.dominioComDisponivel} ? 'text-green-600' : 'text-red-600'">
+                            <span th:text="${sugestao.dominioComDisponivel} ? '✅' : '❌'"></span>
+                            <span>Domínio .com</span>
                         </p>
-                        <p class="flex items-center gap-2" th:classappend="${sugestao.inpiDisponivel} ? 'text-green-600' : 'text-red-600'">
-                            <span th:text="${sugestao.inpiDisponivel} ? '✅ Marca Disponível' : '❌ Marca com Conflito'"></span>
+                        <p class="flex items-center gap-2" th:classappend="${sugestao.dominioComBrDisponivel} ? 'text-green-600' : 'text-red-600'">
+                            <span th:text="${sugestao.dominioComBrDisponivel} ? '✅' : '❌'"></span>
+                            <span>Domínio .com.br</span>
                         </p>
+                        <div th:if="${sugestao.conflitosMarca == 0}" class="flex items-center gap-2 text-green-600">
+                            <span>✅ Sem conflitos de marca</span>
+                        </div>
+                        <div th:unless="${sugestao.conflitosMarca == 0}" class="flex items-center gap-2 text-yellow-600">
+                            <span>⚠️ <span th:text="${sugestao.conflitosMarca}"></span> conflitos de marca (<span th:text="${sugestao.conflitosMarcaTecnologia}"></span> em tec)</span>
+                        </div>
                     </div>
                 </div>
                 <div class="flex items-center justify-between mt-4">
