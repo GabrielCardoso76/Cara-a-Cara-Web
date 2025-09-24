@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Nome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+<div id="app" class="container mx-auto p-4 md:p-8">
+    <!-- Cabeçalho -->
+    <header class="flex flex-col md:flex-row justify-between items-center mb-8 border-b pb-4">
+        <a th:href="@{/}" class="text-indigo-600 hover:underline">&larr; Voltar para a Lista</a>
+        <div id="user-info" class="text-right">
+            <p class="text-sm text-gray-600">Logado como:
+                <span class="font-semibold text-indigo-600" th:text="${username}">Usuário</span>
+            </p>
+        </div>
+    </header>
+
+    <!-- Detalhes da Sugestão -->
+    <main th:object="${sugestao}" class="bg-white p-8 rounded-lg shadow-lg">
+        <h1 class="text-4xl font-bold text-gray-800 mb-2" th:text="*{nome}">Nome da Sugestão</h1>
+        <p class="text-md text-gray-500 mb-6">Sugerido por: <span th:text="*{autor}"></span> &bull; Votos: <span class="font-bold" th:text="*{votos}"></span></p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Coluna de Domínios -->
+            <section>
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-b pb-2">Disponibilidade de Domínio</h2>
+                <div class="space-y-4">
+                    <!-- Domínio .com -->
+                    <div class="flex items-center justify-between p-3 rounded-md" th:classappend="*{dominioComDisponivel} ? 'bg-green-50' : 'bg-red-50'">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl" th:text="*{dominioComDisponivel} ? '✅' : '❌'"></span>
+                            <span class="font-medium" th:text="|Domínio ${nome}.com|"></span>
+                        </div>
+                        <a th:if="${!sugestao.dominioComDisponivel}" th:href="@{'http://' + *{nome} + '.com'}" target="_blank" class="text-sm text-indigo-600 hover:underline">Visitar</a>
+                    </div>
+                    <!-- Domínio .com.br -->
+                    <div class="flex items-center justify-between p-3 rounded-md" th:classappend="*{dominioComBrDisponivel} ? 'bg-green-50' : 'bg-red-50'">
+                        <div class="flex items-center gap-3">
+                             <span class="text-2xl" th:text="*{dominioComBrDisponivel} ? '✅' : '❌'"></span>
+                            <span class="font-medium" th:text="|Domínio ${nome}.com.br|"></span>
+                        </div>
+                         <a th:if="${!sugestao.dominioComBrDisponivel}" th:href="@{'http://' + *{nome} + '.com.br'}" target="_blank" class="text-sm text-indigo-600 hover:underline">Visitar</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Coluna de Marcas -->
+            <section>
+                 <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-b pb-2">Conflitos de Marca (INPI)</h2>
+                 <div th:if="*{conflitosMarca == 0}" class="flex items-center gap-3 p-3 rounded-md bg-green-50">
+                     <span class="text-2xl">✅</span>
+                     <p class="font-medium">Nenhum conflito de marca encontrado.</p>
+                 </div>
+                 <div th:unless="*{conflitosMarca == 0}" class="p-3 rounded-md bg-yellow-50">
+                     <p class="font-medium text-yellow-800 mb-3">
+                         <span class="text-2xl">⚠️</span>
+                         Encontrados <span th:text="*{conflitosMarca}"></span> conflitos, dos quais <span th:text="*{conflitosMarcaTecnologia}"></span> são no setor de tecnologia.
+                     </p>
+                     <h3 class="font-semibold text-gray-600 mb-2">Empresas com nomes semelhantes:</h3>
+                     <p class="text-sm text-gray-700" th:text="*{conflitosMarcaNomes}">Innovate Inc., Tech Solutions, etc.</p>
+                 </div>
+            </section>
+        </div>
+    </main>
+</div>
+</body>
+</html>

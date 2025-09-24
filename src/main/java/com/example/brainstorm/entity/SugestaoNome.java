@@ -20,6 +20,7 @@ public class SugestaoNome {
     private boolean dominioComBrDisponivel;
     private int conflitosMarca;
     private int conflitosMarcaTecnologia;
+    private String conflitosMarcaNomes;
     private LocalDateTime createdAt;
 
     // Construtor padrão exigido pelo JPA
@@ -90,6 +91,14 @@ public class SugestaoNome {
 
     public void setConflitosMarcaTecnologia(int conflitosMarcaTecnologia) {
         this.conflitosMarcaTecnologia = conflitosMarcaTecnologia;
+    }
+
+    public String getConflitosMarcaNomes() {
+        return conflitosMarcaNomes;
+    }
+
+    public void setConflitosMarcaNomes(String conflitosMarcaNomes) {
+        this.conflitosMarcaNomes = conflitosMarcaNomes;
     }
 
     public LocalDateTime getCreatedAt() {

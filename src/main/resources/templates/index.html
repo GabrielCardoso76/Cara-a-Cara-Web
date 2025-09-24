@@ -54,35 +54,22 @@
         </div>
 
         <!-- Lista de Nomes -->
-        <div id="names-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Card de Nome (Renderizado pelo Thymeleaf) -->
-            <div th:each="sugestao : ${sugestoes}" class="name-card bg-white p-5 rounded-lg shadow-md flex flex-col justify-between transition-shadow duration-300">
-                <div>
-                    <h4 class="text-xl font-bold text-gray-800" th:text="${sugestao.nome}"></h4>
-                    <p class="text-xs text-gray-500 mb-3">Sugerido por: <span th:text="${sugestao.autor}"></span></p>
-                    <div class="space-y-2 text-sm">
-                        <p class="flex items-center gap-2" th:classappend="${sugestao.dominioComDisponivel} ? 'text-green-600' : 'text-red-600'">
-                            <span th:text="${sugestao.dominioComDisponivel} ? '✅' : '❌'"></span>
-                            <span>Domínio .com</span>
-                        </p>
-                        <p class="flex items-center gap-2" th:classappend="${sugestao.dominioComBrDisponivel} ? 'text-green-600' : 'text-red-600'">
-                            <span th:text="${sugestao.dominioComBrDisponivel} ? '✅' : '❌'"></span>
-                            <span>Domínio .com.br</span>
-                        </p>
-                        <div th:if="${sugestao.conflitosMarca == 0}" class="flex items-center gap-2 text-green-600">
-                            <span>✅ Sem conflitos de marca</span>
-                        </div>
-                        <div th:unless="${sugestao.conflitosMarca == 0}" class="flex items-center gap-2 text-yellow-600">
-                            <span>⚠️ <span th:text="${sugestao.conflitosMarca}"></span> conflitos de marca (<span th:text="${sugestao.conflitosMarcaTecnologia}"></span> em tec)</span>
-                        </div>
-                    </div>
+        <div id="names-list" class="space-y-4">
+            <!-- Item da Lista (Renderizado pelo Thymeleaf) -->
+            <div th:each="sugestao : ${sugestoes}" class="bg-white p-4 rounded-lg shadow-md flex items-center justify-between transition-shadow duration-300 hover:shadow-lg">
+                <!-- Nome e Autor -->
+                <div class="flex-grow">
+                    <a th:href="@{/sugestao/{id}(id=${sugestao.id})}" class="text-xl font-bold text-indigo-600 hover:underline" th:text="${sugestao.nome}">
+                        Nome da Sugestão
+                    </a>
+                    <p class="text-xs text-gray-500 mt-1">Sugerido por: <span th:text="${sugestao.autor}"></span></p>
                 </div>
-                <div class="flex items-center justify-between mt-4">
-                    <div class="flex items-center gap-3">
-                        <button class="upvote-btn text-2xl hover:opacity-75 transition-opacity" th:attr="data-id=${sugestao.id}">🔥</button>
-                        <span class="vote-count text-lg font-bold text-gray-700" th:text="${sugestao.votos}"></span>
-                        <button class="downvote-btn text-2xl hover:opacity-75 transition-opacity" th:attr="data-id=${sugestao.id}">❄️</button>
-                    </div>
+
+                <!-- Votos -->
+                <div class="flex items-center gap-4 ml-4 flex-shrink-0">
+                    <button class="upvote-btn text-2xl hover:opacity-75 transition-opacity" th:attr="data-id=${sugestao.id}">🔥</button>
+                    <span class="vote-count text-lg font-bold text-gray-700" th:text="${sugestao.votos}">0</span>
+                    <button class="downvote-btn text-2xl hover:opacity-75 transition-opacity" th:attr="data-id=${sugestao.id}">❄️</button>
                 </div>
             </div>
         </div>
@@ -111,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => {
             if (response.ok) {
                 // Atualiza o contador de votos na tela
-                const voteCountSpan = target.closest('.flex.items-center.gap-3').querySelector('.vote-count');
+                const voteCountSpan = target.closest('.flex.items-center.gap-4').querySelector('.vote-count');
                 let currentVotes = parseInt(voteCountSpan.textContent, 10);
                 voteCountSpan.textContent = isUpvote ? currentVotes + 1 : currentVotes - 1;
             } else if (response.status === 401) {
