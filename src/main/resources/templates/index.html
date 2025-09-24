@@ -47,45 +47,33 @@
         <div class="flex flex-wrap gap-3 md:gap-4 mb-6 items-center">
             <h3 class="text-xl font-semibold text-gray-700 mr-4">Ranking</h3>
             <a th:href="@{/}" th:classappend="${activeFilter == 'all'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">Todos</a>
-            <a th:href="@{/filter(by='com')}" th:classappend="${activeFilter == 'com'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">✅ .com Disponível</a>
-            <a th:href="@{/filter(by='combr')}" th:classappend="${activeFilter == 'combr'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">✅ .com.br Disponível</a>
-            <a th:href="@{/filter(by='no_conflicts')}" th:classappend="${activeFilter == 'no_conflicts'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">✅ Sem Conflitos de Marca</a>
+            <a th:href="@{/filter(by='domain')}" th:classappend="${activeFilter == 'domain'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">✅ Domínio Disponível</a>
+            <a th:href="@{/filter(by='inpi')}" th:classappend="${activeFilter == 'inpi'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">✅ Marca Disponível</a>
             <a th:href="@{/filter(by='recent')}" th:classappend="${activeFilter == 'recent'} ? 'active'" class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-gray-200">Mais Recentes</a>
         </div>
 
         <!-- Lista de Nomes -->
-        <div id="names-list" class="space-y-4">
-            <!-- Item da Lista (Renderizado pelo Thymeleaf) -->
-            <div th:each="sugestao : ${sugestoes}" class="bg-white p-4 rounded-lg shadow-md flex items-start justify-between transition-shadow duration-300 hover:shadow-lg">
-                <!-- Lado Esquerdo: Nome, Autor e Detalhes -->
-                <div class="flex-grow">
-                    <a th:href="@{/sugestao/{id}(id=${sugestao.id})}" class="text-xl font-bold text-indigo-600 hover:underline" th:text="${sugestao.nome}">
-                        Nome da Sugestão
-                    </a>
-                    <p class="text-xs text-gray-500 mt-1 mb-3">Sugerido por: <span th:text="${sugestao.autor}"></span></p>
-
-                    <!-- Detalhes Resumidos -->
-                    <div class="flex flex-wrap gap-x-4 gap-y-2 text-sm">
-                        <p class="flex items-center gap-2" th:classappend="${sugestao.dominioComDisponivel} ? 'text-green-600' : 'text-red-600'">
-                            <span th:text="${sugestao.dominioComDisponivel} ? '✅' : '❌'"></span>
-                            <span>.com</span>
+        <div id="names-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card de Nome (Renderizado pelo Thymeleaf) -->
+            <div th:each="sugestao : ${sugestoes}" class="name-card bg-white p-5 rounded-lg shadow-md flex flex-col justify-between transition-shadow duration-300">
+                <div>
+                    <h4 class="text-xl font-bold text-gray-800" th:text="${sugestao.nome}"></h4>
+                    <p class="text-xs text-gray-500 mb-3">Sugerido por: <span th:text="${sugestao.autor}"></span></p>
+                    <div class="space-y-2 text-sm">
+                        <p class="flex items-center gap-2" th:classappend="${sugestao.dominioDisponivel} ? 'text-green-600' : 'text-red-600'">
+                            <span th:text="${sugestao.dominioDisponivel} ? '✅ Domínio Disponível' : '❌ Domínio Ocupado'"></span>
                         </p>
-                        <p class="flex items-center gap-2" th:classappend="${sugestao.dominioComBrDisponivel} ? 'text-green-600' : 'text-red-600'">
-                            <span th:text="${sugestao.dominioComBrDisponivel} ? '✅' : '❌'"></span>
-                            <span>.com.br</span>
-                        </p>
-                        <p class="flex items-center gap-2" th:classappend="${sugestao.conflitosMarca == 0} ? 'text-green-600' : 'text-yellow-600'">
-                            <span th:text="${sugestao.conflitosMarca == 0} ? '✅' : '⚠️'"></span>
-                            <span th:text="${sugestao.conflitosMarca == 0} ? 'INPI Livre' : |${sugestao.conflitosMarca} Conflitos INPI|"></span>
+                        <p class="flex items-center gap-2" th:classappend="${sugestao.inpiDisponivel} ? 'text-green-600' : 'text-red-600'">
+                            <span th:text="${sugestao.inpiDisponivel} ? '✅ Marca Disponível' : '❌ Marca com Conflito'"></span>
                         </p>
                     </div>
                 </div>
-
-                <!-- Lado Direito: Votos -->
-                <div class="flex items-center gap-4 ml-4 flex-shrink-0">
-                    <button class="upvote-btn text-2xl hover:opacity-75 transition-opacity" th:attr="data-id=${sugestao.id}">🔥</button>
-                    <span class="vote-count text-lg font-bold text-gray-700" th:text="${sugestao.votos}">0</span>
-                    <button class="downvote-btn text-2xl hover:opacity-75 transition-opacity" th:attr="data-id=${sugestao.id}">❄️</button>
+                <div class="flex items-center justify-between mt-4">
+                    <div class="flex items-center gap-3">
+                        <button class="upvote-btn text-2xl hover:opacity-75 transition-opacity" th:attr="data-id=${sugestao.id}">🔥</button>
+                        <span class="vote-count text-lg font-bold text-gray-700" th:text="${sugestao.votos}"></span>
+                        <button class="downvote-btn text-2xl hover:opacity-75 transition-opacity" th:attr="data-id=${sugestao.id}">❄️</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => {
             if (response.ok) {
                 // Atualiza o contador de votos na tela
-                const voteCountSpan = target.closest('.flex.items-center.gap-4').querySelector('.vote-count');
+                const voteCountSpan = target.closest('.flex.items-center.gap-3').querySelector('.vote-count');
                 let currentVotes = parseInt(voteCountSpan.textContent, 10);
                 voteCountSpan.textContent = isUpvote ? currentVotes + 1 : currentVotes - 1;
             } else if (response.status === 401) {
