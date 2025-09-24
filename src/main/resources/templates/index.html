@@ -56,32 +56,16 @@
         <!-- Lista de Nomes -->
         <div id="names-list" class="space-y-4">
             <!-- Item da Lista (Renderizado pelo Thymeleaf) -->
-            <div th:each="sugestao : ${sugestoes}" class="bg-white p-4 rounded-lg shadow-md flex items-start justify-between transition-shadow duration-300 hover:shadow-lg">
-                <!-- Lado Esquerdo: Nome, Autor e Detalhes -->
+            <div th:each="sugestao : ${sugestoes}" class="bg-white p-4 rounded-lg shadow-md flex items-center justify-between transition-shadow duration-300 hover:shadow-lg">
+                <!-- Nome e Autor -->
                 <div class="flex-grow">
                     <a th:href="@{/sugestao/{id}(id=${sugestao.id})}" class="text-xl font-bold text-indigo-600 hover:underline" th:text="${sugestao.nome}">
                         Nome da Sugestão
                     </a>
-                    <p class="text-xs text-gray-500 mt-1 mb-3">Sugerido por: <span th:text="${sugestao.autor}"></span></p>
-
-                    <!-- Detalhes Resumidos -->
-                    <div class="flex flex-wrap gap-x-4 gap-y-2 text-sm">
-                        <p class="flex items-center gap-2" th:classappend="${sugestao.dominioComDisponivel} ? 'text-green-600' : 'text-red-600'">
-                            <span th:text="${sugestao.dominioComDisponivel} ? '✅' : '❌'"></span>
-                            <span>.com</span>
-                        </p>
-                        <p class="flex items-center gap-2" th:classappend="${sugestao.dominioComBrDisponivel} ? 'text-green-600' : 'text-red-600'">
-                            <span th:text="${sugestao.dominioComBrDisponivel} ? '✅' : '❌'"></span>
-                            <span>.com.br</span>
-                        </p>
-                        <p class="flex items-center gap-2" th:classappend="${sugestao.conflitosMarca == 0} ? 'text-green-600' : 'text-yellow-600'">
-                            <span th:text="${sugestao.conflitosMarca == 0} ? '✅' : '⚠️'"></span>
-                            <span th:text="${sugestao.conflitosMarca == 0} ? 'INPI Livre' : |${sugestao.conflitosMarca} Conflitos INPI|"></span>
-                        </p>
-                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Sugerido por: <span th:text="${sugestao.autor}"></span></p>
                 </div>
 
-                <!-- Lado Direito: Votos -->
+                <!-- Votos -->
                 <div class="flex items-center gap-4 ml-4 flex-shrink-0">
                     <button class="upvote-btn text-2xl hover:opacity-75 transition-opacity" th:attr="data-id=${sugestao.id}">🔥</button>
                     <span class="vote-count text-lg font-bold text-gray-700" th:text="${sugestao.votos}">0</span>
