@@ -96,6 +96,27 @@ public class SugestaoController {
         return "redirect:/";
     }
 
+    /**
+     * Mostra a página de detalhes de uma sugestão específica.
+     */
+    @GetMapping("/sugestao/{id}")
+    public String viewSuggestionDetails(@PathVariable Long id, HttpSession session, Model model) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "redirect:/login";
+        }
+
+        try {
+            SugestaoNome sugestao = sugestaoService.findById(id);
+            model.addAttribute("sugestao", sugestao);
+            model.addAttribute("username", username); // Passa o username para o cabeçalho
+            return "details"; // Nome do novo template
+        } catch (IllegalArgumentException e) {
+            // Opcional: redirecionar para uma página de erro ou de volta para a lista
+            return "redirect:/";
+        }
+    }
+
     @PostMapping("/votar/{id}/up")
     public ResponseEntity<Void> upvote(@PathVariable Long id, HttpSession session) {
         if (session.getAttribute("username") == null) {
