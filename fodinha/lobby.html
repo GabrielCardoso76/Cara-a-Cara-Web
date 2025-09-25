@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aposta Certa - Lobby</title>
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-800 text-white font-sans p-4">
+    <div id="lobby-container" class="max-w-4xl mx-auto">
+        <header class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-yellow-400">Lobby de Salas</h1>
+            <div>
+                <span class="mr-4">Bem-vindo, <strong id="lobby-username" class="text-yellow-300"></strong>!</span>
+                <button id="create-room-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+                    Criar Nova Sala
+                </button>
+            </div>
+        </header>
+        
+        <main id="room-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            </main>
+    </div>
+
+    <!-- Modal de Criação de Sala -->
+    <div id="create-room-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md">
+            <h2 class="text-2xl font-bold text-yellow-400 mb-6">Criar Nova Sala</h2>
+            <form id="create-room-form">
+                <div class="mb-4">
+                    <label for="room-name" class="block mb-2 text-sm font-medium">Nome da Sala</label>
+                    <input type="text" id="room-name" name="room-name" class="w-full bg-gray-600 border border-gray-500 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" required value="Sala de ">
+                </div>
+                <div class="mb-4">
+                    <label for="initial-lives" class="block mb-2 text-sm font-medium">Vidas Iniciais</label>
+                    <select id="initial-lives" name="initial-lives" class="w-full bg-gray-600 border border-gray-500 rounded-md p-2">
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected>5 (Padrão)</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="anulacao-rank" name="anulacao-rank" class="w-4 h-4 text-yellow-400 bg-gray-700 border-gray-600 rounded focus:ring-yellow-500">
+                        <span class="ml-2 text-sm font-medium">Ativar regra "Anulação por Rank"</span>
+                    </label>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" id="cancel-create-room-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">Cancelar</button>
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">Criar Sala</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/lobby.js"></script>
+</body>
+</html>

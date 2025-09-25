@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aposta Certa - Mesa de Jogo</title>
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg-green-800 text-white font-sans overflow-hidden h-screen">
+    <div id="game-container" class="relative w-full h-full flex items-center justify-center">
+
+        <div id="table-center" class="absolute w-2/3 h-2/3 bg-green-700 rounded-full border-4 border-yellow-600 flex flex-col items-center justify-center">
+            <div id="trick-area" class="flex items-center justify-center space-x-4 h-32">
+                </div>
+            <div id="vira-area" class="absolute top-4 right-4 flex flex-col items-center">
+                <span class="text-xs font-bold uppercase">Vira</span>
+                </div>
+             <div id="game-info" class="absolute bottom-4 text-center">
+                <p id="info-text" class="text-lg font-bold text-yellow-300"></p>
+            </div>
+        </div>
+
+        <div id="player-south" class="absolute bottom-2 left-1/2 -translate-x-1/2 w-full flex flex-col items-center">
+            <div id="player-south-info" class="text-center mb-2"></div>
+            <div id="player-south-hand" class="flex justify-center space-x-[-20px] hover:space-x-[-10px] transition-all duration-300">
+                </div>
+        </div>
+
+        <div id="player-west" class="absolute left-2 top-1/2 -translate-y-1/2 flex items-center">
+            <div id="player-west-info" class="text-center mr-2"></div>
+            <div id="player-west-hand"></div>
+        </div>
+
+        <div id="player-north" class="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
+            <div id="player-north-hand" class="flex justify-center space-x-[-30px]"></div>
+            <div id="player-north-info" class="text-center mt-2"></div>
+        </div>
+
+        <div id="player-east" class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center">
+            <div id="player-east-hand"></div>
+            <div id="player-east-info" class="text-center ml-2"></div>
+        </div>
+
+        <div id="bet-modal" class="hidden absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+            <div class="bg-gray-800 p-8 rounded-lg text-center">
+                <h2 class="text-2xl mb-4 font-bold text-yellow-400">Faça seu palpite!</h2>
+                <p class="mb-4">Quantos turnos você acha que vai ganhar?</p>
+                <div id="bet-options" class="flex justify-center space-x-2">
+                    </div>
+            </div>
+        </div>
+        
+        <div id="game-over-modal" class="hidden absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+            <div class="bg-gray-800 p-8 rounded-lg text-center">
+                <h2 class="text-4xl mb-4 font-bold text-yellow-400">Fim de Jogo!</h2>
+                <p class="mb-6 text-2xl">O vencedor é <strong id="winner-name" class="text-green-400"></strong>!</p>
+                <button onclick="window.location.href = 'lobby.html'" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md">Voltar ao Lobby</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/ui-components.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

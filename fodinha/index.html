@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aposta Certa - Login</title>
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-800 text-white flex items-center justify-center h-screen font-sans">
+    <div id="auth-container" class="bg-gray-700 p-8 rounded-lg shadow-xl w-full max-w-sm">
+        <h1 class="text-3xl font-bold text-center text-yellow-400 mb-6">Aposta Certa</h1>
+        <form id="login-form">
+            <div class="mb-4">
+                <label for="username" class="block mb-2 text-sm font-medium">Nome de Usuário</label>
+                <input type="text" id="username" name="username" class="w-full bg-gray-600 border border-gray-500 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+            </div>
+            <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 px-4 rounded-md transition duration-300">Entrar no Lobby</button>
+        </form>
+        <p id="error-message" class="text-red-400 text-center mt-4"></p>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
