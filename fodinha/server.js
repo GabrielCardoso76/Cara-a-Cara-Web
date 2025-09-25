@@ -1,9 +1,9 @@
 // server.js
 const WebSocket = require('ws');
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: process.env.PORT || 8080, path: '/ws' });
 
-console.log('Servidor "Aposta Certa" iniciado na porta 8080...');
+console.log(`Servidor "Aposta Certa" iniciado...`);
 
 let rooms = {};
 let clients = {};

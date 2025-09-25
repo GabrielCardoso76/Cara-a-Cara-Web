@@ -1,9 +1,10 @@
 // js/main.js
+// js/main.js
 const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 const wsHost = window.location.hostname;
 const wsPort = isLocal ? ':8080' : ''; // Render handles port mapping automatically in production
-const WS_URL = `${wsProtocol}${wsHost}${wsPort}`;
+const WS_URL = `${wsProtocol}${wsHost}${wsPort}/ws`; // Connect to the /ws path
 let socket;
 
 function connectWebSocket() {
