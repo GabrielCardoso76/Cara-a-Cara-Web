@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "npx tailwindcss -i ./css/input.css -o ./css/style.css",
+    "build": "node ./node_modules/tailwindcss/lib/cli.js -i ./css/input.css -o ./css/style.css",
     "tailwind": "npx tailwindcss -i ./css/input.css -o ./css/style.css --watch"
   },
   "author": "Senior Web Game Developer",
